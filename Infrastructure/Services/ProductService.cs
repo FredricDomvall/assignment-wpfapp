@@ -33,7 +33,10 @@ public class ProductService : IProductService
 
     public IEnumerable<Product> GetAllProductsFromList()
     {
-        throw new NotImplementedException();
+        if(!_productList.Any())
+            return Enumerable.Empty<Product>();
+        
+        return _productList;
     }
 
     public IEnumerable<Product> LoadListFromFile()
