@@ -15,9 +15,13 @@ public class CategoryService : ICategoryService
     public async Task<AnswerOutcome<Category>> AddCategoryToListAsync(Category categoryForm)
     {
         Category newCategory = new Category();
-        newCategory.CategoryId = GeneratorHelper.GenerateGuidId();
+        categoryForm.CategoryId = GeneratorHelper.GenerateGuidId();
+        
 
         var nameValidationResult = ValidationHelper.ValidateString(categoryForm.CategoryName!);
+        if (nameValidationResult.Statement is true)
+            categoryForm.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(categoryForm.CategoryName!); 
+        
         var prefixValidationResult = ValidationHelper.ValidateCategoryPrefix(categoryForm.CategoryPrefix!, _categoryList);
         var guidValidationResult = ValidationHelper.ValidateGuidId<Category>(newCategory.CategoryId);
         var uniqueValidationResult = ValidationHelper.ValidateCategoryUnique(newCategory, _categoryList);
@@ -25,6 +29,7 @@ public class CategoryService : ICategoryService
         if (nameValidationResult.Statement is true && prefixValidationResult.Statement is true
          && guidValidationResult.Statement is true && uniqueValidationResult.Statement is true)
         {
+            newCategory.CategoryId = categoryForm.CategoryId;
             newCategory.CategoryName = categoryForm.CategoryName!;
             newCategory.CategoryPrefix = categoryForm.CategoryPrefix!;
 
