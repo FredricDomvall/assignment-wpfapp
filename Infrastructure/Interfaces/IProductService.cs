@@ -5,6 +5,6 @@ public interface IProductService
 {
     bool AddProductToList(ProductForm productForm);
     IEnumerable<Product> GetAllProductsFromList();
-    IEnumerable<Product> LoadListFromFile();
-    bool SaveListToFile();
+    Task<IEnumerable<Product>> LoadListFromFileAsync();
+    Task<bool> SaveListToFileAsync();
 }

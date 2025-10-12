@@ -10,7 +10,7 @@ public class ProductService : IProductService
     public ProductService(IJsonFileRepository jsonFileRepository)
     {
         _jsonFileRepository = jsonFileRepository;
-        LoadListFromFile();
+        LoadListFromFileAsync();
     }
     public bool AddProductToList(ProductForm productForm)
     {
@@ -27,18 +27,19 @@ public class ProductService : IProductService
         };
 
         _productList.Add(newProduct);
-        return SaveListToFile();
+        SaveListToFileAsync();
+        return true;
     }
 
     public IEnumerable<Product> GetAllProductsFromList()
     {
-        LoadListFromFile();
+        LoadListFromFileAsync();
         return _productList;
     }
 
-    public IEnumerable<Product> LoadListFromFile()
+    public async Task<IEnumerable<Product>> LoadListFromFileAsync()
     {
-        var productsFromFile = _jsonFileRepository.ReadFromJsonFile();
+        var productsFromFile = await _jsonFileRepository.ReadFromJsonFile();
         if (productsFromFile == null || !productsFromFile.Any())
             return Enumerable.Empty<Product>();
         
@@ -46,11 +47,12 @@ public class ProductService : IProductService
         return _productList;
     }
 
-    public bool SaveListToFile()
+    public async Task<bool> SaveListToFileAsync()
     {
         if (!_productList.Any())
             return false;
 
-        return _jsonFileRepository.WriteToJsonFile(_productList); 
+        await _jsonFileRepository.WriteToJsonFile(_productList);
+        return true;
     }
 }
