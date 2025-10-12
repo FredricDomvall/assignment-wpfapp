@@ -38,6 +38,17 @@ internal class ProductMenu
     }
     private void ShowProductsInList()
     {
+        Console.Clear();
+        Console.WriteLine("----------PRODUCT LIST ---------- :");
+        var products = _productService.GetAllProductsFromList();
+        foreach (var product in products)
+        {
+            Console.WriteLine($"ID: {product.ProductId}");
+            Console.WriteLine($"Name: {product.ProductName}, Price: {product.ProductPrice}");
+            Console.WriteLine("------------------------------");
+        }
+        Console.WriteLine("Press any key to return to the menu...");
+        Console.ReadKey();
     }
     private void AddNewProductToList()
     {
