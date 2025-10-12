@@ -7,6 +7,4 @@ public interface IProductService
     IEnumerable<Product> GetAllProductsFromList();
     IEnumerable<Product> LoadListFromFile();
     bool SaveListToFile();
-
-
 }
