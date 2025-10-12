@@ -33,7 +33,7 @@ internal class MainMenu
     }
     private void DisplayProductMenu()
     {
-        productMenu.DisplayProductMenu();
+        _productMenu.DisplayProductMenu();
     }
     private void ExitApplication()
     {
