@@ -8,11 +8,11 @@ internal class ProductMenu
     {
         _productService = productService;
     }
-    public void Run()
+    public async Task Run()
     {
-        DisplayProductMenu();
+        await DisplayProductMenu();
     }
-    private void DisplayProductMenu()
+    private async Task DisplayProductMenu()
     {
         Console.Clear();
 
@@ -25,10 +25,10 @@ internal class ProductMenu
         switch (option)
         {
             case "1":
-                ShowProductsInList();
+                await ShowProductsInList();
                 break;
             case "2":
-                AddNewProductToList();
+                await AddNewProductToList();
                 break;
             case "0":
                 return;
@@ -36,7 +36,7 @@ internal class ProductMenu
                 Console.WriteLine("Invalid choice. Please try again.");
                 break;
         }
-        DisplayProductMenu();
+        await DisplayProductMenu();
     }
     private async Task ShowProductsInList()
     {
@@ -59,7 +59,7 @@ internal class ProductMenu
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
     }
-    private void AddNewProductToList()
+    private async Task AddNewProductToList()
     {
         do
         {
@@ -78,9 +78,9 @@ internal class ProductMenu
                 ProductName = productName,
                 ProductPrice = productPrice
             };
-            var result = _productService.AddProductToListAsync(productForm);
+            var addProductResult = await _productService.AddProductToListAsync(productForm);
             
-            if (result)
+            if (addProductResult.Statement)
                 Console.WriteLine("Product added successfully.");
             else
                 Console.WriteLine("Failed to add product. Please check the input values.");
