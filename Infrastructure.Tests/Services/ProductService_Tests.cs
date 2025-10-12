@@ -12,7 +12,7 @@ public class ProductService_Tests
         if (File.Exists(_testFilePath))
             File.Delete(_testFilePath);
         //Arrange
-        var jsonFileRepository = new JsonFileRepository(_testFilePath);
+        var jsonFileRepository = new JsonFileRepository<Product>(_testFilePath);
         var productService = new ProductService(jsonFileRepository);
         var validProduct = new ProductForm
         {
