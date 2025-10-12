@@ -21,7 +21,9 @@ public class ProductService : IProductService
         var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
         var guidValidationResult = ValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
         var uniqueValidationResult = ValidationHelper.ValidateProductUnique(newProduct, _productList);
-        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true && guidValidationResult.Statement is true &&)
+
+        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true 
+         && guidValidationResult.Statement is true && uniqueValidationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
@@ -44,12 +46,6 @@ public class ProductService : IProductService
                 errorMessages += uniqueValidationResult.Answer + "\n";
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
-
-
-
-
-
-
     }
 
     public async Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync()
