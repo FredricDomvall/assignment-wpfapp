@@ -3,35 +3,35 @@ using Infrastructure.Models;
 using System.Text.Json;
 
 namespace Infrastructure.Repositories;
-public class JsonFileRepository<T> : IJsonFileRepository
+public class JsonFileRepository<T> : IJsonFileRepository<T>
 {
     private readonly string _filePath;
     public JsonFileRepository(string filePath)
     {
         _filePath = filePath;
     }
-    public async Task<List<Product>> ReadFromJsonFileAsync()
+    public async Task<AnswerOutcome<List<T>>> ReadFromJsonFileAsync()
     {
         try
         {
             if(!File.Exists(_filePath))
-                return new List<Product>();
+                return new AnswerOutcome<List<T>> {Statement = false, Answer = "File doesnt exist", Outcome = new List<T>() };
 
             var jsonData = await File.ReadAllTextAsync(_filePath);
-            var productData = JsonSerializer.Deserialize<List<Product>>(jsonData);
+            var productData = JsonSerializer.Deserialize<List<T>>(jsonData);
 
             if (productData == null)
-                return new List<Product>();
+                return new AnswerOutcome<List<T>> { Statement = false, Answer = "File is empty", Outcome = new List<T>() };
 
-            return productData;
+            return new AnswerOutcome<List<T>> { Statement = true, Outcome = productData };
         }
-        catch
+        catch(Exception ex)
         {
-            return new List<Product>();
+            return new AnswerOutcome<List<T>> { Statement = false, Answer = ex.Message, Outcome = new List<T>() };
         }
     }
 
-    public async Task<bool> WriteToJsonFileAsync(List<Product> productList)
+    public async Task<AnswerOutcome<bool>> WriteToJsonFileAsync(List<T> productList)
     {
         try
         {
@@ -39,11 +39,11 @@ public class JsonFileRepository<T> : IJsonFileRepository
             var jsonData = JsonSerializer.Serialize(productList, options);
             await File.WriteAllTextAsync(_filePath, jsonData);
 
-            return true;
+            return new AnswerOutcome<bool> { Statement = true, Answer = "Successfully saved list to file"};
         }
-        catch
+        catch(Exception ex)
         {
-            return false;
+            return new AnswerOutcome<bool> { Statement = false, Answer = ex.Message };
         }
     }
 }

@@ -3,8 +3,8 @@
 namespace Infrastructure.Interfaces;
 public interface IProductService
 {
-    Task<bool> AddProductToListAsync(ProductForm productForm);
-    Task<IEnumerable<Product>> GetAllProductsFromListAsync();
-    Task<IEnumerable<Product>> LoadListFromFileAsync();
-    Task<bool> SaveListToFileAsync();
+    Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm);
+    Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync();
+    Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync();
+    Task<AnswerOutcome<bool>> SaveListToFileAsync();
 }
