@@ -13,7 +13,22 @@ public class ProductService : IProductService
     }
     public bool AddProductToList(ProductForm productForm)
     {
-        throw new NotImplementedException();
+        if (productForm == null || string.IsNullOrEmpty(productForm.ProductName) || string.IsNullOrEmpty(productForm.ProductPrice))
+            return false;
+        if (!decimal.TryParse(productForm.ProductPrice, out decimal price))
+            return false;
+        
+        Product newProduct = new Product
+        {
+            ProductId = Guid.NewGuid(),
+            ProductName = productForm.ProductName,
+            ProductPrice = price
+        };
+
+        _productList.Add(newProduct);
+        
+        return true;
+
     }
 
     public IEnumerable<Product> GetAllProductsFromList()
