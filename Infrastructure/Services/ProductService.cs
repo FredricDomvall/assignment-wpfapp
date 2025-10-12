@@ -49,6 +49,9 @@ public class ProductService : IProductService
 
     public bool SaveListToFile()
     {
-        throw new NotImplementedException();
+        if (!_productList.Any())
+            return false;
+
+        return _jsonFileRepository.WriteToJsonFile(_productList); 
     }
 }
