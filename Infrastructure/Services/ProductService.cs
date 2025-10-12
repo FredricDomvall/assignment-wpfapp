@@ -40,18 +40,18 @@ public class ProductService : IProductService
     {
         var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync();
         if (productsFromFile == null || !productsFromFile.Any())
-            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Answer = "No products found in file.", Outcome = Enumerable.Empty<Product>() };
+            return new AnswerOutcome<IEnumerable<Product>> { Statement = false };
 
         _productList = productsFromFile;
-        return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
+        return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
     }
 
-    public async Task<bool> SaveListToFileAsync()
+    public async Task<AnswerOutcome<bool>> SaveListToFileAsync()
     {
         if (!_productList.Any())
-            return false;
+            return new AnswerOutcome<bool> { Statement = false };
 
         await _jsonFileRepository.WriteToJsonFileAsync(_productList);
-        return true;
+        return new AnswerOutcome<bool> { Statement = true };
     }
 }
