@@ -15,7 +15,7 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
         try
         {
             if(!File.Exists(_filePath))
-                return new AnswerOutcome<List<T>> {Statement = false, Answer = "File doesnt exist", Outcome = new List<T> };
+                return new AnswerOutcome<List<T>> {Statement = false, Answer = "File doesnt exist", Outcome = new List<T>() };
 
             var jsonData = await File.ReadAllTextAsync(_filePath);
             var productData = JsonSerializer.Deserialize<List<T>>(jsonData);
@@ -31,7 +31,7 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
         }
     }
 
-    public async Task<bool> WriteToJsonFileAsync(List<T> productList)
+    public async Task<AnswerOutcome<bool>> WriteToJsonFileAsync(List<T> productList)
     {
         try
         {
@@ -39,11 +39,11 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
             var jsonData = JsonSerializer.Serialize(productList, options);
             await File.WriteAllTextAsync(_filePath, jsonData);
 
-            return true;
+            return new AnswerOutcome<bool> { Statement = true, Answer = "Successfully saved list to file"};
         }
-        catch
+        catch(Exception ex)
         {
-            return false;
+            return new AnswerOutcome<bool> { Statement = false, Answer = ex.Message };
         }
     }
 }
