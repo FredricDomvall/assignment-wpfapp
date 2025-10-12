@@ -10,9 +10,8 @@ public class ProductService : IProductService
     public ProductService(IJsonFileRepository jsonFileRepository)
     {
         _jsonFileRepository = jsonFileRepository;
-        LoadListFromFile();
     }
-    public bool AddProductToList(ProductForm productForm)
+    public async Task<bool> AddProductToListAsync(ProductForm productForm)
     {
         if (productForm == null || string.IsNullOrEmpty(productForm.ProductName) || string.IsNullOrEmpty(productForm.ProductPrice))
             return false;
@@ -25,20 +24,21 @@ public class ProductService : IProductService
             ProductName = productForm.ProductName,
             ProductPrice = price
         };
-
+        await LoadListFromFileAsync();
         _productList.Add(newProduct);
-        return SaveListToFile();
+        await SaveListToFileAsync();
+        return true;
     }
 
-    public IEnumerable<Product> GetAllProductsFromList()
+    public async Task<IEnumerable<Product>> GetAllProductsFromListAsync()
     {
-        LoadListFromFile();
+        await LoadListFromFileAsync();
         return _productList;
     }
 
-    public IEnumerable<Product> LoadListFromFile()
+    public async Task<IEnumerable<Product>> LoadListFromFileAsync()
     {
-        var productsFromFile = _jsonFileRepository.ReadFromJsonFile();
+        var productsFromFile = await _jsonFileRepository.ReadFromJsonFile();
         if (productsFromFile == null || !productsFromFile.Any())
             return Enumerable.Empty<Product>();
         
@@ -46,11 +46,12 @@ public class ProductService : IProductService
         return _productList;
     }
 
-    public bool SaveListToFile()
+    public async Task<bool> SaveListToFileAsync()
     {
         if (!_productList.Any())
             return false;
 
-        return _jsonFileRepository.WriteToJsonFile(_productList); 
+        await _jsonFileRepository.WriteToJsonFile(_productList);
+        return true;
     }
 }

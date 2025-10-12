@@ -3,21 +3,21 @@ using Infrastructure.Models;
 using System.Text.Json;
 
 namespace Infrastructure.Repositories;
-public class JsonFileRepository : IJsonFileRepository
+public class JsonFileRepository<T> : IJsonFileRepository
 {
     private readonly string _filePath;
     public JsonFileRepository(string filePath)
     {
         _filePath = filePath;
     }
-    public List<Product> ReadFromJsonFile()
+    public async Task<List<Product>> ReadFromJsonFileAsync()
     {
         try
         {
             if(!File.Exists(_filePath))
                 return new List<Product>();
 
-            var jsonData = File.ReadAllText(_filePath);
+            var jsonData = await File.ReadAllTextAsync(_filePath);
             var productData = JsonSerializer.Deserialize<List<Product>>(jsonData);
 
             if (productData == null)
@@ -31,13 +31,13 @@ public class JsonFileRepository : IJsonFileRepository
         }
     }
 
-    public bool WriteToJsonFile(List<Product> productList)
+    public async Task<bool> WriteToJsonFileAsync(List<Product> productList)
     {
         try
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var jsonData = JsonSerializer.Serialize(productList, options);
-            File.WriteAllText(_filePath, jsonData);
+            await File.WriteAllTextAsync(_filePath, jsonData);
 
             return true;
         }

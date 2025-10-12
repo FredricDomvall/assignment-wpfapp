@@ -42,7 +42,7 @@ internal class ProductMenu
     {
         Console.Clear();
         Console.WriteLine("----------  PRODUCT LIST  ----------");
-        var products = _productService.GetAllProductsFromList();
+        var products = _productService.GetAllProductsFromListAsync();
         if (!products.Any())
         {
             Console.WriteLine("No products available.");
@@ -78,7 +78,7 @@ internal class ProductMenu
                 ProductName = productName,
                 ProductPrice = productPrice
             };
-            var result = _productService.AddProductToList(productForm);
+            var result = _productService.AddProductToListAsync(productForm);
             
             if (result)
                 Console.WriteLine("Product added successfully.");
