@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace Infrastructure.Helpers;
 public static class ValidationHelper
 {
-    public static AnswerOutcome<bool> ValidateString(string stringInputs, List<Product> productList)
+    public static AnswerOutcome<bool> ValidateString(string stringInputs)
     {
         if (string.IsNullOrWhiteSpace(stringInputs))
             return new AnswerOutcome<bool> { Statement = false, Answer = "\tText-inputs can not be left empty" };
@@ -78,6 +78,14 @@ public static class ValidationHelper
         if (categoryList.Any(category => category.CategoryId == checkCategory.CategoryId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "\tCategory Id must be unique." };
 
+        return new AnswerOutcome<bool> { Statement = true };
+    }
+    public static AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> customerList)
+    {
+        if (customerList.Any(c => c.CustomerEmail == checkCustomer.CustomerEmail))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCustomer email must be unique." };
+        if (customerList.Any(c => c.CustomerId == checkCustomer.CustomerId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCustomer Id must be unique." };
         return new AnswerOutcome<bool> { Statement = true };
     }
     public static AnswerOutcome<bool> ValidateManufacturerUnique(Manufacturer checkManufacturer, List<Manufacturer> manufacturerList)

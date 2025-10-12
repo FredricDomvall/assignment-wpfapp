@@ -17,7 +17,7 @@ public class ProductService : IProductService
         Product newProduct = new Product();
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
 
-        var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!, _productList);
+        var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
         var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
         var guidValidationResult = ValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
         var uniqueValidationResult = ValidationHelper.ValidateProductUnique(newProduct, _productList);
