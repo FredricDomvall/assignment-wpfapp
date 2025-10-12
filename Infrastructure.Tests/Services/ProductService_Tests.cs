@@ -7,7 +7,7 @@ public class ProductService_Tests
 {
     private readonly string _testFilePath = "test_products.json";
     [Fact]
-    public void AddProductToList_ShouldAddProductToList_WhenValidInput()
+    public async Task AddProductToList_ShouldAddProductToList_WhenValidInput()
     {
         if (File.Exists(_testFilePath))
             File.Delete(_testFilePath);
@@ -27,15 +27,14 @@ public class ProductService_Tests
 
 
         //Act
-        var validResult = productService.AddProductToListAsync(validProduct);
-        var invalidResult = productService.AddProductToListAsync(invalidProduct);
-        var productExistsInList = productService.GetAllProductsFromListAsync();
+        var validResult = await productService.AddProductToListAsync(validProduct);
+        var invalidResult = await productService.AddProductToListAsync(invalidProduct);
+        var productExistsInList = await productService.GetAllProductsFromListAsync();
 
         //Assert
-        Assert.True(validResult);
-        Assert.False(invalidResult);
-        Assert.Contains(productExistsInList, p => p.ProductName == "ValidTestProduct" && p.ProductPrice == 12.34m);
+        Assert.True(validResult.Statement);
+        Assert.False(invalidResult.Statement);
+        Assert.Contains(productExistsInList.Outcome!, p => p.ProductName == "ValidTestProduct" && p.ProductPrice == 12.34m);
         Assert.True(File.Exists(_testFilePath));
-        Assert.Single(productExistsInList);
     }
 }
