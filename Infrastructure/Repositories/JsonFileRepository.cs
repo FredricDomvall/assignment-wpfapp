@@ -10,24 +10,24 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
     {
         _filePath = filePath;
     }
-    public async Task<List<T>> ReadFromJsonFileAsync()
+    public async Task<AnswerOutcome<List<T>>> ReadFromJsonFileAsync()
     {
         try
         {
             if(!File.Exists(_filePath))
-                return new List<T>();
+                return new AnswerOutcome<List<T>> {Statement = false, Answer = "File doesnt exist", Outcome = new List<T> };
 
             var jsonData = await File.ReadAllTextAsync(_filePath);
             var productData = JsonSerializer.Deserialize<List<T>>(jsonData);
 
             if (productData == null)
-                return new List<T>();
+                return new AnswerOutcome<List<T>> { Statement = false, Answer = "File is empty", Outcome = new List<T>() };
 
-            return productData;
+            return new AnswerOutcome<List<T>> { Statement = true, Outcome = productData };
         }
-        catch
+        catch(Exception ex)
         {
-            return new List<T>();
+            return new AnswerOutcome<List<T>> { Statement = false, Answer = ex.Message, Outcome = new List<T>() };
         }
     }
 
