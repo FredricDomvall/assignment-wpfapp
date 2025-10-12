@@ -82,10 +82,10 @@ public static class ValidationHelper
     }
     public static AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> customerList)
     {
-        if (customerList.Any(c => c.CustomerEmail == checkCustomer.CustomerEmail))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCustomer email must be unique." };
-        if (customerList.Any(c => c.CustomerId == checkCustomer.CustomerId))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCustomer Id must be unique." };
+        if (string.IsNullOrWhiteSpace(prefix))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprefix can not be left empty." };
+        if (customerList.Any(c => c.CategoryPrefix == prefix))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprefix must be unique." };
         return new AnswerOutcome<bool> { Statement = true };
     }
     public static AnswerOutcome<bool> ValidateManufacturerUnique(Manufacturer checkManufacturer, List<Manufacturer> manufacturerList)
