@@ -78,7 +78,7 @@ internal class ProductMenu
                 ProductName = productName,
                 ProductPrice = productPrice
             };
-            var result = _productService.AddProductToList(productForm);
+            var result = _productService.AddProductToListAsync(productForm);
             
             if (result)
                 Console.WriteLine("Product added successfully.");

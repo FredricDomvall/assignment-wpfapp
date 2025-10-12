@@ -12,7 +12,7 @@ public class ProductService : IProductService
         _jsonFileRepository = jsonFileRepository;
         LoadListFromFileAsync();
     }
-    public bool AddProductToList(ProductForm productForm)
+    public async Task<bool> AddProductToListAsync(ProductForm productForm)
     {
         if (productForm == null || string.IsNullOrEmpty(productForm.ProductName) || string.IsNullOrEmpty(productForm.ProductPrice))
             return false;
@@ -27,7 +27,7 @@ public class ProductService : IProductService
         };
 
         _productList.Add(newProduct);
-        SaveListToFileAsync();
+        await SaveListToFileAsync();
         return true;
     }
 

@@ -27,8 +27,8 @@ public class ProductService_Tests
 
 
         //Act
-        var validResult = productService.AddProductToList(validProduct);
-        var invalidResult = productService.AddProductToList(invalidProduct);
+        var validResult = productService.AddProductToListAsync(validProduct);
+        var invalidResult = productService.AddProductToListAsync(invalidProduct);
         var productExistsInList = productService.GetAllProductsFromListAsync();
 
         //Assert
