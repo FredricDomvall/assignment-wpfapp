@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Models;
 
 namespace Infrastructure.Helpers;
-public static class Validationhelper
+public static class ValidationHelper
 {
     public static AnswerOutcome<bool> ValidateString(string stringInputs, List<Product> productList)
     {
@@ -38,12 +38,14 @@ public static class Validationhelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
+
+    /*
+            Below validation for unique values in lists can be changed to generic handlig, Improve later
+     */
     public static AnswerOutcome<bool> ValidateProductUnique(Product checkProduct, List<Product> productList)
     {
         if (productList.Any(product => product.ProductName == checkProduct.ProductName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
-        if (productList.Any(product => product.ProductId == checkProduct.ProductId))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct code must be unique." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
