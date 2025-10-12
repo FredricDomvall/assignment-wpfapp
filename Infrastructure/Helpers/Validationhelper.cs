@@ -38,4 +38,33 @@ public static class Validationhelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
+    public static AnswerOutcome<bool> ValidateProductUnique(Product checkProduct, List<Product> productList)
+    {
+        if (productList.Any(product => product.ProductName == checkProduct.ProductName))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
+        if (productList.Any(product => product.ProductId == checkProduct.ProductId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct code must be unique." };
+
+        return new AnswerOutcome<bool> { Statement = true };
+    }
+    public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> categoryList)
+    {
+        if (categoryList.Any(category => category.CategoryName == checkCategory.CategoryName))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCategory name must be unique." };
+        if (categoryList.Any(category => category.CategoryId == checkCategory.CategoryId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCategory Id must be unique." };
+
+        return new AnswerOutcome<bool> { Statement = true };
+    }
+    public static AnswerOutcome<bool> ValidateManufacturerUnique(Manufacturer checkManufacturer, List<Manufacturer> manufacturerList)
+    {
+        if (manufacturerList.Any(m => m.ManufacturerName == checkManufacturer.ManufacturerName))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tManufacturer name must be unique." };
+        if (manufacturerList.Any(m => m.ManufacturerId == checkManufacturer.ManufacturerId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tManufacturer Id must be unique." };
+        if (manufacturerList.Any(m => m.ManufacturerEmail == checkManufacturer.ManufacturerEmail))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tManufacturer email must be unique." };
+
+        return new AnswerOutcome<bool> { Statement = true };
+    }
 }
