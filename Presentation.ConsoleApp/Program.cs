@@ -9,4 +9,4 @@ ProductService productService = new ProductService(jsonFileRepository);
 ProductMenu productMenu = new ProductMenu(productService);
 MainMenu mainMenu = new MainMenu(productMenu);
 
-mainMenu.Run();
+await mainMenu.Run();

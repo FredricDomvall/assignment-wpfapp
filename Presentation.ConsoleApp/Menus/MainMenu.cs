@@ -6,11 +6,11 @@ internal class MainMenu
     {
         _productMenu = productMenu;
     }
-    public void Run()
+    public async Task Run()
     {
-        DisplayMainMenu();
+        await DisplayMainMenu();
     }
-    private void DisplayMainMenu()
+    private async Task DisplayMainMenu()
     {
         Console.WriteLine("=== MAIN MENU ===");
         Console.WriteLine("1. Product Menu");
@@ -20,7 +20,7 @@ internal class MainMenu
         switch (option)
         {
             case "1":
-                DisplayProductMenu();
+                await DisplayProductMenu();
                 break;
             case "0":
                 ExitApplication();
@@ -29,11 +29,11 @@ internal class MainMenu
                 Console.WriteLine("Invalid choice. Please try again.");
                 break;
         }
-        DisplayMainMenu();
+        await DisplayMainMenu();
     }
-    private void DisplayProductMenu()
+    private async Task DisplayProductMenu()
     {
-        _productMenu.Run();
+        await _productMenu.Run();
     }
     private void ExitApplication()
     {
