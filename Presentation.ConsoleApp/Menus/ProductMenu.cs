@@ -52,5 +52,30 @@ internal class ProductMenu
     }
     private void AddNewProductToList()
     {
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("----------ADD NEW PRODUCT ---------- :");
+
+            Console.Write("Enter Product Name: ");
+            var productName = Console.ReadLine();
+
+            Console.Write("Enter Product Price: ");
+            var productPrice = Console.ReadLine();
+
+            var productForm = new Infrastructure.Models.ProductForm
+            {
+                ProductName = productName,
+                ProductPrice = productPrice
+            };
+            var result = _productService.AddProductToList(productForm);
+            
+            if (result)
+                Console.WriteLine("Product added successfully.");
+            else
+                Console.WriteLine("Failed to add product. Please check the input values.");
+
+            Console.WriteLine("Press '1' to add another product or any other key to return to the menu.");
+        } while (Console.ReadLine() == "1");
     }
 }
