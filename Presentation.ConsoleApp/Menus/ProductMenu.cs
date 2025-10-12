@@ -1,7 +1,11 @@
 ﻿namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
 {
-    public void DisplayProductMenu()
+    public void Run()
+    {
+        DisplayProductMenu();
+    }
+    private void DisplayProductMenu()
     {
         Console.WriteLine("Product Menu");
         Console.WriteLine("1. List Products");
