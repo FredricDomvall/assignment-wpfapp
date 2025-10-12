@@ -19,12 +19,16 @@ internal class MainMenu
                 //productMenu.DisplayProductMenu();
                 break;
             case "0":
-                //ExitApplication();
+                ExitApplication();
                 break;
             default:
                 Console.WriteLine("Invalid choice. Please try again.");
                 break;
         }
         DisplayMainMenu();
+    }
+    private void ExitApplication()
+    {
+        Environment.Exit(0);
     }
 }
