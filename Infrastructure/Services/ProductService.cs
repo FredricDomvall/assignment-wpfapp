@@ -36,14 +36,14 @@ public class ProductService : IProductService
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
 
-    public async Task<IEnumerable<Product>> LoadListFromFileAsync()
+    public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
     {
         var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync();
         if (productsFromFile == null || !productsFromFile.Any())
-            return Enumerable.Empty<Product>();
-        
+            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Answer = "No products found in file.", Outcome = Enumerable.Empty<Product>() };
+
         _productList = productsFromFile;
-        return _productList;
+        return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
 
     public async Task<bool> SaveListToFileAsync()
