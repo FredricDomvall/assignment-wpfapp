@@ -33,9 +33,7 @@ public class ProductService : IProductService
 
     public IEnumerable<Product> GetAllProductsFromList()
     {
-        if(!_productList.Any())
-            return Enumerable.Empty<Product>();
-        
+        LoadListFromFile();
         return _productList;
     }
 
