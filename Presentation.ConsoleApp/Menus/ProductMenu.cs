@@ -1,6 +1,13 @@
-﻿namespace Presentation.ConsoleApp.Menus;
+﻿using Infrastructure.Services;
+
+namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
 {
+    private readonly ProductService _productService;
+    public ProductMenu(ProductService productService)
+    {
+        _productService = productService;
+    }
     public void Run()
     {
         DisplayProductMenu();
