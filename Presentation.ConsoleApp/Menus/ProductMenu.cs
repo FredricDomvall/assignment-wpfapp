@@ -38,19 +38,19 @@ internal class ProductMenu
         }
         DisplayProductMenu();
     }
-    private void ShowProductsInList()
+    private async Task ShowProductsInList()
     {
         Console.Clear();
         Console.WriteLine("----------  PRODUCT LIST  ----------");
-        var products = _productService.GetAllProductsFromListAsync();
-        if (!products.Outcome.Any())
+        var productResult = await _productService.GetAllProductsFromListAsync();
+        if (!productResult.Statement || productResult.Outcome is null)
         {
             Console.WriteLine("No products available.");
             Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
             return;
         }
-        foreach (var product in products)
+        foreach (var product in productResult.Outcome)
         {
             Console.WriteLine($"ID: {product.ProductId}");
             Console.WriteLine($"Name: {product.ProductName}, Price: {product.ProductPrice}");
