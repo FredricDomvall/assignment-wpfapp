@@ -31,9 +31,9 @@ public class ProductService : IProductService
         return true;
     }
 
-    public IEnumerable<Product> GetAllProductsFromList()
+    public async Task<IEnumerable<Product>> GetAllProductsFromListAsync()
     {
-        LoadListFromFileAsync();
+        await LoadListFromFileAsync();
         return _productList;
     }
 
