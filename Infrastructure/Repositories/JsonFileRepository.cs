@@ -33,6 +33,17 @@ public class JsonFileRepository : IJsonFileRepository
 
     public bool WriteToJsonFile(List<Product> productList)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var jsonData = JsonSerializer.Serialize(productList, options);
+            File.WriteAllText(_filePath, jsonData);
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
