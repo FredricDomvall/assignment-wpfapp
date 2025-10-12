@@ -1,8 +1,8 @@
 ﻿using Infrastructure.Models;
 
 namespace Infrastructure.Interfaces;
-public interface IJsonFileRepository
+public interface IJsonFileRepository<T>
 {
-    Task<List<Product>> ReadFromJsonFileAsync();
-    Task<bool> WriteToJsonFileAsync(List<Product> productList);
+    Task<List<T>> ReadFromJsonFileAsync();
+    Task<bool> WriteToJsonFileAsync(List<T> productList);
 }

@@ -6,8 +6,8 @@ public class ProductService : IProductService
 {
     private List<Product> _productList = new List<Product>();
 
-    private readonly IJsonFileRepository _jsonFileRepository;
-    public ProductService(IJsonFileRepository jsonFileRepository)
+    private readonly IJsonFileRepository<Product> _jsonFileRepository;
+    public ProductService(IJsonFileRepository<Product> jsonFileRepository)
     {
         _jsonFileRepository = jsonFileRepository;
     }
@@ -38,7 +38,7 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<Product>> LoadListFromFileAsync()
     {
-        var productsFromFile = await _jsonFileRepository.ReadFromJsonFile();
+        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync();
         if (productsFromFile == null || !productsFromFile.Any())
             return Enumerable.Empty<Product>();
         
@@ -51,7 +51,7 @@ public class ProductService : IProductService
         if (!_productList.Any())
             return false;
 
-        await _jsonFileRepository.WriteToJsonFile(_productList);
+        await _jsonFileRepository.WriteToJsonFileAsync(_productList);
         return true;
     }
 }
