@@ -24,7 +24,7 @@ public class ProductService : IProductService
             ProductName = productForm.ProductName,
             ProductPrice = price
         };
-
+        await LoadListFromFileAsync();
         _productList.Add(newProduct);
         await SaveListToFileAsync();
         return true;
