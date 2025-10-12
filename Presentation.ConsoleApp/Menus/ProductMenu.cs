@@ -14,7 +14,9 @@ internal class ProductMenu
     }
     private void DisplayProductMenu()
     {
-        Console.WriteLine("Product Menu");
+        Console.Clear();
+
+        Console.WriteLine("=== PRODUCT MENU ===");
         Console.WriteLine("1. List Products");
         Console.WriteLine("2. Add Product");
         Console.WriteLine("0. Back to Main Menu");
@@ -39,13 +41,20 @@ internal class ProductMenu
     private void ShowProductsInList()
     {
         Console.Clear();
-        Console.WriteLine("----------PRODUCT LIST ---------- :");
+        Console.WriteLine("----------  PRODUCT LIST  ----------");
         var products = _productService.GetAllProductsFromList();
+        if (!products.Any())
+        {
+            Console.WriteLine("No products available.");
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
+            return;
+        }
         foreach (var product in products)
         {
             Console.WriteLine($"ID: {product.ProductId}");
             Console.WriteLine($"Name: {product.ProductName}, Price: {product.ProductPrice}");
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--------------------------------");
         }
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
@@ -56,6 +65,7 @@ internal class ProductMenu
         {
             Console.Clear();
             Console.WriteLine("----------ADD NEW PRODUCT ---------- :");
+            Console.WriteLine("");
 
             Console.Write("Enter Product Name: ");
             var productName = Console.ReadLine();

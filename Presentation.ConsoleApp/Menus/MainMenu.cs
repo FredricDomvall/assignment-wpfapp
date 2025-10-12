@@ -12,7 +12,7 @@ internal class MainMenu
     }
     private void DisplayMainMenu()
     {
-        Console.WriteLine("Main Menu");
+        Console.WriteLine("=== MAIN MENU ===");
         Console.WriteLine("1. Product Menu");
         Console.WriteLine("0. Exit");
         Console.Write("Select an option: ");
