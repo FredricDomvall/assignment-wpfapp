@@ -31,4 +31,11 @@ public static class Validationhelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
+    public static AnswerOutcome<bool> ValidateGuidId<T>(Guid Id)
+    {
+        if (Id == Guid.Empty)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct Id was not set properly." };
+
+        return new AnswerOutcome<bool> { Statement = true };
+    }
 }
