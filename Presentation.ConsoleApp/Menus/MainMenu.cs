@@ -1,0 +1,42 @@
+﻿namespace Presentation.ConsoleApp.Menus;
+internal class MainMenu
+{
+    private readonly ProductMenu _productMenu;
+    public MainMenu(ProductMenu productMenu)
+    {
+        _productMenu = productMenu;
+    }
+    public void Run()
+    {
+        DisplayMainMenu();
+    }
+    private void DisplayMainMenu()
+    {
+        Console.WriteLine("=== MAIN MENU ===");
+        Console.WriteLine("1. Product Menu");
+        Console.WriteLine("0. Exit");
+        Console.Write("Select an option: ");
+        var option = Console.ReadLine();
+        switch (option)
+        {
+            case "1":
+                DisplayProductMenu();
+                break;
+            case "0":
+                ExitApplication();
+                break;
+            default:
+                Console.WriteLine("Invalid choice. Please try again.");
+                break;
+        }
+        DisplayMainMenu();
+    }
+    private void DisplayProductMenu()
+    {
+        _productMenu.Run();
+    }
+    private void ExitApplication()
+    {
+        Environment.Exit(0);
+    }
+}
