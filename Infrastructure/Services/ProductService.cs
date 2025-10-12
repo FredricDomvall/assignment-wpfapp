@@ -11,12 +11,12 @@ public class ProductService : IProductService
     {
         _jsonFileRepository = jsonFileRepository;
     }
-    public async Task<AnswerOutcome<bool>> AddProductToListAsync(ProductForm productForm)
+    public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
         if (productForm == null || string.IsNullOrEmpty(productForm.ProductName) || string.IsNullOrEmpty(productForm.ProductPrice))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Invalid input." };
+            return new AnswerOutcome<Product> { Statement = false, Answer = "Invalid input." };
         if (!decimal.TryParse(productForm.ProductPrice, out decimal price))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "price not of type decimal." };
+            return new AnswerOutcome<Product> { Statement = false, Answer = "price not of type decimal." };
         
         Product newProduct = new Product
         {
@@ -27,7 +27,7 @@ public class ProductService : IProductService
         await LoadListFromFileAsync();
         _productList.Add(newProduct);
         await SaveListToFileAsync();
-        return new AnswerOutcome<bool> { Statement = true, Answer = "Success.", Outcome = newProduct };
+        return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = newProduct };
     }
 
     public async Task<IEnumerable<Product>> GetAllProductsFromListAsync()
