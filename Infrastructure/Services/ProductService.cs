@@ -41,7 +41,12 @@ public class ProductService : IProductService
 
     public IEnumerable<Product> LoadListFromFile()
     {
-        throw new NotImplementedException();
+        var productsFromFile = _jsonFileRepository.ReadFromJsonFile();
+        if (productsFromFile == null || !productsFromFile.Any())
+            return Enumerable.Empty<Product>();
+        
+        _productList = productsFromFile;
+        return _productList;
     }
 
     public bool SaveListToFile()
