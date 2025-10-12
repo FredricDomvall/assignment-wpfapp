@@ -39,10 +39,10 @@ public class ProductService : IProductService
     public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
     {
         var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync();
-        if (productsFromFile == null || !productsFromFile.Any())
+        if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
             return new AnswerOutcome<IEnumerable<Product>> { Statement = false };
 
-        _productList = productsFromFile;
+        _productList = productsFromFile.Outcome;
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
     }
 
