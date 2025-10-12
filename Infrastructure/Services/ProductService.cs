@@ -30,10 +30,10 @@ public class ProductService : IProductService
         return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = newProduct };
     }
 
-    public async Task<IEnumerable<Product>> GetAllProductsFromListAsync()
+    public async Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync()
     {
         await LoadListFromFileAsync();
-        return _productList;
+        return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
 
     public async Task<IEnumerable<Product>> LoadListFromFileAsync()
