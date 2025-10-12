@@ -12,8 +12,10 @@ internal class ProductMenu
         switch (option)
         {
             case "1":
+                ShowProductsInList();
                 break;
             case "2":
+                AddNewProductToList();
                 break;
             case "0":
                 return;
@@ -22,5 +24,11 @@ internal class ProductMenu
                 break;
         }
         DisplayProductMenu();
+    }
+    private void ShowProductsInList()
+    {
+    }
+    private void AddNewProductToList()
+    {
     }
 }
