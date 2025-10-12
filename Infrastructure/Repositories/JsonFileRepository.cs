@@ -31,13 +31,13 @@ public class JsonFileRepository<T> : IJsonFileRepository
         }
     }
 
-    public bool WriteToJsonFile(List<Product> productList)
+    public async Task<bool> WriteToJsonFile(List<Product> productList)
     {
         try
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var jsonData = JsonSerializer.Serialize(productList, options);
-            File.WriteAllText(_filePath, jsonData);
+            await File.WriteAllTextAsync(_filePath, jsonData);
 
             return true;
         }
