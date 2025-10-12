@@ -1,6 +1,11 @@
 ﻿namespace Presentation.ConsoleApp.Menus;
 internal class MainMenu
 {
+    private readonly ProductMenu _productMenu;
+    public MainMenu(ProductMenu productMenu)
+    {
+        _productMenu = productMenu;
+    }
     public void Run()
     {
         DisplayMainMenu();
@@ -28,7 +33,7 @@ internal class MainMenu
     }
     private void DisplayProductMenu()
     {
-        //productMenu.DisplayProductMenu();
+        productMenu.DisplayProductMenu();
     }
     private void ExitApplication()
     {
