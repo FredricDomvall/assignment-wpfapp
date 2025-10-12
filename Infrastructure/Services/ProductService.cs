@@ -10,7 +10,6 @@ public class ProductService : IProductService
     public ProductService(IJsonFileRepository jsonFileRepository)
     {
         _jsonFileRepository = jsonFileRepository;
-        LoadListFromFileAsync();
     }
     public async Task<bool> AddProductToListAsync(ProductForm productForm)
     {
