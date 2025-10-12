@@ -4,6 +4,8 @@ using Infrastructure.Models;
 namespace Infrastructure.Services;
 public class ProductService : IProductService
 {
+    private List<Product> _productList = new List<Product>();
+
     private readonly IJsonFileRepository _jsonFileRepository;
     public ProductService(IJsonFileRepository jsonFileRepository)
     {
