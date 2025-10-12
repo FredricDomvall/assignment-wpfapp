@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using System.Text.Json;
 
 namespace Infrastructure.Repositories;
 public class JsonFileRepository : IJsonFileRepository
@@ -11,7 +12,23 @@ public class JsonFileRepository : IJsonFileRepository
     }
     public List<Product> ReadFromJsonFile()
     {
-        throw new NotImplementedException();
+        try
+        {
+            if(!File.Exists(_filePath))
+                return new List<Product>();
+
+            var jsonData = File.ReadAllText(_filePath);
+            var productData = JsonSerializer.Deserialize<List<Product>>(jsonData);
+
+            if (productData == null)
+                return new List<Product>();
+
+            return productData;
+        }
+        catch
+        {
+            return new List<Product>();
+        }
     }
 
     public bool WriteToJsonFile(List<Product> productList)
