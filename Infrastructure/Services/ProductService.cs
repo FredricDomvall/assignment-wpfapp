@@ -27,9 +27,7 @@ public class ProductService : IProductService
         };
 
         _productList.Add(newProduct);
-        
-        return true;
-
+        return SaveListToFile();
     }
 
     public IEnumerable<Product> GetAllProductsFromList()
