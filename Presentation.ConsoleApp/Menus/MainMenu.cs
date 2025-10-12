@@ -1,6 +1,10 @@
 ﻿namespace Presentation.ConsoleApp.Menus;
 internal class MainMenu
 {
+    public void Run()
+    {
+        DisplayMainMenu();
+    }
     private void DisplayMainMenu()
     {
         Console.WriteLine("Main Menu");
