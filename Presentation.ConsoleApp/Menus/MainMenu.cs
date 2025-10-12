@@ -15,8 +15,7 @@ internal class MainMenu
         switch (option)
         {
             case "1":
-                var productMenu = new ProductMenu();
-                //productMenu.DisplayProductMenu();
+                DisplayProductMenu();
                 break;
             case "0":
                 ExitApplication();
@@ -26,6 +25,10 @@ internal class MainMenu
                 break;
         }
         DisplayMainMenu();
+    }
+    private void DisplayProductMenu()
+    {
+        //productMenu.DisplayProductMenu();
     }
     private void ExitApplication()
     {
