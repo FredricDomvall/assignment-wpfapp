@@ -10,7 +10,7 @@ public class JsonFileRepository<T> : IJsonFileRepository
     {
         _filePath = filePath;
     }
-    public async Task<List<Product>> ReadFromJsonFile()
+    public async Task<List<Product>> ReadFromJsonFileAsync()
     {
         try
         {
@@ -31,7 +31,7 @@ public class JsonFileRepository<T> : IJsonFileRepository
         }
     }
 
-    public async Task<bool> WriteToJsonFile(List<Product> productList)
+    public async Task<bool> WriteToJsonFileAsync(List<Product> productList)
     {
         try
         {
