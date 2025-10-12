@@ -14,4 +14,21 @@ public static class Validationhelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
+    public static AnswerOutcome<bool> ValidateDecimalPrice(string decimalPrice)
+    {
+        var result = decimal.TryParse(decimalPrice, out decimal parsedPrice);
+        if (!result)
+        {
+            if (string.IsNullOrWhiteSpace(decimalPrice))
+                return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice can not be left empty." };
+            if (decimalPrice is null)
+                return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice can not be null." };
+
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice must be a decimal value." };
+        }
+        else if (parsedPrice <= 0)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct price must be greater than zero." };
+
+        return new AnswerOutcome<bool> { Statement = true };
+    }
 }
