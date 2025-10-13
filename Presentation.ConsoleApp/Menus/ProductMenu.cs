@@ -105,6 +105,9 @@ internal class ProductMenu
                 ProductName = productName,
                 ProductPrice = productPrice,
                 CategoryName = categoryChoice,
+                ManufacturerName = manufacturerChoice.ManufacturerName,
+                ManufacturerCountry = manufacturerChoice.ManufacturerCountry,
+                ManufacturerEmail = manufacturerChoice.ManufacturerEmail
             };
             var addProductResult = await _productService.AddProductToListAsync(productForm);
             Console.WriteLine(addProductResult.Answer);
