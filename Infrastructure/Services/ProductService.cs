@@ -96,4 +96,14 @@ public class ProductService : IProductService
         await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _productList);
         return new AnswerOutcome<bool> { Statement = true };
     }
+
+    public Task<AnswerOutcome<Product>> UpdateProductInListById(Guid productId, ProductForm productForm)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
+    {
+        throw new NotImplementedException();
+    }
 }
