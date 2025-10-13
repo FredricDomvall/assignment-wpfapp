@@ -77,7 +77,7 @@ internal class ProductMenu
 
             Console.Write("Enter Product Price: ");
             var productPrice = Console.ReadLine();          
-            var result = await ChooseCategoryForProduct();
+            var result = await ChooseCategoryForNewProduct();
             var productForm = new ProductForm
             {
                 ProductName = productName,
@@ -91,7 +91,7 @@ internal class ProductMenu
         } while (Console.ReadLine() == "1");
     }
 
-    private async Task<string> ChooseCategoryForProduct()
+    private async Task<string> ChooseCategoryForNewProduct()
     {
 
         var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
