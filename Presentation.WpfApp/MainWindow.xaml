@@ -19,5 +19,53 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
+        <ContentControl Content="CurrentViewModel">
+            <ContentControl.Resources>
+
+                <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
+                    <views:StartView />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type productVM:ProductCreateViewModel}">
+                    <productViews:ProductCreateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type productVM:ProductListViewModel}">
+                    <productViews:ProductListView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type productVM:ProductUpdateViewModel}">
+                    <productViews:ProductUpdateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type productVM:ProductDeleteViewModel}">
+                    <productViews:ProductUpdateView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type categoryVM:CategoryCreateViewModel}">
+                    <categoryViews:CategoryCreateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type categoryVM:CategoryListViewModel}">
+                    <categoryViews:CategoryListView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type categoryVM:CategoryUpdateViewModel}">
+                    <categoryViews:CategoryUpdateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type categoryVM:CategoryDeleteViewModel}">
+                    <categoryViews:CategoryUpdateView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerCreateViewModel}">
+                    <manufacturerViews:ManufacturerCreateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerListViewModel}">
+                    <manufacturerViews:ManufacturerListView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerUpdateViewModel}">
+                    <manufacturerViews:ManufacturerUpdateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerDeleteViewModel}">
+                    <manufacturerViews:ManufacturerUpdateView />
+                </DataTemplate>
+
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </Window>
