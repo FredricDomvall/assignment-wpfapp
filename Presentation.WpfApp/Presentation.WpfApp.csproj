@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Folder Include="Views\CategoryViews\" />
+    <Folder Include="Views\ManufacturerViews\" />
+    <Folder Include="Views\ProductViews\" />
   </ItemGroup>
 
   <ItemGroup>
