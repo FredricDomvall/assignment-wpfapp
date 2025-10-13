@@ -8,17 +8,21 @@ internal class ProductMenu
     private readonly ICategoryService _categoryService;
     private readonly IManufacturerService _manufacturerService;
     private readonly ManufacturerMenu ManufacturerMenu;
+    private readonly CategoryMenu _categoryMenu;
     public ProductMenu(
         IProductService productService, 
         ICategoryService categoryService,
         IManufacturerService manufacturerService
 ,
-        ManufacturerMenu manufacturerMenu)
+        ManufacturerMenu manufacturerMenu,
+        CategoryMenu categoryMenu)
     {
         _productService = productService;
         _categoryService = categoryService;
         _manufacturerService = manufacturerService;
+
         ManufacturerMenu = manufacturerMenu;
+        _categoryMenu = categoryMenu;
     }
     public async Task Run()
     {
@@ -110,20 +114,24 @@ internal class ProductMenu
 
     private async Task<string> ChooseCategoryForNewProduct()
     {
-
         var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
-        if (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
+        while (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
         {
+            Console.WriteLine(categoryResult.Answer);
             Console.WriteLine("No categories available. Please add a category first.");
-            return "N/A";
+            Console.WriteLine("Press any key to add a new category...");
+            Console.ReadKey();
+            Category newCategory = new();
+            await _categoryMenu.AddNewCategoryToList();
         }
-        var categories = categoryResult.Outcome.ToList();
+
+        var categories = categoryResult.Outcome!.ToList();
         Console.WriteLine("Available Categories:");
         for (int i = 0; i < categories.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {categories[i].CategoryName} (Prefix: {categories[i].CategoryPrefix})");
         }
-        Console.Write("Select a category by number or enter '0' to skip: ");
+        Console.Write("Select a category by number or press any other key if not available: ");
         if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= categories.Count)
         {
             return categories[choice - 1].CategoryName;
@@ -132,7 +140,6 @@ internal class ProductMenu
         {
             return "N/A";
         }
-
     }
     private async Task<Manufacturer> ChooseManufacturerForNewProduct()
     {

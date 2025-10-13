@@ -60,7 +60,7 @@ internal class CategoryMenu
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
     }
-    private async Task AddNewCategoryToList()
+    public async Task AddNewCategoryToList()
     {
         do
         {
