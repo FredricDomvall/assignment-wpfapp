@@ -28,8 +28,9 @@ public class ProductService : IProductService
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
+
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
-        newProduct.Category.CategoryName = productForm.CategoryName!; 
+         
         newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
         newProduct.ProductCode = GeneratorHelper.GenerateArticleNumber(newProduct.Category.CategoryPrefix, _productList);
 
@@ -43,6 +44,10 @@ public class ProductService : IProductService
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
+            newProduct.Category.CategoryName = productForm.CategoryName!;
+            newProduct.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
+            newProduct.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
+            newProduct.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
 
             await LoadListFromFileAsync();
             _productList.Add(newProduct);
