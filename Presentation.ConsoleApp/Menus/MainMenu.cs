@@ -3,10 +3,12 @@ internal class MainMenu
 {
     private readonly ProductMenu _productMenu;
     private readonly CategoryMenu _categoryMenu;
-    public MainMenu(ProductMenu productMenu, CategoryMenu categoryMenu)
+    private readonly ManufacturerMenu _manufacturerMenu;
+    public MainMenu(ProductMenu productMenu, CategoryMenu categoryMenu, ManufacturerMenu manufacturerMenu)
     {
         _productMenu = productMenu;
         _categoryMenu = categoryMenu;
+        _manufacturerMenu = manufacturerMenu;
     }
     public async Task Run()
     {
@@ -49,6 +51,7 @@ internal class MainMenu
     {
         await _categoryMenu.Run();
     }
+
     private void ExitApplication()
     {
         Environment.Exit(0);
