@@ -1,0 +1,19 @@
+[
+  {
+    "ProductId": "d36a6b44-0774-4a94-9705-ba7e5e2a8dba",
+    "ProductCode": "ELE-00001",
+    "ProductName": "SUcessfullyEditedProduct",
+    "ProductPrice": 999,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Sony",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Sony@domain.se"
+    }
+  }
+]

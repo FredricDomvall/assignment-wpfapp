@@ -1,16 +1,28 @@
 ﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
-using System.Text;
 
 namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
 {
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
-    public ProductMenu(IProductService productService, ICategoryService categoryService)
+    private readonly IManufacturerService _manufacturerService;
+    private readonly ManufacturerMenu ManufacturerMenu;
+    private readonly CategoryMenu _categoryMenu;
+    public ProductMenu(
+        IProductService productService, 
+        ICategoryService categoryService,
+        IManufacturerService manufacturerService
+,
+        ManufacturerMenu manufacturerMenu,
+        CategoryMenu categoryMenu)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _manufacturerService = manufacturerService;
+
+        ManufacturerMenu = manufacturerMenu;
+        _categoryMenu = categoryMenu;
     }
     public async Task Run()
     {
@@ -23,6 +35,7 @@ internal class ProductMenu
         Console.WriteLine("=== PRODUCT MENU ===");
         Console.WriteLine("1. List Products");
         Console.WriteLine("2. Add Product");
+        Console.WriteLine("3. Edit Product");
         Console.WriteLine("0. Back to Main Menu");
         Console.Write("Select an option: ");
         var option = Console.ReadLine();
@@ -33,6 +46,9 @@ internal class ProductMenu
                 break;
             case "2":
                 await AddNewProductToList();
+                break;
+            case "3":
+                await EditProductInList();
                 break;
             case "0":
                 return;
@@ -47,9 +63,9 @@ internal class ProductMenu
         Console.Clear();
         Console.WriteLine("----------  PRODUCT LIST  ----------");
         var productResult = await _productService.GetAllProductsFromListAsync();
-        if (!productResult.Statement || !productResult.Outcome!.Any())
+        if (!productResult.Statement || productResult.Outcome is null || !productResult.Outcome.Any())
         {
-            Console.WriteLine("No products available.");
+            Console.WriteLine(productResult.Answer);
             Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
             return;
@@ -58,8 +74,9 @@ internal class ProductMenu
         {
             Console.WriteLine($"ID: {product.ProductId}");
             Console.WriteLine($"Name: {product.ProductName}\t Price: {product.ProductPrice}");
-            Console.WriteLine($"ProductCode: {product.ProductCode}\t Category: {product.Category}");
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine($"ProductCode: {product.ProductCode}\t Category: {product.Category.CategoryName}");
+            Console.WriteLine($"Manufacturer: {product.Manufacturer.ManufacturerName}\t {product.Manufacturer.ManufacturerCountry}\t {product.Manufacturer.ManufacturerEmail}");
+            Console.WriteLine("");
         }
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
@@ -67,7 +84,7 @@ internal class ProductMenu
     private async Task AddNewProductToList()
     {
         do
-        {
+        {  
             Console.Clear();
             Console.WriteLine("----------ADD NEW PRODUCT ---------- :");
             Console.WriteLine("");
@@ -77,40 +94,108 @@ internal class ProductMenu
 
             Console.Write("Enter Product Price: ");
             var productPrice = Console.ReadLine();          
-            var result = await ChooseCategoryForProduct();
+            var categoryChoice = await ChooseCategoryForNewProduct();
+            var manufacturerChoice = await ChooseManufacturerForNewProduct();
+            if (manufacturerChoice.ManufacturerName == "N/A")
+            {
+                Console.WriteLine("No manufacturer selected. Product will be added without a manufacturer.");
+            }
+            else
+            {
+                Console.WriteLine($"Selected Manufacturer: {manufacturerChoice.ManufacturerName}");
+            }
             var productForm = new ProductForm
             {
                 ProductName = productName,
                 ProductPrice = productPrice,
-                CategoryName = result
+                CategoryName = categoryChoice,
+                ManufacturerName = manufacturerChoice.ManufacturerName,
+                ManufacturerCountry = manufacturerChoice.ManufacturerCountry,
+                ManufacturerEmail = manufacturerChoice.ManufacturerEmail
             };
             var addProductResult = await _productService.AddProductToListAsync(productForm);
-            
-            if (addProductResult.Statement)
-                Console.WriteLine("Product added successfully.");
-            else
-                Console.WriteLine("Failed to add product. Please check the input values.");
+            Console.WriteLine(addProductResult.Answer);
 
             Console.WriteLine("Press '1' to add another product or any other key to return to the menu.");
         } while (Console.ReadLine() == "1");
     }
-
-    private async Task<string> ChooseCategoryForProduct()
+    private async Task EditProductInList()
     {
-
-        var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
-        if (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
+        Console.Clear();
+        Console.WriteLine("---------- EDIT PRODUCT ----------");
+        var productResult = await _productService.GetAllProductsFromListAsync();
+        if (!productResult.Statement || productResult.Outcome is null || !productResult.Outcome.Any())
         {
-            Console.WriteLine("No categories available. Please add a category first.");
-            return "N/A";
+            Console.WriteLine(productResult.Answer);
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
+            return;
         }
-        var categories = categoryResult.Outcome.ToList();
+        var products = productResult.Outcome.ToList();
+        for (int i = 0; i < products.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {products[i].ProductName} (ID: {products[i].ProductId})");
+        }
+        Console.Write("Select a product to edit by number or press any other key to return to the menu: ");
+        if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= products.Count)
+        {
+            var selectedProduct = products[choice - 1];
+            Console.WriteLine($"Editing Product: {selectedProduct.ProductName}");
+            Console.Write("Enter new Product Name (or press Enter to keep current): ");
+            var newName = Console.ReadLine();
+            string productName = string.IsNullOrWhiteSpace(newName) ? selectedProduct.ProductName : newName;
+
+            Console.Write("Enter new Product Price (or press Enter to keep current): ");
+            var newPriceInput = Console.ReadLine();
+            decimal productPrice = selectedProduct.ProductPrice;
+            if (decimal.TryParse(newPriceInput, out decimal newPrice))
+            {
+                productPrice = newPrice;
+            }
+
+            // Prepare ProductForm for update
+            var productForm = new ProductForm
+            {
+                ProductName = productName,
+                ProductPrice = productPrice.ToString(),
+                CategoryName = selectedProduct.Category?.CategoryName ?? "N/A",
+                ManufacturerName = selectedProduct.Manufacturer?.ManufacturerName ?? "N/A",
+                ManufacturerCountry = selectedProduct.Manufacturer?.ManufacturerCountry ?? "N/A",
+                ManufacturerEmail = selectedProduct.Manufacturer?.ManufacturerEmail ?? "N/A"
+            };
+
+            var updateResult = await _productService.UpdateProductInListByIdAsync(selectedProduct.ProductId, productForm);
+            Console.WriteLine(updateResult.Answer);
+        }
+        else
+        {
+            Console.WriteLine("Invalid selection. Returning to menu.");
+        }
+        Console.WriteLine("Press any key to return to the menu...");
+        Console.ReadKey();
+    }
+
+    private async Task<string> ChooseCategoryForNewProduct()
+    {
+        var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
+        while (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
+        {
+            Console.WriteLine(categoryResult.Answer);
+            Console.WriteLine("No categories available. Please add a category first.");
+            Console.WriteLine("Press any key to add a new category...");
+            Console.ReadKey();
+            Category newCategory = new();
+            await _categoryMenu.AddNewCategoryToList();
+            categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
+        }
+
+        var categories = categoryResult.Outcome!.ToList();
         Console.WriteLine("Available Categories:");
         for (int i = 0; i < categories.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {categories[i].CategoryName} (Prefix: {categories[i].CategoryPrefix})");
         }
-        Console.Write("Select a category by number or enter '0' to skip: ");
+        Console.Write("Select a category by number or press any other key if not available: ");
         if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= categories.Count)
         {
             return categories[choice - 1].CategoryName;
@@ -119,6 +204,35 @@ internal class ProductMenu
         {
             return "N/A";
         }
+    }
+    private async Task<Manufacturer> ChooseManufacturerForNewProduct()
+    {
+        var manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        while (!manufacturerResult.Statement || manufacturerResult.Outcome is null || !manufacturerResult.Outcome.Any())
+        {
+            Console.WriteLine(manufacturerResult.Answer);
+            Console.WriteLine("Press any key to add a new manufacturer...");
+            Console.ReadKey();
+            Manufacturer newManufacturer = new();
+            await ManufacturerMenu.AddNewManufacturerToList();
+            manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        }
 
+        var manufacturers = manufacturerResult.Outcome!.ToList();
+        Console.WriteLine("Available Manufacturers:");
+        for (int i = 0; i < manufacturers.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {manufacturers[i].ManufacturerName} (Country: {manufacturers[i].ManufacturerCountry})");
+        }
+        Console.Write("Select a manufacturer by number or press any other key if not availible: ");
+        if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= manufacturers.Count)
+        {
+            return manufacturers[choice - 1];
+        }
+        else
+        {
+            Manufacturer noManufacturer = new() { ManufacturerName = "N/A", ManufacturerCountry = "N/A", ManufacturerEmail = "N/A" };
+            return noManufacturer;
+        }
     }
 }

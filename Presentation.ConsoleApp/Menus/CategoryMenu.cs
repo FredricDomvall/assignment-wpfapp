@@ -46,7 +46,7 @@ internal class CategoryMenu
         var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
         if (!categoryResult.Statement || categoryResult.Outcome is null)
         {
-            Console.WriteLine("No categories available.");
+            Console.WriteLine(categoryResult.Answer);
             Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
             return;
@@ -55,12 +55,12 @@ internal class CategoryMenu
         {
             Console.WriteLine($"ID: {category.CategoryId}");
             Console.WriteLine($"Name: {category.CategoryName} Prefix: {category.CategoryPrefix}");
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine("");
         }
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
     }
-    private async Task AddNewCategoryToList()
+    public async Task AddNewCategoryToList()
     {
         do
         {
@@ -76,11 +76,7 @@ internal class CategoryMenu
                 CategoryName = categoryName
             };
             var addCategoryResult = await _categoryService.AddCategoryToListAsync(categoryForm);
-
-            if (addCategoryResult.Statement)
-                Console.WriteLine("Category added successfully.");
-            else
-                Console.WriteLine("Failed to add category. Please check the input values.");
+            Console.WriteLine(addCategoryResult.Answer);
 
             Console.WriteLine("Press '1' to add another category or any other key to return to the menu.");
         } while (Console.ReadLine() == "1");
