@@ -8,11 +8,12 @@ namespace Infrastructure.Services;
 public class ProductService : IProductService
 {
     private List<Product> _productList = new List<Product>();
-
     private readonly IJsonFileRepository<Product> _jsonFileRepository;
-    public ProductService(IJsonFileRepository<Product> jsonFileRepository, FileSources fileSource)
+    private readonly string _filePath;
+    public ProductService(IJsonFileRepository<Product> jsonFileRepository, FileSources filePath)
     {
         _jsonFileRepository = jsonFileRepository;
+        _filePath = filePath.ProductFileSource;
 
     }
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
@@ -59,7 +60,7 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
     {
-        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync();
+        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
         if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
             return new AnswerOutcome<IEnumerable<Product>> { Statement = false };
 
@@ -72,7 +73,7 @@ public class ProductService : IProductService
         if (!_productList.Any())
             return new AnswerOutcome<bool> { Statement = false };
 
-        await _jsonFileRepository.WriteToJsonFileAsync(_productList);
+        await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _productList);
         return new AnswerOutcome<bool> { Statement = true };
     }
 }

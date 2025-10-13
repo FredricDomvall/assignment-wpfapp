@@ -8,11 +8,12 @@ namespace Infrastructure.Services;
 public class CategoryService : ICategoryService
 {
     private List<Category> _categoryList = new List<Category>();
-
     private readonly IJsonFileRepository<Category> _jsonFileRepository;
-    public CategoryService(IJsonFileRepository<Category> jsonFileRepository, FileSources fileSource)
+    private readonly string _filePath;
+    public CategoryService(IJsonFileRepository<Category> jsonFileRepository, FileSources filePath)
     {
         _jsonFileRepository = jsonFileRepository;
+        _filePath = filePath.CategoryFileSource;
     }
     public async Task<AnswerOutcome<Category>> AddCategoryToListAsync(Category categoryForm)
     {
@@ -63,7 +64,7 @@ public class CategoryService : ICategoryService
 
     public async Task<AnswerOutcome<IEnumerable<Category>>> LoadListFromFileAsync()
     {
-        var categoriesFromFile = await _jsonFileRepository.ReadFromJsonFileAsync();
+        var categoriesFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
         if (categoriesFromFile.Outcome == null || categoriesFromFile.Outcome.Count == 0)
             return new AnswerOutcome<IEnumerable<Category>> { Statement = false };
 
@@ -76,7 +77,7 @@ public class CategoryService : ICategoryService
         if (!_categoryList.Any())
             return new AnswerOutcome<bool> { Statement = false };
 
-        await _jsonFileRepository.WriteToJsonFileAsync(_categoryList);
+        await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _categoryList);
         return new AnswerOutcome<bool> { Statement = true };
     }
 }
