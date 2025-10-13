@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModels\CategoryViewModels\" />
+    <Folder Include="ViewModels\ManufacturerViewModels\" />
+    <Folder Include="ViewModels\ProductViewModels\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
