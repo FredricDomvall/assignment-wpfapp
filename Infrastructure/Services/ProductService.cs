@@ -2,7 +2,6 @@
 using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
-using Infrastructure.Repositories;
 
 namespace Infrastructure.Services;
 public class ProductService : IProductService
