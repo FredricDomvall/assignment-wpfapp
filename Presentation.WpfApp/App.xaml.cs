@@ -4,6 +4,9 @@ using Presentation.WpfApp.ViewModels;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
+using Presentation.WpfApp.Views.CategoryViews;
+using Presentation.WpfApp.Views.ManufacturerViews;
+using Presentation.WpfApp.Views.ProductViews;
 using System.Windows;
 
 namespace Presentation.WpfApp;
@@ -22,19 +25,50 @@ public partial class App : Application
                 services.AddTransient<StartViewModel>();
 
                 services.AddTransient<ProductCreateViewModel>();
+                services.AddTransient<ProductCreateView>();
+
                 services.AddTransient<ProductListViewModel>();
+                services.AddTransient<ProductListView>();
+
                 services.AddTransient<ProductUpdateViewModel>();
+                services.AddTransient<ProductUpdateView>();
+
                 services.AddTransient<ProductDeleteViewModel>();
 
                 services.AddTransient<CategoryCreateViewModel>();
+                services.AddTransient<CategoryCreateView>();
+
                 services.AddTransient<CategoryListViewModel>();
+                services.AddTransient<CategoryListView>();
+
                 services.AddTransient<CategoryUpdateViewModel>();
+                services.AddTransient<CategoryUpdateView>();
+
                 services.AddTransient<CategoryDeleteViewModel>();
 
                 services.AddTransient<ManufacturerCreateViewModel>();
+                services.AddTransient<ManufacturerCreateView>();
+
                 services.AddTransient<ManufacturerListViewModel>();
+                services.AddTransient<ManufacturerListView>();
+
                 services.AddTransient<ManufacturerUpdateViewModel>();
+                services.AddTransient<ManufacturerUpdateView>();
+
                 services.AddTransient<ManufacturerDeleteViewModel>();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             })
             .Build();
