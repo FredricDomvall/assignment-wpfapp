@@ -43,9 +43,14 @@ public partial class App : Application
     {
         await _host.StartAsync();
 
-        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
-
         base.OnStartup(e);
+
+        var mainViewModel = _host.Services.GetRequiredService<MainViewModel>();
+        mainviewModel.CurrentViewModel = _host.Services.GetRequiredService<StartViewModel>();
+
+        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+        mainWindow.DataContext = mainViewModel;
+
+        mainWindow.Show(); 
     }
 }
