@@ -11,14 +11,18 @@ public class ProductService : IProductService
     private readonly IManufacturerService _manuFacturerService;
     private readonly ICategoryService _categoryService;
     private readonly string _filePath;
-    public ProductService(IJsonFileRepository<Product> jsonFileRepository,IManufacturerService manuFacturerService, ICategoryService categoryService, FileSources filePath)
+
+    public ProductService(
+        IJsonFileRepository<Product> jsonFileRepository,
+        IManufacturerService manuFacturerService, 
+        ICategoryService categoryService, FileSources filePath)
     {
         _jsonFileRepository = jsonFileRepository;
         _manuFacturerService = manuFacturerService;
         _categoryService = categoryService;
         _filePath = filePath.ProductFileSource;
-
     }
+
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
         Product newProduct = new Product();
