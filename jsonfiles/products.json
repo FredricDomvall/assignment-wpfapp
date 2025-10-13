@@ -1,0 +1,19 @@
+[
+  {
+    "ProductId": "018db49c-2978-4727-8be2-5f61116611e2",
+    "ProductCode": "ELE-00001",
+    "ProductName": "Headphones",
+    "ProductPrice": 89.78,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": null,
+      "ManufacturerCountry": null,
+      "ManufacturerEmail": null
+    }
+  }
+]

@@ -123,6 +123,7 @@ internal class ProductMenu
             Console.ReadKey();
             Category newCategory = new();
             await _categoryMenu.AddNewCategoryToList();
+            categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
         }
 
         var categories = categoryResult.Outcome!.ToList();
@@ -147,11 +148,11 @@ internal class ProductMenu
         while (!manufacturerResult.Statement || manufacturerResult.Outcome is null || !manufacturerResult.Outcome.Any())
         {
             Console.WriteLine(manufacturerResult.Answer);
-            Console.WriteLine("No manufacturers available. Please add a manufacturer first.");
             Console.WriteLine("Press any key to add a new manufacturer...");
             Console.ReadKey();
             Manufacturer newManufacturer = new();
             await ManufacturerMenu.AddNewManufacturerToList();
+            manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
         }
 
         var manufacturers = manufacturerResult.Outcome!.ToList();
