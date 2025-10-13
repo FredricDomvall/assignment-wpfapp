@@ -46,7 +46,7 @@ internal class CategoryMenu
         var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
         if (!categoryResult.Statement || categoryResult.Outcome is null)
         {
-            Console.WriteLine("No categories available.");
+            Console.WriteLine(categoryResult.Answer);
             Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
             return;
