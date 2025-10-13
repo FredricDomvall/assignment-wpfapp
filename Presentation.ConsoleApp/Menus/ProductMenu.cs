@@ -85,11 +85,7 @@ internal class ProductMenu
                 CategoryName = result
             };
             var addProductResult = await _productService.AddProductToListAsync(productForm);
-            
-            if (addProductResult.Statement)
-                Console.WriteLine("Product added successfully.");
-            else
-                Console.WriteLine("Failed to add product. Please check the input values.");
+            Console.WriteLine(addProductResult.Answer);
 
             Console.WriteLine("Press '1' to add another product or any other key to return to the menu.");
         } while (Console.ReadLine() == "1");
