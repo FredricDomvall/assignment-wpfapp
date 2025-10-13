@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Presentation.WpfApp.ViewModels;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -13,7 +15,13 @@ namespace Presentation.WpfApp
         private IHost _host;
         public App()
         {
-            _host = Host.CreateDefaultBuilder().ConfigureServices().Build();
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices(services => 
+                {
+                    services.AddSingleton<MainViewModel>();
+                    services.AddSingleton<MainWindow>();
+                })
+                .Build();
         }
     }
 
