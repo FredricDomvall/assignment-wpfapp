@@ -23,6 +23,7 @@ public partial class App : Application
                 services.AddSingleton<MainWindow>();
 
                 services.AddTransient<StartViewModel>();
+                services.AddTransient<StartView>();
 
                 services.AddTransient<ProductCreateViewModel>();
                 services.AddTransient<ProductCreateView>();
