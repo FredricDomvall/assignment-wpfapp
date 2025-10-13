@@ -14,6 +14,7 @@ internal class MainMenu
     }
     private async Task DisplayMainMenu()
     {
+        Console.Clear();
         Console.WriteLine("=== MAIN MENU ===");
         Console.WriteLine("1. Product Menu");
         Console.WriteLine("2. Category Menu");

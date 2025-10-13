@@ -66,7 +66,7 @@ public class ProductService : IProductService
     {
         var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
         if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
-            return new AnswerOutcome<IEnumerable<Product>> { Statement = false };
+            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Outcome = productsFromFile.Outcome};
 
         _productList = productsFromFile.Outcome;
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
