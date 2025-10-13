@@ -21,7 +21,7 @@ public class ProductService : IProductService
     {
         Product newProduct = new Product();
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
-        newProduct.Category.CategoryName = productForm.CategoryName; 
+        newProduct.Category.CategoryName = productForm.CategoryName!; 
         newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
         newProduct.ProductCode = GeneratorHelper.GenerateArticleNumber(newProduct.Category.CategoryPrefix, _productList);
 

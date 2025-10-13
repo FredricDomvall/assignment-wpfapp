@@ -47,7 +47,7 @@ internal class ProductMenu
         Console.Clear();
         Console.WriteLine("----------  PRODUCT LIST  ----------");
         var productResult = await _productService.GetAllProductsFromListAsync();
-        if (!productResult.Statement || !productResult.Outcome!.Any())
+        if (!productResult.Statement || !productResult.Outcome!.Any() || productResult.Outcome is null)
         {
             Console.WriteLine("No products available.");
             Console.WriteLine("Press any key to return to the menu...");
@@ -58,7 +58,7 @@ internal class ProductMenu
         {
             Console.WriteLine($"ID: {product.ProductId}");
             Console.WriteLine($"Name: {product.ProductName}\t Price: {product.ProductPrice}");
-            Console.WriteLine($"ProductCode: {product.ProductCode}\t Category: {product.Category}");
+            Console.WriteLine($"ProductCode: {product.ProductCode}\t Category: {product.Category.CategoryName}");
             Console.WriteLine("--------------------------------");
         }
         Console.WriteLine("Press any key to return to the menu...");
