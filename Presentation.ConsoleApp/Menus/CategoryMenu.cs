@@ -76,11 +76,7 @@ internal class CategoryMenu
                 CategoryName = categoryName
             };
             var addCategoryResult = await _categoryService.AddCategoryToListAsync(categoryForm);
-
-            if (addCategoryResult.Statement)
-                Console.WriteLine("Category added successfully.");
-            else
-                Console.WriteLine("Failed to add category. Please check the input values.");
+            Console.WriteLine(addCategoryResult.Answer);
 
             Console.WriteLine("Press '1' to add another category or any other key to return to the menu.");
         } while (Console.ReadLine() == "1");
