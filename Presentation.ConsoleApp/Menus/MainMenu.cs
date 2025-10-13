@@ -51,6 +51,10 @@ internal class MainMenu
     {
         await _categoryMenu.Run();
     }
+    private async Task DisplayManufacturerMenu()
+    {
+        await _manufacturerMenu.Run();
+    }
 
     private void ExitApplication()
     {
