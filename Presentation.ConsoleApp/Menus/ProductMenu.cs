@@ -57,7 +57,8 @@ internal class ProductMenu
         foreach (var product in productResult.Outcome)
         {
             Console.WriteLine($"ID: {product.ProductId}");
-            Console.WriteLine($"Name: {product.ProductName}, Price: {product.ProductPrice} Category: {product.Category}");
+            Console.WriteLine($"Name: {product.ProductName}\t Price: {product.ProductPrice}");
+            Console.WriteLine($"ProductCode: {product.ProductCode}\t Category: {product.Category}");
             Console.WriteLine("--------------------------------");
         }
         Console.WriteLine("Press any key to return to the menu...");
