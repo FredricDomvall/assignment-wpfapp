@@ -5,9 +5,11 @@ namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
 {
     private readonly IProductService _productService;
-    public ProductMenu(IProductService productService)
+    private readonly ICategoryService _categoryService;
+    public ProductMenu(IProductService productService, ICategoryService categoryService)
     {
         _productService = productService;
+        _categoryService = categoryService;
     }
     public async Task Run()
     {
