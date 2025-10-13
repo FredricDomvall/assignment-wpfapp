@@ -18,4 +18,13 @@ public partial class App : Application
             })
             .Build();
     }
+    protected override async void OnStartup(StartupEventArgs e)
+    {
+        await _host.StartAsync();
+
+        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+        mainWindow.Show();
+
+        base.OnStartup(e);
+    }
 }
