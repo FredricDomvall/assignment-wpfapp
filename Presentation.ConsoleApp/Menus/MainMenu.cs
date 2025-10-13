@@ -34,7 +34,7 @@ internal class MainMenu
                 break;
             case "3":
                 await DisplayManufacturerMenu();
-                break
+                break;
             case "0":
                 ExitApplication();
                 break;
