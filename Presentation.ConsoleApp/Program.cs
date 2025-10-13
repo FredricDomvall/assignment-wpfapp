@@ -16,6 +16,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddSingleton<IProductService, ProductService>();
         services.AddSingleton<ICategoryService, CategoryService>();
+        services.AddSingleton<IManufacturerService, ManufacturerService>();
 
         services.AddTransient<ProductMenu>();
         services.AddTransient<CategoryMenu>();
