@@ -13,6 +13,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<FileSources>();
         services.AddSingleton<IJsonFileRepository<Product>, JsonFileRepository<Product>>();
         services.AddSingleton<IJsonFileRepository<Category>, JsonFileRepository<Category>>();
+        services.AddSingleton<IJsonFileRepository<Manufacturer>, JsonFileRepository<Manufacturer>>();
 
         services.AddSingleton<IProductService, ProductService>();
         services.AddSingleton<ICategoryService, CategoryService>();
