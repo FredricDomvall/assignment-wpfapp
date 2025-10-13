@@ -20,6 +20,7 @@ internal class MainMenu
         Console.WriteLine("=== MAIN MENU ===");
         Console.WriteLine("1. Product Menu");
         Console.WriteLine("2. Category Menu");
+        Console.WriteLine("3. Manufacturer Menu");
         Console.WriteLine("0. Exit");
         Console.Write("Select an option: ");
         var option = Console.ReadLine();
@@ -31,6 +32,9 @@ internal class MainMenu
             case "2":
                 await DisplayCategoryMenu();
                 break;
+            case "3":
+                await DisplayManufacturerMenu();
+                break
             case "0":
                 ExitApplication();
                 break;
