@@ -97,9 +97,45 @@ public class ProductService : IProductService
         return new AnswerOutcome<bool> { Statement = true };
     }
 
-    public Task<AnswerOutcome<Product>> UpdateProductInListById(Guid productId, ProductForm productForm)
+    public async Task<AnswerOutcome<Product>> UpdateProductInListById(Guid productId, ProductForm productForm)
     {
-        throw new NotImplementedException();
+        await LoadListFromFileAsync();
+        var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == productId);
+        if (productToUpdate == null)
+            return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
+
+        var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
+        var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
+        var uniqueValidationResult = ValidationHelper.ValidateProductUnique(productToUpdate, _productList);
+
+        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true
+         && uniqueValidationResult.Statement is true)
+        {
+            productToUpdate.ProductName = productForm.ProductName!;
+            productToUpdate.ProductPrice = decimal.Parse(productForm.ProductPrice!);
+            productToUpdate.Category.CategoryName = productForm.CategoryName!;
+            productToUpdate.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
+            productToUpdate.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
+            productToUpdate.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
+
+            await LoadListFromFileAsync();
+            _productList.Add(productToUpdate);
+            await SaveListToFileAsync();
+            return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = productToUpdate };
+        }
+        else
+        {
+            string errorMessages = "";
+            if (nameValidationResult.Statement is false)
+                errorMessages += nameValidationResult.Answer + "\n";
+            if (priceValidationResult.Statement is false)
+                errorMessages += priceValidationResult.Answer + "\n";
+            if (uniqueValidationResult.Statement is false)
+                errorMessages += uniqueValidationResult.Answer + "\n";
+            return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
+        }
+
+
     }
 
     public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
