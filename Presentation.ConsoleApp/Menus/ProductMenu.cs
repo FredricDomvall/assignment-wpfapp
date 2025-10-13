@@ -75,11 +75,13 @@ internal class ProductMenu
 
             Console.Write("Enter Product Price: ");
             var productPrice = Console.ReadLine();
-
+            var categoryName = Console.ReadLine() ?? "N/A";
+            var result = ChooseCategoryForProduct(categoryName);
             var productForm = new ProductForm
             {
                 ProductName = productName,
-                ProductPrice = productPrice
+                ProductPrice = productPrice,
+                CategoryName = result
             };
             var addProductResult = await _productService.AddProductToListAsync(productForm);
             
@@ -90,5 +92,31 @@ internal class ProductMenu
 
             Console.WriteLine("Press '1' to add another product or any other key to return to the menu.");
         } while (Console.ReadLine() == "1");
+    }
+
+    private string ChooseCategoryForProduct(string categoryName)
+    {
+        var categoryResult = _categoryService.GetAllCategoriesFromListAsync().Result;
+        if (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
+        {
+            Console.WriteLine("No categories available. Please add a category first.");
+            return "N/A";
+        }
+        var categories = categoryResult.Outcome.ToList();
+        Console.WriteLine("Available Categories:");
+        for (int i = 0; i < categories.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {categories[i].CategoryName} (Prefix: {categories[i].CategoryPrefix})");
+        }
+        Console.Write("Select a category by number or enter '0' to skip: ");
+        if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= categories.Count)
+        {
+            return categories[choice - 1].CategoryName;
+        }
+        else
+        {
+            return "N/A";
+        }
+
     }
 }
