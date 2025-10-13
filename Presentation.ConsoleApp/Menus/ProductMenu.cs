@@ -57,7 +57,7 @@ internal class ProductMenu
         foreach (var product in productResult.Outcome)
         {
             Console.WriteLine($"ID: {product.ProductId}");
-            Console.WriteLine($"Name: {product.ProductName}, Price: {product.ProductPrice}");
+            Console.WriteLine($"Name: {product.ProductName}, Price: {product.ProductPrice} Category: {product.Category}");
             Console.WriteLine("--------------------------------");
         }
         Console.WriteLine("Press any key to return to the menu...");
@@ -75,9 +75,8 @@ internal class ProductMenu
             var productName = Console.ReadLine();
 
             Console.Write("Enter Product Price: ");
-            var productPrice = Console.ReadLine();
-            var categoryName = Console.ReadLine() ?? "N/A";
-            var result = await ChooseCategoryForProduct(categoryName);
+            var productPrice = Console.ReadLine();          
+            var result = await ChooseCategoryForProduct();
             var productForm = new ProductForm
             {
                 ProductName = productName,
@@ -95,8 +94,9 @@ internal class ProductMenu
         } while (Console.ReadLine() == "1");
     }
 
-    private async Task<string> ChooseCategoryForProduct(string categoryName)
+    private async Task<string> ChooseCategoryForProduct()
     {
+
         var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
         if (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
         {
