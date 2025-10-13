@@ -4,6 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.WpfApp"
+        
+        xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
+        xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
+        xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
+        xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
+        xmlns:views="clr-namespace:Presentation.WpfApp.Views"
+        xmlns:categoryViews="clr-namespace:Presentation.WpfApp.Views.CategoryViews"
+        xmlns:manufacturerViews="clr-namespace:Presentation.WpfApp.Views.ManufacturerViews"
+        xmlns:productViews="clr-namespace:Presentation.WpfApp.Views.ProductViews"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
