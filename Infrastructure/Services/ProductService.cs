@@ -102,8 +102,15 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
+    public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
     {
-        throw new NotImplementedException();
+        await LoadListFromFileAsync();
+
+        if (!_productList.Any(p => p.ProductId == productId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified ID does not exist." };
+       
+        _productList.RemoveAll(p => p.ProductId == productId);
+        await SaveListToFileAsync();
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Product deleted successfully." };
     }
 }
