@@ -58,20 +58,6 @@ public partial class App : Application
                 services.AddTransient<ManufacturerUpdateView>();
 
                 services.AddTransient<ManufacturerDeleteViewModel>();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             })
             .Build();
     }
