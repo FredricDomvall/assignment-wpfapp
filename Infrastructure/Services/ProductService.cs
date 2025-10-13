@@ -58,7 +58,10 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync()
     {
-        await LoadListFromFileAsync();
+        var result = await LoadListFromFileAsync();
+        if (result.Statement is false || !_productList.Any())
+            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Answer = "No products available.", Outcome = _productList };
+
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
 
