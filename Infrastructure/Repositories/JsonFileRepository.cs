@@ -5,19 +5,14 @@ using System.Text.Json;
 namespace Infrastructure.Repositories;
 public class JsonFileRepository<T> : IJsonFileRepository<T>
 {
-    private readonly string _filePath;
-    public JsonFileRepository(string filePath)
-    {
-        _filePath = filePath;
-    }
-    public async Task<AnswerOutcome<List<T>>> ReadFromJsonFileAsync()
+    public async Task<AnswerOutcome<List<T>>> ReadFromJsonFileAsync(string filePath)
     {
         try
         {
-            if(!File.Exists(_filePath))
+            if(!File.Exists(filePath))
                 return new AnswerOutcome<List<T>> {Statement = false, Answer = "File doesnt exist", Outcome = new List<T>() };
 
-            var jsonData = await File.ReadAllTextAsync(_filePath);
+            var jsonData = await File.ReadAllTextAsync(filePath);
             var productData = JsonSerializer.Deserialize<List<T>>(jsonData);
 
             if (productData == null)
@@ -31,13 +26,13 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
         }
     }
 
-    public async Task<AnswerOutcome<bool>> WriteToJsonFileAsync(List<T> productList)
+    public async Task<AnswerOutcome<bool>> WriteToJsonFileAsync(string filePath, List<T> productList)
     {
         try
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var jsonData = JsonSerializer.Serialize(productList, options);
-            await File.WriteAllTextAsync(_filePath, jsonData);
+            await File.WriteAllTextAsync(filePath, jsonData);
 
             return new AnswerOutcome<bool> { Statement = true, Answer = "Successfully saved list to file"};
         }
