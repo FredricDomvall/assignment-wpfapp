@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using System.Text;
 
 namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
@@ -76,7 +77,7 @@ internal class ProductMenu
             Console.Write("Enter Product Price: ");
             var productPrice = Console.ReadLine();
             var categoryName = Console.ReadLine() ?? "N/A";
-            var result = ChooseCategoryForProduct(categoryName);
+            var result = await ChooseCategoryForProduct(categoryName);
             var productForm = new ProductForm
             {
                 ProductName = productName,
@@ -94,9 +95,9 @@ internal class ProductMenu
         } while (Console.ReadLine() == "1");
     }
 
-    private string ChooseCategoryForProduct(string categoryName)
+    private async Task<string> ChooseCategoryForProduct(string categoryName)
     {
-        var categoryResult = _categoryService.GetAllCategoriesFromListAsync().Result;
+        var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
         if (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
         {
             Console.WriteLine("No categories available. Please add a category first.");
