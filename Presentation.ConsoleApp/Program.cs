@@ -21,6 +21,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddTransient<ProductMenu>();
         services.AddTransient<CategoryMenu>();
+        services.AddTransient<ManufacturerMenu>();
         services.AddTransient<MainMenu>();
         
     })
