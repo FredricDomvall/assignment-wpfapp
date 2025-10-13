@@ -20,6 +20,7 @@ public class ProductService : IProductService
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
         Product newProduct = new Product();
+        newProduct.Category = new Category();
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
         newProduct.Category.CategoryName = productForm.CategoryName!; 
         newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);

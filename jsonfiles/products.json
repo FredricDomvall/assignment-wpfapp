@@ -1,0 +1,14 @@
+[
+  {
+    "ProductId": "056b03d0-aaa2-4789-82ff-8b8fbe0648f2",
+    "ProductCode": "MIS-00001",
+    "ProductName": "Fredric",
+    "ProductPrice": 12.34,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Misc",
+      "CategoryPrefix": "MIS"
+    },
+    "Manufacturer": null
+  }
+]
