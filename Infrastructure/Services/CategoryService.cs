@@ -1,6 +1,8 @@
-﻿using Infrastructure.Helpers;
+﻿using Infrastructure.Configurations;
+using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Repositories;
 
 namespace Infrastructure.Services;
 public class CategoryService : ICategoryService
@@ -8,9 +10,9 @@ public class CategoryService : ICategoryService
     private List<Category> _categoryList = new List<Category>();
 
     private readonly IJsonFileRepository<Category> _jsonFileRepository;
-    public CategoryService(IJsonFileRepository<Category> jsonFileRepository)
+    public CategoryService(IJsonFileRepository<Category> jsonFileRepository, FileSources fileSource)
     {
-        _jsonFileRepository = jsonFileRepository;
+        _jsonFileRepository = new JsonFileRepository<Category>(fileSource.CategoryFileSource);
     }
     public async Task<AnswerOutcome<Category>> AddCategoryToListAsync(Category categoryForm)
     {
