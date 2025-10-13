@@ -4,6 +4,7 @@ using Presentation.WpfApp.ViewModels;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
+using Presentation.WpfApp.Views;
 using Presentation.WpfApp.Views.CategoryViews;
 using Presentation.WpfApp.Views.ManufacturerViews;
 using Presentation.WpfApp.Views.ProductViews;
