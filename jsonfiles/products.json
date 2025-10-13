@@ -1,9 +1,9 @@
 [
   {
-    "ProductId": "9e5d175c-e3d6-416a-9f2f-9ae32eb33329",
+    "ProductId": "d36a6b44-0774-4a94-9705-ba7e5e2a8dba",
     "ProductCode": "ELE-00001",
-    "ProductName": "Headphones",
-    "ProductPrice": 198.67,
+    "ProductName": "SUcessfullyEditedProduct",
+    "ProductPrice": 999,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Electronics",

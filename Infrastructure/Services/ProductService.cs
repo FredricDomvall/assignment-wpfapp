@@ -106,10 +106,8 @@ public class ProductService : IProductService
 
         var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
         var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
-        var uniqueValidationResult = ValidationHelper.ValidateProductUnique(productToUpdate, _productList);
 
-        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true
-         && uniqueValidationResult.Statement is true)
+        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true)
         {
             productToUpdate.ProductName = productForm.ProductName!;
             productToUpdate.ProductPrice = decimal.Parse(productForm.ProductPrice!);
@@ -118,8 +116,6 @@ public class ProductService : IProductService
             productToUpdate.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
             productToUpdate.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
 
-            await LoadListFromFileAsync();
-            _productList.Add(productToUpdate);
             await SaveListToFileAsync();
             return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = productToUpdate };
         }
@@ -130,8 +126,6 @@ public class ProductService : IProductService
                 errorMessages += nameValidationResult.Answer + "\n";
             if (priceValidationResult.Statement is false)
                 errorMessages += priceValidationResult.Answer + "\n";
-            if (uniqueValidationResult.Statement is false)
-                errorMessages += uniqueValidationResult.Answer + "\n";
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
 
