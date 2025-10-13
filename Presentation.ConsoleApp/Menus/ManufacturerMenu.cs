@@ -41,7 +41,21 @@ public class ManufacturerMenu
 
     private async Task ShowManufacturersInList()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        Console.WriteLine("----------  MANUFACTURER LIST  ----------");
+        var manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        if (!manufacturerResult.Statement || manufacturerResult.Outcome is null)
+        {
+            Console.WriteLine(manufacturerResult.Answer);
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
+            return;
+        }
+        foreach (var manufacturer in manufacturerResult.Outcome)
+        {
+            Console.WriteLine($"ID: {manufacturer.ManufacturerId}");
+            Console.WriteLine($"Name: {manufacturer.ManufacturerName}\t Price: {manufacturer.ManufacturerCountry}\t Email: {manufacturer.ManufacturerEmail}");
+        }
     }
 
     private async Task AddNewManufacturerToList()
