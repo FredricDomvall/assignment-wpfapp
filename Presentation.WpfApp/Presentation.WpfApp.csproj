@@ -13,8 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\CategoryViewModels\" />
-    <Folder Include="ViewModels\ManufacturerViewModels\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

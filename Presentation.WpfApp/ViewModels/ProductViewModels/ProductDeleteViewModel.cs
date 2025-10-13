@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
+namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductDeleteViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
@@ -8,5 +9,5 @@ public partial class ProductDeleteViewModel : ObservableObject
         _serviceProvider = serviceProvider;
     }
     [ObservableProperty]
-    private string _title = "Delete Product";
+    private string _title = "Delete Product From List";
 }
