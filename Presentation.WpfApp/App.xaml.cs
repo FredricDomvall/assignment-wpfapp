@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Microsoft.Extensions.Hosting;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +10,11 @@ namespace Presentation.WpfApp
     /// </summary>
     public partial class App : Application
     {
+        private IHost _host;
+        public App()
+        {
+            _host = Host.CreateDefaultBuilder().ConfigureServices().Build();
+        }
     }
 
 }
