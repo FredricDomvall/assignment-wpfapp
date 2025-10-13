@@ -1,16 +1,17 @@
 ﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
-using System.Text;
 
 namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
 {
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
-    public ProductMenu(IProductService productService, ICategoryService categoryService)
+    private readonly IManufacturerService _manufacturerService;
+    public ProductMenu(IProductService productService, ICategoryService categoryService, IManufacturerService manufacturerService)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _manufacturerService = manufacturerService;
     }
     public async Task Run()
     {
