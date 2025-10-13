@@ -7,7 +7,10 @@ internal class ProductMenu
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
     private readonly IManufacturerService _manufacturerService;
-    public ProductMenu(IProductService productService, ICategoryService categoryService, IManufacturerService manufacturerService)
+    public ProductMenu(
+        IProductService productService, 
+        ICategoryService categoryService, 
+        IManufacturerService manufacturerService)
     {
         _productService = productService;
         _categoryService = categoryService;
