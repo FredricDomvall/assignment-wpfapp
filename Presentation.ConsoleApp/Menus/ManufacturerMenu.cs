@@ -38,7 +38,6 @@ public class ManufacturerMenu
         }
         await DisplayManufacturerMenu();
     }
-
     private async Task ShowManufacturersInList()
     {
         Console.Clear();
@@ -60,7 +59,6 @@ public class ManufacturerMenu
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
     }
-
     private async Task AddNewManufacturerToList()
     {
         do

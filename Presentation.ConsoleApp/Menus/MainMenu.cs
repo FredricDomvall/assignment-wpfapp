@@ -44,9 +44,6 @@ internal class MainMenu
         }
         await DisplayMainMenu();
     }
-
-
-
     private async Task DisplayProductMenu()
     {
         await _productMenu.Run();
@@ -59,7 +56,6 @@ internal class MainMenu
     {
         await _manufacturerMenu.Run();
     }
-
     private void ExitApplication()
     {
         Environment.Exit(0);

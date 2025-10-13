@@ -10,5 +10,22 @@
       "CategoryPrefix": "MIS"
     },
     "Manufacturer": null
+  },
+  {
+    "ProductId": "47dadbe2-3178-40f3-9706-122ce39291e5",
+    "ProductCode": "CLO-00001",
+    "ProductName": "Jeans",
+    "ProductPrice": 49.98,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Clothes",
+      "CategoryPrefix": "CLO"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": null,
+      "ManufacturerCountry": null,
+      "ManufacturerEmail": null
+    }
   }
 ]
