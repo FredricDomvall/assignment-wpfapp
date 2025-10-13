@@ -14,12 +14,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <TextBlock Text="Welcome to the Product Management System" 
+        <TextBlock Grid.Row="0" Text="Welcome to the Product Management System" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    FontSize="24" 
                    FontWeight="Bold"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" >
+            <Button Content="Manage Products" Width="150" Height="40" Margin="10" Command="{Binding NavigateToProductListCommand}"/>
+            <Button Content="Manage Categories" Width="150" Height="40" Margin="10" Command="{Binding NavigateToCategoryListCommand}"/>
+            <Button Content="Manage Manufacturers" Width="150" Height="40" Margin="10" Command="{Binding NavigateToManufacturerListCommand}"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>
