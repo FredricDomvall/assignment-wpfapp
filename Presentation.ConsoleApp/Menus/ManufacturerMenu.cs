@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Interfaces;
+using Infrastructure.Models;
 
 namespace Presentation.ConsoleApp.Menus;
 public class ManufacturerMenu
@@ -45,6 +46,27 @@ public class ManufacturerMenu
 
     private async Task AddNewManufacturerToList()
     {
-        throw new NotImplementedException();
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("----------  ADD NEW MANUFACTURER  ----------");
+            Console.Write("Enter Manufacturer Name: ");
+            var manufacturerName = Console.ReadLine() ?? "";
+            Console.Write("Enter Manufacturer Country: ");
+            var manufacturerCountry = Console.ReadLine() ?? "";
+            Console.Write("Enter Manufacturer Email: ");
+            var manufacturerEmail = Console.ReadLine() ?? "";
+
+            Manufacturer manufacturerForm = new Manufacturer()
+            {
+                ManufacturerName = manufacturerName,
+                ManufacturerCountry = manufacturerCountry,
+                ManufacturerEmail = manufacturerEmail
+            };
+            var addManufacturerResult = await _manufacturerService.AddManufacturerToListAsync(manufacturerForm);
+            Console.WriteLine(addManufacturerResult.Answer);
+
+            Console.WriteLine("Press '1' to add another category or any other key to return to the menu.");
+        } while (Console.ReadLine() == "1");
     }
 }
