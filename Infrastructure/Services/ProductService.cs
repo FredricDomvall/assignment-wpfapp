@@ -8,11 +8,13 @@ public class ProductService : IProductService
 {
     private List<Product> _productList = new List<Product>();
     private readonly IJsonFileRepository<Product> _jsonFileRepository;
+    private readonly IManufacturerService _manuFacturerService;
     private readonly ICategoryService _categoryService;
     private readonly string _filePath;
-    public ProductService(IJsonFileRepository<Product> jsonFileRepository,ICategoryService categoryService, FileSources filePath)
+    public ProductService(IJsonFileRepository<Product> jsonFileRepository,IManufacturerService manuFacturerService, ICategoryService categoryService, FileSources filePath)
     {
         _jsonFileRepository = jsonFileRepository;
+        _manuFacturerService = manuFacturerService;
         _categoryService = categoryService;
         _filePath = filePath.ProductFileSource;
 
@@ -21,6 +23,7 @@ public class ProductService : IProductService
     {
         Product newProduct = new Product();
         newProduct.Category = new Category();
+        newProduct.Manufacturer = new Manufacturer();
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
         newProduct.Category.CategoryName = productForm.CategoryName!; 
         newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
