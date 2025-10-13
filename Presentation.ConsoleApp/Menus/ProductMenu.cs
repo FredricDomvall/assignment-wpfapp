@@ -1,10 +1,10 @@
-﻿using Infrastructure.Services;
+﻿using Infrastructure.Interfaces;
 
 namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
 {
-    private readonly ProductService _productService;
-    public ProductMenu(ProductService productService)
+    private readonly IProductService _productService;
+    public ProductMenu(IProductService productService)
     {
         _productService = productService;
     }

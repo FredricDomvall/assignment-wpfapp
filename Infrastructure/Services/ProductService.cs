@@ -12,7 +12,8 @@ public class ProductService : IProductService
     private readonly IJsonFileRepository<Product> _jsonFileRepository;
     public ProductService(IJsonFileRepository<Product> jsonFileRepository, FileSources fileSource)
     {
-        _jsonFileRepository = new JsonFileRepository<Product>(fileSource.ProductFileSource);
+        _jsonFileRepository = jsonFileRepository;
+
     }
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {

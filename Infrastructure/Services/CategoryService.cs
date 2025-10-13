@@ -12,7 +12,7 @@ public class CategoryService : ICategoryService
     private readonly IJsonFileRepository<Category> _jsonFileRepository;
     public CategoryService(IJsonFileRepository<Category> jsonFileRepository, FileSources fileSource)
     {
-        _jsonFileRepository = new JsonFileRepository<Category>(fileSource.CategoryFileSource);
+        _jsonFileRepository = jsonFileRepository;
     }
     public async Task<AnswerOutcome<Category>> AddCategoryToListAsync(Category categoryForm)
     {
