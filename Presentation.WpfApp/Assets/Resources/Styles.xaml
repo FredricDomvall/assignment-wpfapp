@@ -1,4 +1,184 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
+  
+    <!-- 🌌 GLOBAL BAKGRUNDSSTIL FÖR FÖNSTER -->
+    <Style TargetType="Window">
+        <Setter Property="Background">
+            <Setter.Value>
+                <!-- Djup bakgrund med suddig gradient och svag struktur -->
+                <VisualBrush Stretch="UniformToFill">
+                    <VisualBrush.Visual>
+                        <Grid>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,9">
+                                        <GradientStop Color="#1A1C20" Offset="0" />
+                                        <GradientStop Color="#2B2E35" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                            <!-- Lägg till en subtil highlight för 3D-effekt -->
+                            <Rectangle Opacity="0.15">
+                                <Rectangle.Fill>
+                                    <RadialGradientBrush Center="0.3,0.3" RadiusX="0.8" RadiusY="0.8">
+                                        <GradientStop Color="#FFFFFF" Offset="0" />
+                                        <GradientStop Color="#00000000" Offset="3" />
+                                    </RadialGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 🟦 KNAPPSTIL MED 3D-EFFEKT -->
+    <Style TargetType="Button">
+        <Setter Property="Foreground" Value="#F5F5F5"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Margin" Value="6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <!-- Mindre svart, mer transparent i mitten -->
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#26282B" Offset="0" />
+                    <GradientStop Color="#232323AA" Offset="0.5" /> <!-- Mer genomskinlig i mitten -->
+                    <GradientStop Color="#393B40" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Effect">
+            <!-- Liten skugga för att ge djup -->
+            <Setter.Value>
+                <DropShadowEffect Color="#222" Direction="270" ShadowDepth="3" BlurRadius="6" Opacity="0.4"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            SnapsToDevicePixels="True">
+                        <Border.Effect>
+                            <!-- Subtil inre skugga -->
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#000000" Opacity="0.25"/>
+                        </Border.Effect>
+
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Hover-effekt med orange skugga -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#444444" Offset="0" />
+                                        <GradientStop Color="#232323AA" Offset="0.5" />
+                                        <GradientStop Color="#393B40" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#FF9900" BlurRadius="16" ShadowDepth="2" Opacity="0.8"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <!-- Tryck-effekt (ger 3D-känsla) -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="2"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#111" ShadowDepth="0" BlurRadius="4" Opacity="0.8"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#1A1A1A" Offset="0" />
+                                        <GradientStop Color="#333333AA" Offset="0.5" />
+                                        <GradientStop Color="#222222" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 🪶 TEXTBLOCK-STYLING FÖR BINDAD TEXT -->
+    <Style TargetType="TextBlock">
+        <!-- Grundinställningar -->
+        <Setter Property="Foreground" Value="#E0E0E0"/>
+        <!-- ljusgrå för mörk bakgrund -->
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="4,2"/>
+
+        <!-- Effekt: lätt glow som ger djup -->
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#000000"
+                              BlurRadius="3"
+                              ShadowDepth="0.5"
+                              Opacity="0.6"/>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Triggers för olika bindningsscenarion -->
+        <Style.Triggers>
+            <!-- När TextBlock används som rubrik -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Header">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#111"
+                                      BlurRadius="5"
+                                      ShadowDepth="1"
+                                      Opacity="0.8"/>
+                    </Setter.Value>
+                </Setter>
+                <!-- Orange accent underline for headers -->
+                <Setter Property="TextDecorations">
+                    <Setter.Value>
+                        <TextDecorationCollection>
+                            <TextDecoration Location="Underline" PenOffset="2" PenOffsetUnit="Pixel">
+                                <TextDecoration.Pen>
+                                    <Pen Brush="#FF9900" Thickness="2"/>
+                                </TextDecoration.Pen>
+                            </TextDecoration>
+                        </TextDecorationCollection>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <!-- Om texten är tom (binder till null eller "") -->
+            <Trigger Property="Text" Value="">
+                <Setter Property="Foreground" Value="#777"/>
+                <Setter Property="FontStyle" Value="Italic"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Accentfärg för små detaljer, t.ex. border runt knappar -->
+    <SolidColorBrush x:Key="AccentOrangeBrush" Color="#FF9900"/>
 </ResourceDictionary>

@@ -18,21 +18,21 @@ public partial class StartViewModel : ObservableObject
     private string _title = "Start View Model";
 
     [RelayCommand]
-    private void ShowProductListView()
+    private void NavigateToProductListView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;
     }
     [RelayCommand]
-    private void ShowCategoryListView()
+    private void NavigateToCategoryListView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
         mainViewModel.CurrentViewModel = categoryListViewModel;
     }
     [RelayCommand]
-    private void ShowManufacturerListView()
+    private void NavigateToManufacturerListView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();

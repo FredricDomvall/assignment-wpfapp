@@ -10,7 +10,7 @@
              xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
              xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:StartViewModel}"
-             
+             Background="#d5d5d5"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -25,9 +25,9 @@
                    FontSize="24" 
                    FontWeight="Bold"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" >
-            <Button Content="Manage Products" Width="150" Height="40" Margin="10" Command="{Binding NavigateToProductListCommand}"/>
-            <Button Content="Manage Categories" Width="150" Height="40" Margin="10" Command="{Binding NavigateToCategoryListCommand}"/>
-            <Button Content="Manage Manufacturers" Width="150" Height="40" Margin="10" Command="{Binding NavigateToManufacturerListCommand}"/>
+            <Button Content="Manage Products" Width="150" Height="40" Margin="10" Command="{Binding NavigateToProductListViewCommand}"/>
+            <Button Content="Manage Categories" Width="150" Height="40" Margin="10" Command="{Binding NavigateToCategoryListViewCommand}"/>
+            <Button Content="Manage Manufacturers" Width="150" Height="40" Margin="10" Command="{Binding NavigateToManufacturerListViewCommand}"/>
         </StackPanel>
 
     </Grid>
