@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Interfaces;
+using Infrastructure.Models;
 
 namespace Presentation.ConsoleApp.Menus;
 internal class ProductMenu
@@ -73,7 +74,7 @@ internal class ProductMenu
             Console.Write("Enter Product Price: ");
             var productPrice = Console.ReadLine();
 
-            var productForm = new Infrastructure.Models.ProductForm
+            var productForm = new ProductForm
             {
                 ProductName = productName,
                 ProductPrice = productPrice

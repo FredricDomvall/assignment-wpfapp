@@ -25,9 +25,10 @@ public class CategoryService : ICategoryService
             categoryForm.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(categoryForm.CategoryName!); 
         
         var prefixValidationResult = ValidationHelper.ValidateCategoryPrefix(categoryForm.CategoryPrefix!, _categoryList);
-        var guidValidationResult = ValidationHelper.ValidateGuidId<Category>(newCategory.CategoryId);
-        var uniqueValidationResult = ValidationHelper.ValidateCategoryUnique(newCategory, _categoryList);
+        var guidValidationResult = ValidationHelper.ValidateGuidId<Category>(categoryForm.CategoryId);
+        var uniqueValidationResult = ValidationHelper.ValidateCategoryUnique(categoryForm, _categoryList);
 
+        
         if (nameValidationResult.Statement is true && prefixValidationResult.Statement is true
          && guidValidationResult.Statement is true && uniqueValidationResult.Statement is true)
         {

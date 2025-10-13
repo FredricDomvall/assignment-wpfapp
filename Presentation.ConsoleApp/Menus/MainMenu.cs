@@ -2,9 +2,11 @@
 internal class MainMenu
 {
     private readonly ProductMenu _productMenu;
-    public MainMenu(ProductMenu productMenu)
+    private readonly CategoryMenu _categoryMenu;
+    public MainMenu(ProductMenu productMenu, CategoryMenu categoryMenu)
     {
         _productMenu = productMenu;
+        _categoryMenu = categoryMenu;
     }
     public async Task Run()
     {
@@ -14,6 +16,7 @@ internal class MainMenu
     {
         Console.WriteLine("=== MAIN MENU ===");
         Console.WriteLine("1. Product Menu");
+        Console.WriteLine("2. Category Menu");
         Console.WriteLine("0. Exit");
         Console.Write("Select an option: ");
         var option = Console.ReadLine();
@@ -21,6 +24,9 @@ internal class MainMenu
         {
             case "1":
                 await DisplayProductMenu();
+                break;
+            case "2":
+                await DisplayCategoryMenu();
                 break;
             case "0":
                 ExitApplication();
@@ -31,9 +37,16 @@ internal class MainMenu
         }
         await DisplayMainMenu();
     }
+
+
+
     private async Task DisplayProductMenu()
     {
         await _productMenu.Run();
+    }    
+    private async Task DisplayCategoryMenu()
+    {
+        await _categoryMenu.Run();
     }
     private void ExitApplication()
     {
