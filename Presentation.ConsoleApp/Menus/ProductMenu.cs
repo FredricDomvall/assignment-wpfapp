@@ -35,6 +35,7 @@ internal class ProductMenu
         Console.WriteLine("=== PRODUCT MENU ===");
         Console.WriteLine("1. List Products");
         Console.WriteLine("2. Add Product");
+        Console.WriteLine("3. Edit Product");
         Console.WriteLine("0. Back to Main Menu");
         Console.Write("Select an option: ");
         var option = Console.ReadLine();
@@ -45,6 +46,9 @@ internal class ProductMenu
                 break;
             case "2":
                 await AddNewProductToList();
+                break;
+            case "3":
+                await EditProductInList();
                 break;
             case "0":
                 return;
@@ -114,6 +118,61 @@ internal class ProductMenu
 
             Console.WriteLine("Press '1' to add another product or any other key to return to the menu.");
         } while (Console.ReadLine() == "1");
+    }
+    private async Task EditProductInList()
+    {
+        Console.Clear();
+        Console.WriteLine("---------- EDIT PRODUCT ----------");
+        var productResult = await _productService.GetAllProductsFromListAsync();
+        if (!productResult.Statement || productResult.Outcome is null || !productResult.Outcome.Any())
+        {
+            Console.WriteLine(productResult.Answer);
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
+            return;
+        }
+        var products = productResult.Outcome.ToList();
+        for (int i = 0; i < products.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {products[i].ProductName} (ID: {products[i].ProductId})");
+        }
+        Console.Write("Select a product to edit by number or press any other key to return to the menu: ");
+        if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= products.Count)
+        {
+            var selectedProduct = products[choice - 1];
+            Console.WriteLine($"Editing Product: {selectedProduct.ProductName}");
+            Console.Write("Enter new Product Name (or press Enter to keep current): ");
+            var newName = Console.ReadLine();
+            string productName = string.IsNullOrWhiteSpace(newName) ? selectedProduct.ProductName : newName;
+
+            Console.Write("Enter new Product Price (or press Enter to keep current): ");
+            var newPriceInput = Console.ReadLine();
+            decimal productPrice = selectedProduct.ProductPrice;
+            if (decimal.TryParse(newPriceInput, out decimal newPrice))
+            {
+                productPrice = newPrice;
+            }
+
+            // Prepare ProductForm for update
+            var productForm = new ProductForm
+            {
+                ProductName = productName,
+                ProductPrice = productPrice.ToString(),
+                CategoryName = selectedProduct.Category?.CategoryName ?? "N/A",
+                ManufacturerName = selectedProduct.Manufacturer?.ManufacturerName ?? "N/A",
+                ManufacturerCountry = selectedProduct.Manufacturer?.ManufacturerCountry ?? "N/A",
+                ManufacturerEmail = selectedProduct.Manufacturer?.ManufacturerEmail ?? "N/A"
+            };
+
+            var updateResult = await _productService.UpdateProductInListByIdAsync(selectedProduct.ProductId, productForm);
+            Console.WriteLine(updateResult.Answer);
+        }
+        else
+        {
+            Console.WriteLine("Invalid selection. Returning to menu.");
+        }
+        Console.WriteLine("Press any key to return to the menu...");
+        Console.ReadKey();
     }
 
     private async Task<string> ChooseCategoryForNewProduct()

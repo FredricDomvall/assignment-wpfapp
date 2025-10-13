@@ -97,7 +97,7 @@ public class ProductService : IProductService
         return new AnswerOutcome<bool> { Statement = true };
     }
 
-    public async Task<AnswerOutcome<Product>> UpdateProductInListById(Guid productId, ProductForm productForm)
+    public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Guid productId, ProductForm productForm)
     {
         await LoadListFromFileAsync();
         var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == productId);
