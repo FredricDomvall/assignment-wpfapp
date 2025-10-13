@@ -59,7 +59,7 @@ internal class ProductMenu
             Console.WriteLine($"ID: {product.ProductId}");
             Console.WriteLine($"Name: {product.ProductName}\t Price: {product.ProductPrice}");
             Console.WriteLine($"ProductCode: {product.ProductCode}\t Category: {product.Category.CategoryName}");
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine("");
         }
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();

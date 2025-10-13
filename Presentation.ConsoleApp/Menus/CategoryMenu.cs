@@ -55,7 +55,7 @@ internal class CategoryMenu
         {
             Console.WriteLine($"ID: {category.CategoryId}");
             Console.WriteLine($"Name: {category.CategoryName} Prefix: {category.CategoryPrefix}");
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine("");
         }
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();

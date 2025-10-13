@@ -55,7 +55,10 @@ public class ManufacturerMenu
         {
             Console.WriteLine($"ID: {manufacturer.ManufacturerId}");
             Console.WriteLine($"Name: {manufacturer.ManufacturerName}\t Price: {manufacturer.ManufacturerCountry}\t Email: {manufacturer.ManufacturerEmail}");
+            Console.WriteLine("");
         }
+        Console.WriteLine("Press any key to return to the menu...");
+        Console.ReadKey();
     }
 
     private async Task AddNewManufacturerToList()
