@@ -1,6 +1,8 @@
-﻿using Infrastructure.Helpers;
+﻿using Infrastructure.Configurations;
+using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Repositories;
 
 namespace Infrastructure.Services;
 public class ProductService : IProductService
@@ -8,9 +10,9 @@ public class ProductService : IProductService
     private List<Product> _productList = new List<Product>();
 
     private readonly IJsonFileRepository<Product> _jsonFileRepository;
-    public ProductService(IJsonFileRepository<Product> jsonFileRepository)
+    public ProductService(IJsonFileRepository<Product> jsonFileRepository, FileSources fileSource)
     {
-        _jsonFileRepository = jsonFileRepository;
+        _jsonFileRepository = new JsonFileRepository<Product>(fileSource.ProductFileSource);
     }
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
