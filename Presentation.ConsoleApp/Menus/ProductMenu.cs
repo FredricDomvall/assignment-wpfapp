@@ -121,4 +121,28 @@ internal class ProductMenu
         }
 
     }
+    private async Task<string> ChooseManufacturerForNewProduct()
+    {
+        var manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        if (!manufacturerResult.Statement || manufacturerResult.Outcome is null || !manufacturerResult.Outcome.Any())
+        {
+            Console.WriteLine("No manufacturers available. Please add a manufacturer first.");
+            return "N/A";
+        }
+        var manufacturers = manufacturerResult.Outcome.ToList();
+        Console.WriteLine("Available Manufacturers:");
+        for (int i = 0; i < manufacturers.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {manufacturers[i].ManufacturerName} (Country: {manufacturers[i].ManufacturerCountry})");
+        }
+        Console.Write("Select a manufacturer by number or enter '0' to skip: ");
+        if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= manufacturers.Count)
+        {
+            return manufacturers[choice - 1].ManufacturerName;
+        }
+        else
+        {
+            return "N/A";
+        }
+    }
 }
