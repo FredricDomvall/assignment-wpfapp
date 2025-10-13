@@ -24,10 +24,10 @@ public class ManufacturerMenu
         switch (option)
         {
             case "1":
-                //await ShowManufacturersInList();
+                await ShowManufacturersInList();
                 break;
             case "2":
-                //await AddNewManufacturerToList();
+                await AddNewManufacturerToList();
                 break;
             case "0":
                 return;
@@ -38,4 +38,13 @@ public class ManufacturerMenu
         await DisplayManufacturerMenu();
     }
 
+    private async Task ShowManufacturersInList()
+    {
+        throw new NotImplementedException();
+    }
+
+    private async Task AddNewManufacturerToList()
+    {
+        throw new NotImplementedException();
+    }
 }
