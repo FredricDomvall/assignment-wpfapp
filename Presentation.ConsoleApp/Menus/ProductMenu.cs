@@ -7,14 +7,18 @@ internal class ProductMenu
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
     private readonly IManufacturerService _manufacturerService;
+    private readonly ManufacturerMenu ManufacturerMenu;
     public ProductMenu(
         IProductService productService, 
-        ICategoryService categoryService, 
-        IManufacturerService manufacturerService)
+        ICategoryService categoryService,
+        IManufacturerService manufacturerService
+,
+        ManufacturerMenu manufacturerMenu)
     {
         _productService = productService;
         _categoryService = categoryService;
         _manufacturerService = manufacturerService;
+        ManufacturerMenu = manufacturerMenu;
     }
     public async Task Run()
     {
@@ -71,7 +75,7 @@ internal class ProductMenu
     private async Task AddNewProductToList()
     {
         do
-        {
+        {  
             Console.Clear();
             Console.WriteLine("----------ADD NEW PRODUCT ---------- :");
             Console.WriteLine("");
@@ -81,12 +85,21 @@ internal class ProductMenu
 
             Console.Write("Enter Product Price: ");
             var productPrice = Console.ReadLine();          
-            var result = await ChooseCategoryForNewProduct();
+            var categoryChoice = await ChooseCategoryForNewProduct();
+            var manufacturerChoice = await ChooseManufacturerForNewProduct();
+            if (manufacturerChoice.ManufacturerName == "N/A")
+            {
+                Console.WriteLine("No manufacturer selected. Product will be added without a manufacturer.");
+            }
+            else
+            {
+                Console.WriteLine($"Selected Manufacturer: {manufacturerChoice.ManufacturerName}");
+            }
             var productForm = new ProductForm
             {
                 ProductName = productName,
                 ProductPrice = productPrice,
-                CategoryName = result
+                CategoryName = categoryChoice,
             };
             var addProductResult = await _productService.AddProductToListAsync(productForm);
             Console.WriteLine(addProductResult.Answer);
@@ -121,28 +134,34 @@ internal class ProductMenu
         }
 
     }
-    private async Task<string> ChooseManufacturerForNewProduct()
+    private async Task<Manufacturer> ChooseManufacturerForNewProduct()
     {
         var manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
-        if (!manufacturerResult.Statement || manufacturerResult.Outcome is null || !manufacturerResult.Outcome.Any())
+        while (!manufacturerResult.Statement || manufacturerResult.Outcome is null || !manufacturerResult.Outcome.Any())
         {
+            Console.WriteLine(manufacturerResult.Answer);
             Console.WriteLine("No manufacturers available. Please add a manufacturer first.");
-            return "N/A";
+            Console.WriteLine("Press any key to add a new manufacturer...");
+            Console.ReadKey();
+            Manufacturer newManufacturer = new();
+            await ManufacturerMenu.AddNewManufacturerToList();
         }
-        var manufacturers = manufacturerResult.Outcome.ToList();
+
+        var manufacturers = manufacturerResult.Outcome!.ToList();
         Console.WriteLine("Available Manufacturers:");
         for (int i = 0; i < manufacturers.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {manufacturers[i].ManufacturerName} (Country: {manufacturers[i].ManufacturerCountry})");
         }
-        Console.Write("Select a manufacturer by number or enter '0' to skip: ");
+        Console.Write("Select a manufacturer by number or press any other key if not availible: ");
         if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= manufacturers.Count)
         {
-            return manufacturers[choice - 1].ManufacturerName;
+            return manufacturers[choice - 1];
         }
         else
         {
-            return "N/A";
+            Manufacturer noManufacturer = new() { ManufacturerName = "N/A", ManufacturerCountry = "N/A", ManufacturerEmail = "N/A" };
+            return noManufacturer;
         }
     }
 }

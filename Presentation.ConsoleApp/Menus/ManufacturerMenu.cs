@@ -59,7 +59,7 @@ public class ManufacturerMenu
         Console.WriteLine("Press any key to return to the menu...");
         Console.ReadKey();
     }
-    private async Task AddNewManufacturerToList()
+    public async Task AddNewManufacturerToList()
     {
         do
         {
