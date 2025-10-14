@@ -11,17 +11,20 @@ namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductListViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly IJsonFileRepository<Product> _productRepository;
     private readonly IProductService _productService;
-    public ProductListViewModel(IServiceProvider serviceProvider, IProductService productService)
+ 
+    public ProductListViewModel(IServiceProvider serviceProvider, IJsonFileRepository<Product> productFileRepository, IProductService productService)
     {
         _serviceProvider = serviceProvider;
         _productService = productService;
+        _productRepository = productFileRepository;
     }
     [ObservableProperty]
     private string _title = "Product List";
 
     [ObservableProperty]
-    private ObservableCollection<Product> _productListData = new();
+    private ObservableCollection<Product> _productList = new();
 
 
     [RelayCommand]

@@ -1,4 +1,7 @@
-﻿using Infrastructure.Interfaces;
+﻿using Infrastructure.Configurations;
+using Infrastructure.Interfaces;
+using Infrastructure.Models;
+using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,8 +25,15 @@ public partial class App : Application
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => 
             {
+                services.AddSingleton<FileSources>();
+
+                services.AddSingleton<IJsonFileRepository<Product> , JsonFileRepository<Product>>();
                 services.AddSingleton<IProductService, ProductService>();
+
+                services.AddSingleton<IJsonFileRepository<Category>, JsonFileRepository<Category>>();
                 services.AddSingleton<ICategoryService, CategoryService>();
+
+                services.AddSingleton<IJsonFileRepository<Manufacturer>, JsonFileRepository<Manufacturer>>();
                 services.AddSingleton<IManufacturerService, ManufacturerService>();
 
                 services.AddSingleton<MainViewModel>();
