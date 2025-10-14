@@ -47,13 +47,13 @@
                         <!-- Column 1: Name -->
                         <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
                             <Label Content="Name" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
-                            <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="16" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
+                            <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
                         </StackPanel>
 
                         <!-- Column 2: Price -->
                         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
                             <Label Content="Price" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
-                            <TextBlock Text="{Binding ProductPrice, StringFormat='{}{0} kr'}" FontWeight="Bold" FontSize="16" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
+                            <TextBlock Text="{Binding ProductPrice, StringFormat='Price: {0:C2}'}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
                         </StackPanel>
 
                         <!-- Column 3: Buttons (span both rows) -->
@@ -71,22 +71,19 @@
         <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10 0"
         BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
             <StackPanel>
-                <TextBlock Text="{Binding CurrentViewDetails.ProductName, StringFormat='Namn: {0}'}" FontWeight="Bold"/>
-                <TextBlock Text="{Binding CurrentViewDetails.ProductPrice, StringFormat='Pris: {0:C2}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding CurrentViewDetails.ProductCode, StringFormat='Id: {0}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding CurrentViewDetails.ProductDescription, StringFormat='Beskrivning: {0}'}" Margin="0,2"/>
-
-                <TextBlock Text="Kategori:" FontWeight="Bold" Margin="0,8,0,0"/>
-                <TextBlock Text="{Binding CurrentViewDetails.Category.CategoryName, StringFormat='Namn: {0}'}" Margin="0,2"/>
-
-                <TextBlock Text="Tillverkare:" FontWeight="Bold" Margin="0,8,0,0"/>
-                <TextBlock Text="{Binding CurrentViewDetails.Manufacturer.ManufacturerName, StringFormat='Namn: {0}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding CurrentViewDetails.Manufacturer.ManufacturerEmail, StringFormat='Email: {0}'}" Margin="0,2"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductName}" FontWeight="Bold" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductId}" Margin="0,2" FontSize="8" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductPrice, StringFormat='Price: {0:C2}'}" Margin="0,2" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductCode, StringFormat='ArticleNumber: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+                
+                <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName, StringFormat='Category: {0}'}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerName, StringFormat='Manufacturer: {0}'}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerEmail, StringFormat='Email: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerCountry, StringFormat='Country: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductDescription, StringFormat='Description: '}" Margin="0,2" TextWrapping="Wrap"/>
             </StackPanel>
         </Border>
 
-        <!-- If no product is selected, show a message -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="No products available" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Previous" Command="{Binding NavigateToManufacturerListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
             <Button Command="{Binding RefreshProductListCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5" ToolTip="Reload">

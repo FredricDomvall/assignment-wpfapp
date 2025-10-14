@@ -24,11 +24,11 @@ public partial class ProductListViewModel : ObservableObject
     private string _title = "Product List";
 
     [ObservableProperty]
-    private Product? _currentViewDetails;
+    private Product? _currentProductDetails;
     [RelayCommand]
     private void ShowProductDetails(Product product)
     {
-        CurrentViewDetails = product;
+        CurrentProductDetails = product;
     }
 
     [ObservableProperty]
