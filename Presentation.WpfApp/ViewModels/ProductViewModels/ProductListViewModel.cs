@@ -19,6 +19,7 @@ public partial class ProductListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _productService = productService;
         _productRepository = productFileRepository;
+        LoadProductsAsync().ConfigureAwait(false);
     }
     [ObservableProperty]
     private string _title = "Product List";
@@ -26,21 +27,30 @@ public partial class ProductListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Product> _productList = new();
 
-
-    [RelayCommand]
-    private void NavigateToStartView()
+    private async Task LoadProductsAsync()
     {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var startViewModel = _serviceProvider.GetRequiredService<StartViewModel>();
-        mainViewModel.CurrentViewModel = startViewModel;
+        var loadResult = await _productService.GetAllProductsFromListAsync();
+        if (loadResult.Statement is true)
+            ProductList = new ObservableCollection<Product>(loadResult.Outcome!);
+        else
+            ProductList = new ObservableCollection<Product>();
     }
-
+    /***********************************************************************************
+     *                          ONLY NAVIGATION COMMANDS BELOW                         *
+     ***********************************************************************************/
     [RelayCommand]
     private void NavigateToProductCreateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
         mainViewModel.CurrentViewModel = categoryCreateViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToStartView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var startViewModel = _serviceProvider.GetRequiredService<StartViewModel>();
+        mainViewModel.CurrentViewModel = startViewModel;
     }
     [RelayCommand]
     private void NavigateToProductUpdateView()
@@ -56,7 +66,6 @@ public partial class ProductListViewModel : ObservableObject
         var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
         mainViewModel.CurrentViewModel = categoryCreateViewModel;
     }
-
     [RelayCommand]
     private void NavigateToManufacturerListView()
     {
