@@ -1,19 +1,46 @@
-﻿<UserControl x:Class="Presentation.WpfApp.Views.ManufacturerViews.ManufacturerCreateView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Presentation.WpfApp.Views.ManufacturerViews"
-             
-             xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
-             xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
-             xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
-             xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
-             d:DataContext="{d:DesignInstance Type=manufacturerVM:ManufacturerCreateViewModel}"
-             
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
-</UserControl>
+﻿    <UserControl x:Class="Presentation.WpfApp.Views.ManufacturerViews.ManufacturerCreateView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                 xmlns:local="clr-namespace:Presentation.WpfApp.Views.ManufacturerViews"
+                 xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
+                 xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
+                 d:DataContext="{d:DesignInstance Type=manufacturerVM:ManufacturerCreateViewModel}"
+                 mc:Ignorable="d" 
+                 d:DesignHeight="350" d:DesignWidth="600">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Manufacturer Name -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5" Text="{Binding NewManufacturer.ManufacturerName, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <!-- Email -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding NewManufacturer.ManufacturerEmail, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <!-- Country -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Country:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5" Text="{Binding NewManufacturer.ManufacturerCountry, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <!-- Info Row -->
+            <StackPanel x:Name="ValidationMessagesPanel" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,20,5,5" Visibility="Collapsed">
+                <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
+            </StackPanel>
+
+            <!-- Submit Button -->
+            <Button Grid.Row="3" Grid.Column="1" Content="Create Manufacturer" Command="{Binding SaveNewManufacturerCommand}" Width="170" Height="35" HorizontalAlignment="Right" Margin="0,10,100,0"/>
+            <!-- Cancel Button -->
+            <Button Grid.Row="3" Grid.Column="1" Content="Cancel" Command="{Binding CancelNewManufacturerCreationCommand}" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
+        </Grid>
+    </UserControl>

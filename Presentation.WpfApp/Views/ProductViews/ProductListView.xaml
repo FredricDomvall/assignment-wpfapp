@@ -85,7 +85,7 @@
         </Border>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Previous" Command="{Binding NavigateToManufacturerListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
+            <Button Content="Previous" Command="{Binding NavigateToStartViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
             <Button Command="{Binding RefreshProductListCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5" ToolTip="Reload">
                 <TextBlock Text="&#x21bb;" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 10"/>
             </Button>

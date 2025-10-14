@@ -4,5 +4,11 @@
     "ManufacturerName": "Sony",
     "ManufacturerCountry": "Sweden",
     "ManufacturerEmail": "Sony@domain.se"
+  },
+  {
+    "ManufacturerId": "2c1ac677-e955-4876-9ad6-174e6a212b84",
+    "ManufacturerName": "Volvo",
+    "ManufacturerCountry": "Sweden",
+    "ManufacturerEmail": "Volvo@domain.se"
   }
 ]

@@ -4,22 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.WpfApp.Views.CategoryViews"
-             
-             xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
-             xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
              xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
-             xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
              d:DataContext="{d:DesignInstance Type=categoryVM:CategoryCreateViewModel}"
-             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Category Create View" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-        <TextBlock Text="(Design-time DataContext: CategoryCreateViewModel)" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0" FontSize="14" Foreground="Gray"/>
-        <TextBox Width="200" Height="30" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Content="Create Category" Width="120" Height="30" Margin="0,150,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="10" VerticalAlignment="Bottom" Height="100">
-            <TextBlock Text="This is a placeholder for additional UI elements." TextWrapping="Wrap"/>
-        </Border>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Category Name -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Category Name:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5" Text="{Binding NewCategory.CategoryName, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <!-- Parent Category (optional) -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Parent Category:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Margin="0,5"
+                      ItemsSource="{Binding Categories}"
+                      SelectedItem="{Binding SelectedParentCategory, Mode=TwoWay}"
+                      DisplayMemberPath="CategoryName"/>
+
+        <!-- Validation Messages -->
+        <StackPanel x:Name="ValidationMessagesPanel" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,20,5,5">
+            <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
+        </StackPanel>
+
+        <!-- Submit Button -->
+        <Button Grid.Row="3" Grid.Column="1" Content="Create Category" Command="{Binding SaveNewCategoryCommand}" Width="150" Height="35" HorizontalAlignment="Right" Margin="0,10,100,0"/>
+        <!-- Cancel Button -->
+        <Button Grid.Row="3" Grid.Column="1" Content="Cancel" Command="{Binding CancelNewCategoryCreationCommand}" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
     </Grid>
 </UserControl>
