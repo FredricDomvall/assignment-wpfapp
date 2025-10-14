@@ -24,6 +24,9 @@ public partial class ProductListViewModel : ObservableObject
     private string _title = "Product List";
 
     [ObservableProperty]
+    private Product? _currentViewDetails;
+
+    [ObservableProperty]
     private ObservableCollection<Product> _productList = new();
 
     private async Task LoadProductsAsync()
