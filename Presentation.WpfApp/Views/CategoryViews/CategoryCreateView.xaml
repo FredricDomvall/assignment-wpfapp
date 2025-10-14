@@ -4,9 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.WpfApp.Views.CategoryViews"
+             
+             xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
+             xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
+             xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
+             xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
+             d:DataContext="{d:DesignInstance Type=categoryVM:CategoryCreateViewModel}"
+             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TextBlock Text="Category Create View" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        <TextBlock Text="(Design-time DataContext: CategoryCreateViewModel)" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0" FontSize="14" Foreground="Gray"/>
+        <TextBox Width="200" Height="30" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button Content="Create Category" Width="120" Height="30" Margin="0,150,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="10" VerticalAlignment="Bottom" Height="100">
+            <TextBlock Text="This is a placeholder for additional UI elements." TextWrapping="Wrap"/>
+        </Border>
     </Grid>
 </UserControl>

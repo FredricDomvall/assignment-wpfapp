@@ -25,6 +25,8 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
+        await LoadListFromFileAsync();
+
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
@@ -48,8 +50,7 @@ public class ProductService : IProductService
             newProduct.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
             newProduct.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
             newProduct.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
-
-            await LoadListFromFileAsync();
+            
             _productList.Add(newProduct);
             await SaveListToFileAsync();
             return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = newProduct };
