@@ -25,9 +25,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Margin="10">
-            <Button FontStyle="Italic" Background="#c4c4c4" Content="Create Product" Margin="0,0,0,10" Command="{Binding NavigateToProductCreateViewCommand}" />
-            <Button FontStyle="Italic" Background="#c4c4c4" Content="Update Product" Margin="0,0,0,10"/>
-            <Button FontStyle="Italic" Background="#c4c4c4" Content="Delete Product" Margin="0,0,0,10"/>
+            <Button Command="{Binding NavigateToProductCreateViewCommand}" FontStyle="Italic" Background="#c4c4c4" Content="Create Product" Margin="0,0,0,10"/>
+            <Button Command="{Binding NavigateToProductUpdateViewCommand}" FontStyle="Italic" Background="#c4c4c4" Content="Update Product" Margin="0,0,0,10"/>
+            <Button Command="{Binding NavigateToProductDeleteViewCommand}" FontStyle="Italic" Background="#c4c4c4" Content="Delete Product" Margin="0,0,0,10"/>
         </StackPanel>
 
         <ListView Grid.RowSpan="3" Grid.Column="1" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" Margin="10">

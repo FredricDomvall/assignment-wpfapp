@@ -23,13 +23,13 @@
             <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
         </Border>
         <StackPanel Grid.Row="1">
-            <Button Command="{Binding NavigateToManufacturerCreateViewCommand}" Content="Create Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-            <Button Command="{Binding NavigateToManufacturerUpdateViewCommand}" Content="Update Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-            <Button Command="{Binding NavigateToManufacturerDeleteViewCommand}" Content="Delete Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <Button Command="{Binding NavigateToCategoryCreateViewCommand}" Content="Create Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <Button Command="{Binding NavigateToCategoryUpdateViewCommand}" Content="Update Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <Button Command="{Binding NavigateToCategoryDeleteViewCommand}" Content="Delete Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
 
             <Button Command="{Binding NavigateToStartViewCommand}" Content="Back to StartView" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,20,0,0"/>
         </StackPanel>
         <Button Grid.Row="2" Command="{Binding NavigateToProductListViewCommand}" Content="Product List" Width="150" Height="35" HorizontalAlignment="Right" Margin="0,10,100,0"/>
-        <Button Grid.Row="2" Command="{Binding NavigateToCategoryListViewCommand}" Content="Category List" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
+        <Button Grid.Row="2" Command="{Binding NavigateToManufacturerListViewCommand}" Content="Manufacturer List" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
     </Grid>
 </UserControl>

@@ -46,10 +46,27 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,200,0,0" >
-            <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Products" Width="175" Height="40" Margin="10" Command="{Binding NavigateToProductListViewCommand}"/>
-            <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Categories" Width="175" Height="40" Margin="10" Command="{Binding NavigateToCategoryListViewCommand}"/>
-            <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Manufacturers" Width="175" Height="40" Margin="10" Command="{Binding NavigateToManufacturerListViewCommand}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,40,0,0" >
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="List Products" Width="175" Height="40" Margin="10 30" Command="{Binding NavigateToProductListViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Create Products" Width="175" Height="40" Margin="10" Command="{Binding NavigateToProductCreatetViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Update Products" Width="175" Height="40" Margin="10" Command="{Binding NavigateToProductUpdateViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Delete Products" Width="175" Height="40" Margin="10" Command="{Binding NavigateToProductDeleteViewCommand}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="List Categories" Width="175" Height="40" Margin="10 30" Command="{Binding NavigateToCategoryListViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Create Category" Width="175" Height="40" Margin="10" Command="{Binding NavigateToCategoryCreateViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Update Category" Width="175" Height="40" Margin="10" Command="{Binding NavigateToCategoryUpdateViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Delete Category" Width="175" Height="40" Margin="10" Command="{Binding NavigateToCategoryDeleteViewCommand}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="List Manufacturers" Width="175" Height="40" Margin="10 30" Command="{Binding NavigateToManufacturerListViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Create Manufacturer" Width="175" Height="40" Margin="10" Command="{Binding NavigateToManufacturerCreateViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Update Manufacturer" Width="175" Height="40" Margin="10" Command="{Binding NavigateToManufacturerUpdateViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Delete Manufacturer" Width="175" Height="40" Margin="10" Command="{Binding NavigateToManufacturerDeleteViewCommand}"/>
+            </StackPanel>
         </StackPanel>
 
     </Grid>
