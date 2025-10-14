@@ -25,6 +25,11 @@ public partial class ProductListViewModel : ObservableObject
 
     [ObservableProperty]
     private Product? _currentViewDetails;
+    [RelayCommand]
+    private void ShowProductDetails(Product product)
+    {
+        CurrentViewDetails = product;
+    }
 
     [ObservableProperty]
     private ObservableCollection<Product> _productList = new();
