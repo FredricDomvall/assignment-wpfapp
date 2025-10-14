@@ -20,4 +20,19 @@ public partial class ProductListViewModel : ObservableObject
         var productCreateViewModel = _serviceProvider.GetRequiredService<ProductCreateViewModel>();
         mainViewModel.CurrentViewModel = productCreateViewModel;
     }
+
+    [RelayCommand]
+    private void NavigateToCategoryListView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
+        mainViewModel.CurrentViewModel = categoryListViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToManufacturerListView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
+        mainViewModel.CurrentViewModel = manufacturerListViewModel;
+    }
 }
