@@ -19,7 +19,6 @@ public partial class ProductListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _productService = productService;
         _productRepository = productFileRepository;
-        LoadProductsAsync().RunSynchronously();
     }
     [ObservableProperty]
     private string _title = "Product List";
