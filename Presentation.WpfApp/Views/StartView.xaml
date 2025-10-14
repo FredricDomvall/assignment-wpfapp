@@ -22,12 +22,34 @@
         <TextBlock Grid.Row="0" Text="Welcome to the Product Management System" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
-                   FontSize="24" 
-                   FontWeight="Bold"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" >
-            <Button Content="Manage Products" Width="150" Height="40" Margin="10" Command="{Binding NavigateToProductListViewCommand}"/>
-            <Button Content="Manage Categories" Width="150" Height="40" Margin="10" Command="{Binding NavigateToCategoryListViewCommand}"/>
-            <Button Content="Manage Manufacturers" Width="150" Height="40" Margin="10" Command="{Binding NavigateToManufacturerListViewCommand}"/>
+                   FontSize="24" FontStyle="Italic" 
+                   Foreground="#c4c4c4" 
+                   FontWeight="Bold">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="#c4c4c4"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="#c4c4c4" BlurRadius="0" ShadowDepth="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#fff"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#c4c4c4" BlurRadius="10" ShadowDepth="0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,200,0,0" >
+            <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Products" Width="175" Height="40" Margin="10" Command="{Binding NavigateToProductListViewCommand}"/>
+            <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Categories" Width="175" Height="40" Margin="10" Command="{Binding NavigateToCategoryListViewCommand}"/>
+            <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Manufacturers" Width="175" Height="40" Margin="10" Command="{Binding NavigateToManufacturerListViewCommand}"/>
         </StackPanel>
 
     </Grid>
