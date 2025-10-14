@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Infrastructure.Interfaces;
+using Infrastructure.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Presentation.WpfApp.ViewModels;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
@@ -20,6 +22,10 @@ public partial class App : Application
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => 
             {
+                services.AddSingleton<IProductService, ProductService>();
+                services.AddSingleton<ICategoryService, CategoryService>();
+                services.AddSingleton<IManufacturerService, ManufacturerService>();
+
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<MainWindow>();
 
