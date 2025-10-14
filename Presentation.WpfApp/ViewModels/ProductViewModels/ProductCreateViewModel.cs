@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductCreateViewModel : ObservableObject
@@ -29,7 +30,33 @@ public partial class ProductCreateViewModel : ObservableObject
     [ObservableProperty]
     private string _title = "Create New Product";
     [ObservableProperty]
+    private ObservableCollection<Category> _categories = new();
+    [ObservableProperty]
+    private ObservableCollection<Manufacturer> _manufacturers = new();
+    [ObservableProperty]
     private ProductForm? _newProduct = new ProductForm();
+
+    private async Task LoadOtherListsAsync()
+    {
+        var loadCategoriesResult = await _categoryService.GetAllCategoriesFromListAsync();
+        if (loadCategoriesResult.Statement is true)
+            Categories = new ObservableCollection<Category>(loadCategoriesResult.Outcome!);
+        else
+            Categories = new ObservableCollection<Category>();
+
+        var loadManufacturersResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        if (loadManufacturersResult.Statement is true)
+            Manufacturers = new ObservableCollection<Manufacturer>(loadManufacturersResult.Outcome!);
+        else
+            Manufacturers = new ObservableCollection<Manufacturer>();
+    }
+    [RelayCommand]
+    private async Task RefreshProductList()
+    {
+        await LoadOtherListsAsync();
+    }
+
+
     [RelayCommand]
     private async Task SaveNewProduct()
     {
