@@ -10,20 +10,38 @@ public partial class ProductCreateViewModel : ObservableObject
     private readonly IServiceProvider _serviceProvider;
     private readonly IJsonFileRepository<Product> _productRepository;
     private readonly IProductService _productService;
-    public ProductCreateViewModel(IServiceProvider serviceProvider, IJsonFileRepository<Product> productRepository, IProductService productService)
+    private readonly IManufacturerService _manufacturerService;
+    private readonly ICategoryService _categoryService;
+    public ProductCreateViewModel(
+        IServiceProvider serviceProvider, 
+        IJsonFileRepository<Product> productRepository, 
+        IProductService productService, 
+        IManufacturerService manufacturerService, 
+        ICategoryService categoryService)
     {
         _serviceProvider = serviceProvider;
         _productRepository = productRepository;
         _productService = productService;
+        _manufacturerService = manufacturerService;
+        _categoryService = categoryService;
+        
     }
     [ObservableProperty]
     private string _title = "Create New Product";
     [ObservableProperty]
-    private Product? _newProduct = new Product();
+    private ProductForm? _newProduct = new ProductForm();
     [RelayCommand]
-    private void SaveNewProduct()
+    private async Task SaveNewProduct()
     {
-        //will build soon
+        if (NewProduct is null) return;
+        var addResult = await _productService.AddProductToListAsync(NewProduct);
+        if (addResult.Statement is true)
+        {
+            var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+            var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
+            mainViewModel.CurrentViewModel = productListViewModel;
+        }
+
     }
     [RelayCommand]
     private void CancelNewProductCreation()
