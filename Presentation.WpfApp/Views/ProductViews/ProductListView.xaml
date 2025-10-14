@@ -5,12 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.WpfApp.Views.ProductViews"
              
+             xmlns:models="clr-namespace:Infrastructure.Models;assembly=Infrastructure"
+             
              xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
              xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
              xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
              xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
              d:DataContext="{d:DesignInstance Type=productVM:ProductListViewModel}"
-             
+
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -25,39 +27,68 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Margin="10">
-            <Button Command="{Binding NavigateToProductCreateViewCommand}" FontStyle="Italic" Background="#c4c4c4" Content="Create Product" Margin="0,0,0,10"/>
-            <Button Command="{Binding NavigateToProductUpdateViewCommand}" FontStyle="Italic" Background="#c4c4c4" Content="Update Product" Margin="0,0,0,10"/>
-            <Button Command="{Binding NavigateToProductDeleteViewCommand}" FontStyle="Italic" Background="#c4c4c4" Content="Delete Product" Margin="0,0,0,10"/>
+            <Button Command="{Binding NavigateToProductCreateViewCommand}" Content="Create Product" FontStyle="Italic" Height="50"  Margin="0,0,0,10"/>
         </StackPanel>
 
-        <ListView Grid.RowSpan="3" Grid.Column="1" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" Margin="10">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="100"/>
-                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category.Name}" Width="100"/>
-                    <GridViewColumn Header="Manufacturer" DisplayMemberBinding="{Binding Manufacturer.Name}" Width="100"/>
-                </GridView>
-            </ListView.View>
+        <ListView ItemsSource="{Binding ProductList}" Grid.RowSpan="3" Grid.Column="1" Width="580" Height="400" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:Product}">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Column 1: Name -->
+                        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
+                            <Label Content="Name" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
+                            <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
+                        </StackPanel>
+
+                        <!-- Column 2: Price -->
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
+                            <Label Content="Price" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
+                            <TextBlock Text="{Binding ProductPrice, StringFormat='Price: {0:C2}'}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
+                        </StackPanel>
+
+                        <!-- Column 3: Buttons (span both rows) -->
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <Button Content="Details" Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="75" Height="50" />
+                            <Button Content="Edit" Width="75" Height="50" />
+                            <Button Content="Delete" Width="75" Height="50" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
 
         <!-- Product details panel shown when a product is selected -->
-        <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
+        <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10 0"
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
             <StackPanel>
-                <TextBlock Text="Produktdetaljer" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-                <TextBlock Text="{Binding SelectedProduct.Name, StringFormat='Namn: {0}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding SelectedProduct.Price, StringFormat='Pris: {0:C}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding SelectedProduct.Category.Name, StringFormat='Kategori: {0}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding SelectedProduct.Manufacturer.Name, StringFormat='Tillverkare: {0}'}" Margin="0,2"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductName}" FontWeight="Bold" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductId}" Margin="0,2" FontSize="8" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductPrice, StringFormat='Price: {0:C2}'}" Margin="0,2" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductCode, StringFormat='ArticleNumber: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+                
+                <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName, StringFormat='Category: {0}'}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerName, StringFormat='Manufacturer: {0}'}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerEmail, StringFormat='Email: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerCountry, StringFormat='Country: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductDescription, StringFormat='Description: '}" Margin="0,2" TextWrapping="Wrap"/>
             </StackPanel>
         </Border>
 
-        <!-- If no product is selected, show a message -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="No products available" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Previous" Command="{Binding NavigateToManufacturerListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
-            <Button Content="Next" Command="{Binding NavigateToCategoryListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
+            <Button Command="{Binding RefreshProductListCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5" ToolTip="Reload">
+                <TextBlock Text="&#x21bb;" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 10"/>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

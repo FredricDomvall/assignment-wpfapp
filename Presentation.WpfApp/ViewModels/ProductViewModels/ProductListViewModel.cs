@@ -1,20 +1,62 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
+using System.Collections.ObjectModel;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductListViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
-    public ProductListViewModel(IServiceProvider serviceProvider)
+    private readonly IJsonFileRepository<Product> _productRepository;
+    private readonly IProductService _productService;
+ 
+    public ProductListViewModel(IServiceProvider serviceProvider, IJsonFileRepository<Product> productFileRepository, IProductService productService)
     {
         _serviceProvider = serviceProvider;
+        _productService = productService;
+        _productRepository = productFileRepository;
     }
     [ObservableProperty]
     private string _title = "Product List";
 
+    [ObservableProperty]
+    private Product? _currentProductDetails;
+    [RelayCommand]
+    private void ShowProductDetails(Product product)
+    {
+        CurrentProductDetails = product;
+    }
+
+    [ObservableProperty]
+    private ObservableCollection<Product> _productList = new();
+
+    private async Task LoadProductsAsync()
+    {
+        var loadResult = await _productService.GetAllProductsFromListAsync();
+        if (loadResult.Statement is true)
+            ProductList = new ObservableCollection<Product>(loadResult.Outcome!);
+        else
+            ProductList = new ObservableCollection<Product>();
+    }
+    [RelayCommand]
+    private async Task RefreshProductList()
+    {
+        await LoadProductsAsync();
+    }
+    /***********************************************************************************
+     *                          ONLY NAVIGATION COMMANDS BELOW                         *
+     ***********************************************************************************/
+    [RelayCommand]
+    private void NavigateToProductCreateView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var productCreateViewModel = _serviceProvider.GetRequiredService<ProductCreateViewModel>();
+        mainViewModel.CurrentViewModel = productCreateViewModel;
+    }
     [RelayCommand]
     private void NavigateToStartView()
     {
@@ -22,29 +64,20 @@ public partial class ProductListViewModel : ObservableObject
         var startViewModel = _serviceProvider.GetRequiredService<StartViewModel>();
         mainViewModel.CurrentViewModel = startViewModel;
     }
-
-    [RelayCommand]
-    private void NavigateToProductCreateView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
-    }
     [RelayCommand]
     private void NavigateToProductUpdateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+        var productUpdateViewModel = _serviceProvider.GetRequiredService<ProductUpdateViewModel>();
+        mainViewModel.CurrentViewModel = productUpdateViewModel;
     }
     [RelayCommand]
     private void NavigateToProductDeleteView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+        var productDeleteViewModel = _serviceProvider.GetRequiredService<ProductDeleteViewModel>();
+        mainViewModel.CurrentViewModel = productDeleteViewModel;
     }
-
     [RelayCommand]
     private void NavigateToManufacturerListView()
     {
