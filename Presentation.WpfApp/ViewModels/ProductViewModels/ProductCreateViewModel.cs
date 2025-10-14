@@ -51,7 +51,7 @@ public partial class ProductCreateViewModel : ObservableObject
             Manufacturers = new ObservableCollection<Manufacturer>();
     }
     [RelayCommand]
-    private async Task RefreshProductList()
+    private async Task RefreshOtherLists()
     {
         await LoadOtherListsAsync();
     }
