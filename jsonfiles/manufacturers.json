@@ -4,5 +4,17 @@
     "ManufacturerName": "Sony",
     "ManufacturerCountry": "Sweden",
     "ManufacturerEmail": "Sony@domain.se"
+  },
+  {
+    "ManufacturerId": "2c1ac677-e955-4876-9ad6-174e6a212b84",
+    "ManufacturerName": "Volvo",
+    "ManufacturerCountry": "Sweden",
+    "ManufacturerEmail": "Volvo@domain.se"
+  },
+  {
+    "ManufacturerId": "ee0ebb3d-4e38-438a-95ec-42ecade53f97",
+    "ManufacturerName": "Nokia",
+    "ManufacturerCountry": "USA",
+    "ManufacturerEmail": "Nokia@domain.com"
   }
 ]
