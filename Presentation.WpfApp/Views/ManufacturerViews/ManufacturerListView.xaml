@@ -74,7 +74,6 @@
                 <TextBlock Text="{Binding CurrentManufacturerDetails.ManufacturerId}" Margin="0,2" FontSize="8" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding CurrentManufacturerDetails.ManufacturerEmail, StringFormat='Email: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding CurrentManufacturerDetails.ManufacturerCountry, StringFormat='Country: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding CurrentManufacturerDetails.ManufacturerDescription, StringFormat='Description: '}" Margin="0,2" TextWrapping="Wrap"/>
             </StackPanel>
         </Border>
 

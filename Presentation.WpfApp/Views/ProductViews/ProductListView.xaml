@@ -11,7 +11,7 @@
              xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
              xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
              xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
-             d:DataContext="{d:DesignInstance Type=productVM:ProductListViewModel}"
+             d:DataContext="{d:DesignInstance Type=manufacturerVM:ManufacturerListViewModel}"
 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
