@@ -52,13 +52,13 @@
 
                         <!-- Column 2: Price -->
                         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
-                            <TextBlock Text="Price: " FontWeight="SemiBold"/>
-                            <TextBlock Text="{Binding ProductPrice, StringFormat='{}{0} kr'}"/>
+                            <Label Content="Price" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
+                            <TextBlock Text="{Binding ProductPrice, StringFormat='{}{0} kr'}" FontWeight="Bold" FontSize="16" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
                         </StackPanel>
 
                         <!-- Column 3: Buttons (span both rows) -->
                         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0">
-                            <Button Content="Details" Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Width="75" Height="50" />
+                            <Button Content="Details" Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="75" Height="50" />
                             <Button Content="Edit" Width="75" Height="50" />
                             <Button Content="Delete" Width="75" Height="50" />
                         </StackPanel>
@@ -68,13 +68,20 @@
         </ListView>
 
         <!-- Product details panel shown when a product is selected -->
-        <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
+        <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10 0"
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
             <StackPanel>
-                <TextBlock Text="Produktdetaljer" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-                <TextBlock Text="{Binding SelectedProduct.Name, StringFormat='Namn: {0}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding SelectedProduct.Price, StringFormat='Pris: {0:C}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding SelectedProduct.Category.Name, StringFormat='Kategori: {0}'}" Margin="0,2"/>
-                <TextBlock Text="{Binding SelectedProduct.Manufacturer.Name, StringFormat='Tillverkare: {0}'}" Margin="0,2"/>
+                <TextBlock Text="{Binding CurrentViewDetails.ProductName, StringFormat='Namn: {0}'}" FontWeight="Bold"/>
+                <TextBlock Text="{Binding CurrentViewDetails.ProductPrice, StringFormat='Pris: {0:C2}'}" Margin="0,2"/>
+                <TextBlock Text="{Binding CurrentViewDetails.ProductCode, StringFormat='Id: {0}'}" Margin="0,2"/>
+                <TextBlock Text="{Binding CurrentViewDetails.ProductDescription, StringFormat='Beskrivning: {0}'}" Margin="0,2"/>
+
+                <TextBlock Text="Kategori:" FontWeight="Bold" Margin="0,8,0,0"/>
+                <TextBlock Text="{Binding CurrentViewDetails.Category.CategoryName, StringFormat='Namn: {0}'}" Margin="0,2"/>
+
+                <TextBlock Text="Tillverkare:" FontWeight="Bold" Margin="0,8,0,0"/>
+                <TextBlock Text="{Binding CurrentViewDetails.Manufacturer.ManufacturerName, StringFormat='Namn: {0}'}" Margin="0,2"/>
+                <TextBlock Text="{Binding CurrentViewDetails.Manufacturer.ManufacturerEmail, StringFormat='Email: {0}'}" Margin="0,2"/>
             </StackPanel>
         </Border>
 
