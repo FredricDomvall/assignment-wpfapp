@@ -1,19 +1,67 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
+using System.Collections.ObjectModel;
 
 namespace Presentation.WpfApp.ViewModels.CategoryViewModels;
 public partial class CategoryListViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
-    public CategoryListViewModel(IServiceProvider serviceProvider)
+    private readonly IJsonFileRepository<Category> _categoryRepository;
+    private readonly ICategoryService _categoryService;
+
+    public CategoryListViewModel(IServiceProvider serviceProvider, IJsonFileRepository<Category> categoryFileRepository, ICategoryService categoryService)
     {
         _serviceProvider = serviceProvider;
+        _categoryService = categoryService;
+        _categoryRepository = categoryFileRepository;
     }
+
     [ObservableProperty]
     private string _title = "Category List";
+
+    [ObservableProperty]
+    private Category? _currentCategoryDetails;
+
+    [RelayCommand]
+    private void ShowCategoryDetails(Category category)
+    {
+        CurrentCategoryDetails = category;
+    }
+
+    [ObservableProperty]
+    private ObservableCollection<Category> _categoryList = new();
+
+    private async Task LoadCategoriesAsync()
+    {
+        var loadResult = await _categoryService.GetAllCategoriesFromListAsync();
+        if (loadResult.Statement is true)
+            CategoryList = new ObservableCollection<Category>(loadResult.Outcome!);
+        else
+            CategoryList = new ObservableCollection<Category>();
+    }
+
+    [RelayCommand]
+    private async Task RefreshCategoryList()
+    {
+        await LoadCategoriesAsync();
+    }
+
+    /***********************************************************************************
+     *                          ONLY NAVIGATION COMMANDS BELOW                         *
+     ***********************************************************************************/
+    [RelayCommand]
+    private void NavigateToCategoryCreateView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
+        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+    }
 
     [RelayCommand]
     private void NavigateToStartView()
@@ -24,26 +72,21 @@ public partial class CategoryListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void NavigateToCategoryCreateView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
-    }
-    [RelayCommand]
     private void NavigateToCategoryUpdateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
-        mainViewModel.CurrentViewModel = categoryListViewModel;
+        var categoryUpdateViewModel = _serviceProvider.GetRequiredService<CategoryUpdateViewModel>();
+        mainViewModel.CurrentViewModel = categoryUpdateViewModel;
     }
+
     [RelayCommand]
-    private void NavigateToCategoryDeleteView() 
+    private void NavigateToCategoryDeleteView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
-        mainViewModel.CurrentViewModel = categoryListViewModel;
+        var categoryDeleteViewModel = _serviceProvider.GetRequiredService<CategoryDeleteViewModel>();
+        mainViewModel.CurrentViewModel = categoryDeleteViewModel;
     }
+
     [RelayCommand]
     private void NavigateToProductListView()
     {
@@ -51,6 +94,7 @@ public partial class CategoryListViewModel : ObservableObject
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;
     }
+
     [RelayCommand]
     private void NavigateToManufacturerListView()
     {

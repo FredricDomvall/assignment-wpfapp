@@ -5,31 +5,81 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.WpfApp.Views.CategoryViews"
              
+             xmlns:models="clr-namespace:Infrastructure.Models;assembly=Infrastructure"
              xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
              xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
              xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
-             xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
+                xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
              d:DataContext="{d:DesignInstance Type=categoryVM:CategoryListViewModel}"
-             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#f0f0f0" Padding="10" Margin="10" CornerRadius="5">
-            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-        </Border>
-        <StackPanel Grid.Row="1">
-            <Button Command="{Binding NavigateToCategoryCreateViewCommand}" Content="Create Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-            <Button Command="{Binding NavigateToCategoryUpdateViewCommand}" Content="Update Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-            <Button Command="{Binding NavigateToCategoryDeleteViewCommand}" Content="Delete Category" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,10,0,0"/>
 
-            <Button Command="{Binding NavigateToStartViewCommand}" Content="Back to StartView" Width="150" Height="35" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+        <StackPanel Grid.Column="0" Margin="10">
+            <Button Command="{Binding NavigateToCategoryCreateViewCommand}" Content="Create Category" FontStyle="Italic" Height="50"  Margin="0,0,0,10"/>
         </StackPanel>
-        <Button Grid.Row="2" Command="{Binding NavigateToProductListViewCommand}" Content="Product List" Width="150" Height="35" HorizontalAlignment="Right" Margin="0,10,100,0"/>
-        <Button Grid.Row="2" Command="{Binding NavigateToManufacturerListViewCommand}" Content="Manufacturer List" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
+
+        <ListView ItemsSource="{Binding CategoryList}" Grid.RowSpan="3" Grid.Column="1" Width="580" Height="400" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:Category}">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Column 1: Name -->
+                        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
+                            <Label Content="Name" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
+                            <TextBlock Text="{Binding CategoryName}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
+                        </StackPanel>
+
+                        <!-- Column 2: Description -->
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
+                            <Label Content="Description" FontWeight="Bold" FontSize="12" Foreground="#2D4159" Background="Transparent" Padding="0,0,0,0"/>
+                            <TextBlock Text="{Binding CategoryDescription}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
+                        </StackPanel>
+
+                        <!-- Column 3: Buttons (span both rows) -->
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <Button Content="Details" Command="{Binding DataContext.ShowCategoryDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="75" Height="50" />
+                            <Button Content="Edit" Width="75" Height="50" />
+                            <Button Content="Delete" Width="75" Height="50" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Category details panel shown when a category is selected -->
+        <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10 0"
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
+            <StackPanel>
+                <TextBlock Text="{Binding CurrentCategoryDetails.CategoryName}" FontWeight="Bold" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentCategoryDetails.CategoryId}" Margin="0,2" FontSize="8" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentCategoryDetails.CategoryPrefix, StringFormat='Description: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Previous" Command="{Binding NavigateToCategoryListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
+            <Button Command="{Binding RefreshCategoryListCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5" ToolTip="Reload">
+                <TextBlock Text="&#x21bb;" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 10"/>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>
