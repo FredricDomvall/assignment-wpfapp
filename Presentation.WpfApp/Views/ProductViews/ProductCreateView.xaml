@@ -30,28 +30,30 @@
         </Grid.ColumnDefinitions>
 
         <!-- Product Name -->
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Product Name:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding NewProduct.ProductName}" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5" Text="{Binding NewProduct.ProductName, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Description -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Description:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding NewProduct.ProductDescription}" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding NewProduct.ProductDescription, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Price -->
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Price:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5" Text="{Binding NewProduct.ProductPrice, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Category -->
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Category:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5" 
+                  ItemsSource="{Binding Categories}" 
+                  SelectedItem="{Binding NewProduct.Category, Mode=TwoWay}" 
+                  DisplayMemberPath="CategoryName"/>
 
         <!-- Manufacturer -->
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Manufacturer:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,5"/>
-
-        <!-- Stock Quantity -->
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Stock Quantity:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Margin="0,5"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,5" 
+                  ItemsSource="{Binding Manufacturers}" 
+                  SelectedItem="{Binding NewProduct.Manufacturer, Mode=TwoWay}" 
+                  DisplayMemberPath="ManufacturerName"/>
 
         <!-- Info Row (unchanged, now on row 8) -->
         <StackPanel x:Name="ValidationMessagesPanel" Grid.Row="8" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,20,5,5" Visibility="Collapsed">

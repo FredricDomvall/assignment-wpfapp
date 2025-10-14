@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,14 +18,23 @@ public partial class ProductCreateViewModel : ObservableObject
     }
     [ObservableProperty]
     private string _title = "Create New Product";
-    
+    [ObservableProperty]
+    private Product? _newProduct = new Product();
+    [RelayCommand]
     private void SaveNewProduct()
     {
+        //will build soon
     }
+    [RelayCommand]
     private void CancelNewProductCreation()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;
     }
+
+    /***********************************************************************************
+     *                          ONLY NAVIGATION METHODS BELOW                          *
+     ***********************************************************************************/
+
 }
