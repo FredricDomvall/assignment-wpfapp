@@ -56,8 +56,8 @@
         <!-- If no product is selected, show a message -->
         <TextBlock Grid.Row="1" Grid.Column="0" Text="No products available" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Previous" Command="{Binding NavigateToCategoryCreateViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
-            <Button Content="Next" Command="{Binding NavigateToManufacturerCreateViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
+            <Button Content="Previous" Command="{Binding NavigateToManufacturerListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
+            <Button Content="Next" Command="{Binding NavigateToCategoryListViewCommand}" FontStyle="Italic" Background="#c4c4c4" Width="80" Margin="5"/>
         </StackPanel>
     </Grid>
 </UserControl>
