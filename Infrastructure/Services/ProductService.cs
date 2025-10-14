@@ -50,7 +50,7 @@ public class ProductService : IProductService
             newProduct.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
             newProduct.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
             newProduct.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
-            
+            newProduct.ProductDescription = productForm.ProductDescription ?? "No description available.";
             _productList.Add(newProduct);
             await SaveListToFileAsync();
             return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = newProduct };

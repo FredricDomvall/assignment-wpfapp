@@ -88,5 +88,23 @@
       "ManufacturerCountry": "Sweden",
       "ManufacturerEmail": "Volvo@domain.se"
     }
+  },
+  {
+    "ProductId": "df9b81a5-9bbc-402b-9355-591375ffb128",
+    "ProductCode": "ELE-00004",
+    "ProductName": "Mobile",
+    "ProductDescription": "nokia 3310, old reliable and will never break, betetr than all new fragile smartphones",
+    "ProductPrice": 99.99,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Nokia",
+      "ManufacturerCountry": "USA",
+      "ManufacturerEmail": "Nokia@domain.com"
+    }
   }
 ]
