@@ -54,8 +54,8 @@ public partial class ProductListViewModel : ObservableObject
     private void NavigateToProductCreateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+        var productCreateViewModel = _serviceProvider.GetRequiredService<ProductCreateViewModel>();
+        mainViewModel.CurrentViewModel = productCreateViewModel;
     }
     [RelayCommand]
     private void NavigateToStartView()
@@ -68,15 +68,15 @@ public partial class ProductListViewModel : ObservableObject
     private void NavigateToProductUpdateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+        var productUpdateViewModel = _serviceProvider.GetRequiredService<ProductUpdateViewModel>();
+        mainViewModel.CurrentViewModel = productUpdateViewModel;
     }
     [RelayCommand]
     private void NavigateToProductDeleteView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
-        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+        var productDeleteViewModel = _serviceProvider.GetRequiredService<ProductDeleteViewModel>();
+        mainViewModel.CurrentViewModel = productDeleteViewModel;
     }
     [RelayCommand]
     private void NavigateToManufacturerListView()
