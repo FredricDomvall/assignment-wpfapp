@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Infrastructure.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
@@ -8,9 +9,11 @@ namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductListViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
-    public ProductListViewModel(IServiceProvider serviceProvider)
+    private readonly IProductService _productService;
+    public ProductListViewModel(IServiceProvider serviceProvider, IProductService productService)
     {
         _serviceProvider = serviceProvider;
+        _productService = productService;
     }
     [ObservableProperty]
     private string _title = "Product List";
