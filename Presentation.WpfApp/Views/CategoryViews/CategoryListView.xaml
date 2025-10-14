@@ -14,6 +14,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Button Grid.Row="9" Grid.Column="1" Command="{Binding NavigateToProductListViewCommand}" Content="Product List" Width="150" Height="35" HorizontalAlignment="Right" Margin="0,10,100,0"/>
+
+        <!-- Submit Button -->
+        <Button Grid.Row="9" Grid.Column="1" Command="{Binding NavigateToManufacturerListViewCommand}" Content="Manufacturer List" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
     </Grid>
 </UserControl>
