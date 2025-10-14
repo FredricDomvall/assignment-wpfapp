@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
+using System.Collections.ObjectModel;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductListViewModel : ObservableObject
@@ -17,6 +19,10 @@ public partial class ProductListViewModel : ObservableObject
     }
     [ObservableProperty]
     private string _title = "Product List";
+
+    [ObservableProperty]
+    private ObservableCollection<Product> _productListData = new();
+
 
     [RelayCommand]
     private void NavigateToStartView()
