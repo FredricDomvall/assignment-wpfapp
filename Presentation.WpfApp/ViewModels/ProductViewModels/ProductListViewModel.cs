@@ -16,25 +16,47 @@ public partial class ProductListViewModel : ObservableObject
     private string _title = "Product List";
 
     [RelayCommand]
-    private void NavigateToProductCreateView()
+    private void NavigateToStartView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var productCreateViewModel = _serviceProvider.GetRequiredService<ProductCreateViewModel>();
-        mainViewModel.CurrentViewModel = productCreateViewModel;
+        var startViewModel = _serviceProvider.GetRequiredService<StartViewModel>();
+        mainViewModel.CurrentViewModel = startViewModel;
     }
 
     [RelayCommand]
-    private void NavigateToCategoryListView()
+    private void NavigateToProductCreateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
-        mainViewModel.CurrentViewModel = categoryListViewModel;
+        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
+        mainViewModel.CurrentViewModel = categoryCreateViewModel;
     }
+    [RelayCommand]
+    private void NavigateToProductUpdateView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
+        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToProductDeleteView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
+        mainViewModel.CurrentViewModel = categoryCreateViewModel;
+    }
+
     [RelayCommand]
     private void NavigateToManufacturerListView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
         mainViewModel.CurrentViewModel = manufacturerListViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToCategoryListView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
+        mainViewModel.CurrentViewModel = categoryListViewModel;
     }
 }

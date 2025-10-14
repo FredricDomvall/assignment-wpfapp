@@ -16,11 +16,33 @@ public partial class CategoryListViewModel : ObservableObject
     private string _title = "Category List";
 
     [RelayCommand]
+    private void NavigateToStartView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var startViewModel = _serviceProvider.GetRequiredService<StartViewModel>();
+        mainViewModel.CurrentViewModel = startViewModel;
+    }
+
+    [RelayCommand]
     private void NavigateToCategoryCreateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryCreateViewModel = _serviceProvider.GetRequiredService<CategoryCreateViewModel>();
         mainViewModel.CurrentViewModel = categoryCreateViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToCategoryUpdateView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
+        mainViewModel.CurrentViewModel = categoryListViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToCategoryDeleteView() 
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
+        mainViewModel.CurrentViewModel = categoryListViewModel;
     }
     [RelayCommand]
     private void NavigateToProductListView()

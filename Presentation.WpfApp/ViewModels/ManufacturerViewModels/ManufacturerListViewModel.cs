@@ -22,12 +22,13 @@ public partial class ManufacturerListViewModel : ObservableObject
         var startViewModel = _serviceProvider.GetRequiredService<StartViewModel>();
         mainViewModel.CurrentViewModel = startViewModel;
     }
+
     [RelayCommand]
-    private void NavigateToManufacturerDeleteView()
+    private void NavigateToManufacturerCreateView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
-        mainViewModel.CurrentViewModel = manufacturerListViewModel;
+        var manufacturerCreateViewModel = _serviceProvider.GetRequiredService<ManufacturerCreateViewModel>();
+        mainViewModel.CurrentViewModel = manufacturerCreateViewModel;
     }
     [RelayCommand]
     private void NavigateToManufacturerUpdateView()
@@ -37,12 +38,13 @@ public partial class ManufacturerListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = manufacturerListViewModel;
     }
     [RelayCommand]
-    private void NavigateToManufacturerCreateView()
+    private void NavigateToManufacturerDeleteView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var manufacturerCreateViewModel = _serviceProvider.GetRequiredService<ManufacturerCreateViewModel>();
-        mainViewModel.CurrentViewModel = manufacturerCreateViewModel;
+        var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
+        mainViewModel.CurrentViewModel = manufacturerListViewModel;
     }
+
     [RelayCommand]
     private void NavigateToCategoryListView()
     {
