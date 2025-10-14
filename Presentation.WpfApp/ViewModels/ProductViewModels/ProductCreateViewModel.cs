@@ -32,6 +32,10 @@ public partial class ProductCreateViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Category> _categories = new();
     [ObservableProperty]
+    private Category? _selectedCategory;
+    [ObservableProperty]
+    private Manufacturer? _selectedManufacturer;
+    [ObservableProperty]
     private ObservableCollection<Manufacturer> _manufacturers = new();
     [ObservableProperty]
     private ProductForm? _newProduct = new ProductForm();
@@ -60,7 +64,12 @@ public partial class ProductCreateViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveNewProduct()
     {
-        if (NewProduct is null) return;
+        
+        NewProduct!.CategoryName = SelectedCategory!.CategoryName;
+        NewProduct.ManufacturerName = SelectedManufacturer!.ManufacturerName;
+        NewProduct.ManufacturerCountry = SelectedManufacturer.ManufacturerCountry;
+        NewProduct.ManufacturerEmail = SelectedManufacturer.ManufacturerEmail;
+        
         var addResult = await _productService.AddProductToListAsync(NewProduct);
         if (addResult.Statement is true)
         {

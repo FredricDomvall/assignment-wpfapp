@@ -34,5 +34,41 @@
       "ManufacturerCountry": null,
       "ManufacturerEmail": null
     }
+  },
+  {
+    "ProductId": "1ba52884-d8f1-47fe-9c9f-47126c7de1ed",
+    "ProductCode": "ELE-00002",
+    "ProductName": "testproductA",
+    "ProductDescription": null,
+    "ProductPrice": 12.34,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Sony",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Sony@domain.se"
+    }
+  },
+  {
+    "ProductId": "5383b0ee-afb5-41bf-a421-214423837a95",
+    "ProductCode": "ELE-00003",
+    "ProductName": "testproductB",
+    "ProductDescription": null,
+    "ProductPrice": 12.56,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Sony",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Sony@domain.se"
+    }
   }
 ]

@@ -45,14 +45,14 @@
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Category:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
         <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5" 
                   ItemsSource="{Binding Categories}" 
-                  SelectedItem="{Binding NewProduct.CategoryName, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" 
                   DisplayMemberPath="CategoryName"/>
 
         <!-- Manufacturer -->
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Manufacturer:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,5" 
-                  ItemsSource="{Binding Manufacturers}" 
-                  SelectedItem="{Binding NewProduct.ManufacturerName, Mode=TwoWay}" 
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,5"
+                  ItemsSource="{Binding Manufacturers}"
+                  SelectedItem="{Binding SelectedManufacturer, Mode=TwoWay}"
                   DisplayMemberPath="ManufacturerName"/>
 
         <!-- Info Row (unchanged, now on row 8) -->
