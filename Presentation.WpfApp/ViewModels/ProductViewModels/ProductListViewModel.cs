@@ -19,7 +19,7 @@ public partial class ProductListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _productService = productService;
         _productRepository = productFileRepository;
-        LoadProductsAsync().ConfigureAwait(false);
+        LoadProductsAsync().RunSynchronously();
     }
     [ObservableProperty]
     private string _title = "Product List";
@@ -34,6 +34,11 @@ public partial class ProductListViewModel : ObservableObject
             ProductList = new ObservableCollection<Product>(loadResult.Outcome!);
         else
             ProductList = new ObservableCollection<Product>();
+    }
+    [RelayCommand]
+    private async Task RefreshProductList()
+    {
+        await LoadProductsAsync();
     }
     /***********************************************************************************
      *                          ONLY NAVIGATION COMMANDS BELOW                         *
