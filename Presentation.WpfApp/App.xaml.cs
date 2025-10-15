@@ -51,8 +51,6 @@ public partial class App : Application
                 services.AddTransient<ProductUpdateViewModel>();
                 services.AddTransient<ProductUpdateView>();
 
-                services.AddTransient<ProductDeleteViewModel>();
-
                 services.AddTransient<CategoryCreateViewModel>();
                 services.AddTransient<CategoryCreateView>();
 
@@ -62,8 +60,6 @@ public partial class App : Application
                 services.AddTransient<CategoryUpdateViewModel>();
                 services.AddTransient<CategoryUpdateView>();
 
-                services.AddTransient<CategoryDeleteViewModel>();
-
                 services.AddTransient<ManufacturerCreateViewModel>();
                 services.AddTransient<ManufacturerCreateView>();
 
@@ -72,8 +68,6 @@ public partial class App : Application
 
                 services.AddTransient<ManufacturerUpdateViewModel>();
                 services.AddTransient<ManufacturerUpdateView>();
-
-                services.AddTransient<ManufacturerDeleteViewModel>();
             })
             .Build();
     }
