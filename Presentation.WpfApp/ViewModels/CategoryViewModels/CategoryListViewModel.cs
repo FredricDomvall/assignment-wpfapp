@@ -19,6 +19,7 @@ public partial class CategoryListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _categoryService = categoryService;
         _categoryRepository = categoryFileRepository;
+        LoadCategories();
     }
 
     [ObservableProperty]

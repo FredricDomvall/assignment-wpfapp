@@ -19,6 +19,7 @@ public partial class ManufacturerListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _manufacturerService = manufacturerService;
         _manufacturerRepository = manufacturerFileRepository;
+        LoadManufacturers();
     }
     [ObservableProperty]
     private string _title = "Manufacturer List";
