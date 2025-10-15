@@ -17,7 +17,7 @@ public partial class ProductListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _productService = productService;
         _productRepository = productFileRepository;
-        _ = LoadProductsAsync();
+        LoadProducts();
     }
     [ObservableProperty]
     private string _title = "Product List";
@@ -33,9 +33,9 @@ public partial class ProductListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Product> _productList = new();
 
-    private async Task LoadProductsAsync()
+    private void LoadProducts()
     {
-        var loadResult = await _productService.GetAllProductsFromListAsync();
+        var loadResult = _productService.GetAllProductsFromList();
         if (loadResult.Statement is true)
             ProductList = new ObservableCollection<Product>(loadResult.Outcome!);
         else
@@ -48,7 +48,7 @@ public partial class ProductListViewModel : ObservableObject
         if (product is null) return;
         var deleteResult = await _productService.DeleteProductFromListByIdAsync(product.ProductId);
         if (deleteResult.Statement is true)
-            await LoadProductsAsync();
+            LoadProducts();
     }
     /***********************************************************************************
      *                          ONLY NAVIGATION COMMANDS BELOW                         *

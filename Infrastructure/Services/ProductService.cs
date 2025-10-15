@@ -25,6 +25,7 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
+
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
@@ -68,7 +69,7 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync()
+    public AnswerOutcome<IEnumerable<Product>> GetAllProductsFromList()
     {   
         if (!_productList.Any())
             return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Answer = "No products available.", Outcome = _productList };
