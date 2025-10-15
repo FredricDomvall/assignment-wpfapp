@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
 using System.Collections.ObjectModel;
@@ -37,19 +36,13 @@ public partial class CategoryListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Category> _categoryList = new();
 
-    private async Task LoadCategoriesAsync()
+    private void LoadCategories()
     {
-        var loadResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var loadResult = _categoryService.GetAllCategoriesFromList();
         if (loadResult.Statement is true)
             CategoryList = new ObservableCollection<Category>(loadResult.Outcome!);
         else
             CategoryList = new ObservableCollection<Category>();
-    }
-
-    [RelayCommand]
-    private async Task RefreshCategoryList()
-    {
-        await LoadCategoriesAsync();
     }
 
     /***********************************************************************************

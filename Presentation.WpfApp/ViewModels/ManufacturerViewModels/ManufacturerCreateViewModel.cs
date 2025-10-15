@@ -29,19 +29,13 @@ public partial class ManufacturerCreateViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Manufacturer> _manufacturers = new();
 
-    private async Task LoadManufacturersAsync()
+    private void LoadManufacturers()
     {
-        var loadManufacturersResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var loadManufacturersResult = _manufacturerService.GetAllManufacturersFromList();
         if (loadManufacturersResult.Statement is true)
             Manufacturers = new ObservableCollection<Manufacturer>(loadManufacturersResult.Outcome!);
         else
             Manufacturers = new ObservableCollection<Manufacturer>();
-    }
-
-    [RelayCommand]
-    private async Task RefreshManufacturers()
-    {
-        await LoadManufacturersAsync();
     }
 
     [RelayCommand]
@@ -63,8 +57,4 @@ public partial class ManufacturerCreateViewModel : ObservableObject
         var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
         mainViewModel.CurrentViewModel = manufacturerListViewModel;
     }
-
-    /***********************************************************************************
-     *                          ONLY NAVIGATION METHODS BELOW                          *
-     ***********************************************************************************/
 }

@@ -4,7 +4,6 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.WpfApp.ViewModels.CategoryViewModels;
-using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
 using System.Collections.ObjectModel;
 
@@ -35,22 +34,14 @@ public partial class ManufacturerListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Manufacturer> _manufacturerList = new();
 
-    private async Task LoadManufacturersAsync()
+    private void LoadManufacturers()
     {
-        var loadResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var loadResult = _manufacturerService.GetAllManufacturersFromList();
         if (loadResult.Statement is true)
             ManufacturerList = new ObservableCollection<Manufacturer>(loadResult.Outcome!);
         else
             ManufacturerList = new ObservableCollection<Manufacturer>();
     }
-    [RelayCommand]
-    private async Task RefreshManufacturerList()
-    {
-        await LoadManufacturersAsync();
-    }
-    /***********************************************************************************
-     *                          ONLY NAVIGATION COMMANDS BELOW                         *
-     ***********************************************************************************/
     [RelayCommand]
     private void NavigateToManufacturerCreateView()
     {

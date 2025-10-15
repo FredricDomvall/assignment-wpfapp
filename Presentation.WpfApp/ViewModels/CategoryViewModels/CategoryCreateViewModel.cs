@@ -29,19 +29,13 @@ public partial class CategoryCreateViewModel : ObservableObject
     [ObservableProperty]
     private Category? _newCategory = new Category();
 
-    private async Task LoadCategoriesAsync()
+    private void LoadCategories()
     {
-        var loadCategoriesResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var loadCategoriesResult = _categoryService.GetAllCategoriesFromList();
         if (loadCategoriesResult.Statement is true)
             Categories = new ObservableCollection<Category>(loadCategoriesResult.Outcome!);
         else
             Categories = new ObservableCollection<Category>();
-    }
-
-    [RelayCommand]
-    private async Task RefreshCategories()
-    {
-        await LoadCategoriesAsync();
     }
 
     [RelayCommand]
@@ -63,8 +57,4 @@ public partial class CategoryCreateViewModel : ObservableObject
         var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
         mainViewModel.CurrentViewModel = categoryListViewModel;
     }
-
-    /***********************************************************************************
-     *                          ONLY NAVIGATION METHODS BELOW                          *
-     ***********************************************************************************/
 }
