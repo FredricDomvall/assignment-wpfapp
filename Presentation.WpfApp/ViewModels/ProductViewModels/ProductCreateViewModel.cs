@@ -40,26 +40,20 @@ public partial class ProductCreateViewModel : ObservableObject
     [ObservableProperty]
     private ProductForm? _newProduct = new ProductForm();
 
-    private async Task LoadOtherListsAsync()
+    private void LoadOtherLists()
     {
-        var loadCategoriesResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var loadCategoriesResult = _categoryService.GetAllCategoriesFromList();
         if (loadCategoriesResult.Statement is true)
             Categories = new ObservableCollection<Category>(loadCategoriesResult.Outcome!);
         else
             Categories = new ObservableCollection<Category>();
 
-        var loadManufacturersResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var loadManufacturersResult = _manufacturerService.GetAllManufacturersFromList();
         if (loadManufacturersResult.Statement is true)
             Manufacturers = new ObservableCollection<Manufacturer>(loadManufacturersResult.Outcome!);
         else
             Manufacturers = new ObservableCollection<Manufacturer>();
     }
-    [RelayCommand]
-    private async Task RefreshOtherLists()
-    {
-        await LoadOtherListsAsync();
-    }
-
 
     [RelayCommand]
     private async Task SaveNewProduct()
@@ -86,9 +80,4 @@ public partial class ProductCreateViewModel : ObservableObject
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;
     }
-
-    /***********************************************************************************
-     *                          ONLY NAVIGATION METHODS BELOW                          *
-     ***********************************************************************************/
-
 }
