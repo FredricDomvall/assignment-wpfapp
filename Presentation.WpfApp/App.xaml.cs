@@ -77,7 +77,12 @@ public partial class App : Application
         base.OnStartup(e);
 
         var productService = _host.Services.GetRequiredService<IProductService>();
+        var categoryService = _host.Services.GetRequiredService<ICategoryService>();
+        var manufacturerService = _host.Services.GetRequiredService<IManufacturerService>();
+
         await productService.LoadListFromFileAsync();
+        await categoryService.LoadListFromFileAsync();
+        await manufacturerService.LoadListFromFileAsync();
 
         var mainViewModel = _host.Services.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _host.Services.GetRequiredService<StartViewModel>();
