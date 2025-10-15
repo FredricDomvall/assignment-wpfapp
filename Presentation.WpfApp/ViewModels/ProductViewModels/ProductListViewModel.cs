@@ -69,7 +69,7 @@ public partial class ProductListViewModel : ObservableObject
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productUpdateViewModel = _serviceProvider.GetRequiredService<ProductUpdateViewModel>();
-
+        productUpdateViewModel.CurrentProductDetails = CurrentProductDetails;
         mainViewModel.CurrentViewModel = productUpdateViewModel;
     }
     [RelayCommand]

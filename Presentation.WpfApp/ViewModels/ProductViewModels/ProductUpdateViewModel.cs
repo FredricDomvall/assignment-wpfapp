@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Infrastructure.Models;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductUpdateViewModel : ObservableObject
@@ -10,4 +11,6 @@ public partial class ProductUpdateViewModel : ObservableObject
     }
     [ObservableProperty]
     private string _title = "Update Product";
+
+    public Product? CurrentProductDetails { get; internal set; }
 }
