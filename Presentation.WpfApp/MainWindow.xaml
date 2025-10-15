@@ -35,9 +35,6 @@
                 <DataTemplate DataType="{x:Type productVM:ProductUpdateViewModel}">
                     <productViews:ProductUpdateView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type productVM:ProductDeleteViewModel}">
-                    <productViews:ProductUpdateView />
-                </DataTemplate>
 
                 <DataTemplate DataType="{x:Type categoryVM:CategoryCreateViewModel}">
                     <categoryViews:CategoryCreateView />
@@ -48,10 +45,6 @@
                 <DataTemplate DataType="{x:Type categoryVM:CategoryUpdateViewModel}">
                     <categoryViews:CategoryUpdateView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type categoryVM:CategoryDeleteViewModel}">
-                    <categoryViews:CategoryUpdateView />
-                </DataTemplate>
-
                 <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerCreateViewModel}">
                     <manufacturerViews:ManufacturerCreateView />
                 </DataTemplate>
@@ -59,9 +52,6 @@
                     <manufacturerViews:ManufacturerListView />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerUpdateViewModel}">
-                    <manufacturerViews:ManufacturerUpdateView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerDeleteViewModel}">
                     <manufacturerViews:ManufacturerUpdateView />
                 </DataTemplate>
 

@@ -73,13 +73,6 @@ public partial class ManufacturerListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = manufacturerUpdateViewModel;
     }
     [RelayCommand]
-    private void NavigateToManufacturerDeleteView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var manufacturerDeleteViewModel = _serviceProvider.GetRequiredService<ManufacturerDeleteViewModel>();
-        mainViewModel.CurrentViewModel = manufacturerDeleteViewModel;
-    }
-    [RelayCommand]
     private void NavigateToProductListView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();

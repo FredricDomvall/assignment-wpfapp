@@ -80,14 +80,6 @@ public partial class CategoryListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void NavigateToCategoryDeleteView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryDeleteViewModel = _serviceProvider.GetRequiredService<CategoryDeleteViewModel>();
-        mainViewModel.CurrentViewModel = categoryDeleteViewModel;
-    }
-
-    [RelayCommand]
     private void NavigateToProductListView()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
