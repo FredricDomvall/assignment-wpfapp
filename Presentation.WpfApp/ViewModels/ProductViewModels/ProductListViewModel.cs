@@ -47,6 +47,14 @@ public partial class ProductListViewModel : ObservableObject
     {
         await LoadProductsAsync();
     }
+    [RelayCommand]
+    private async Task DeleteProduct(Product product)
+    {
+        if (product is null) return;
+        var deleteResult = await _productService.DeleteProductFromListByIdAsync(product.ProductId);
+        if (deleteResult.Statement is true)
+            await LoadProductsAsync();
+    }
     /***********************************************************************************
      *                          ONLY NAVIGATION COMMANDS BELOW                         *
      ***********************************************************************************/
@@ -72,5 +80,4 @@ public partial class ProductListViewModel : ObservableObject
         productUpdateViewModel.CurrentProductDetails = CurrentProductDetails;
         mainViewModel.CurrentViewModel = productUpdateViewModel;
     }
-    [RelayCommand]
 }

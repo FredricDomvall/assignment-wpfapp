@@ -1,77 +1,5 @@
 [
   {
-    "ProductId": "d36a6b44-0774-4a94-9705-ba7e5e2a8dba",
-    "ProductCode": "ELE-00001",
-    "ProductName": "SUcessfullyEditedProduct",
-    "ProductDescription": null,
-    "ProductPrice": 999,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Sony",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Sony@domain.se"
-    }
-  },
-  {
-    "ProductId": "965d79fb-5a28-4958-9b08-3ef3a608153e",
-    "ProductCode": "INF-00001",
-    "ProductName": "testproduct",
-    "ProductDescription": null,
-    "ProductPrice": 19.34,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Infrastructure.Models.Category",
-      "CategoryPrefix": "INF"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Infrastructure.Models.Manufacturer",
-      "ManufacturerCountry": null,
-      "ManufacturerEmail": null
-    }
-  },
-  {
-    "ProductId": "1ba52884-d8f1-47fe-9c9f-47126c7de1ed",
-    "ProductCode": "ELE-00002",
-    "ProductName": "UpdatedProduct",
-    "ProductDescription": null,
-    "ProductPrice": 12.34,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Sony",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Sony@domain.se"
-    }
-  },
-  {
-    "ProductId": "5383b0ee-afb5-41bf-a421-214423837a95",
-    "ProductCode": "ELE-00003",
-    "ProductName": "testproductB",
-    "ProductDescription": null,
-    "ProductPrice": 12.56,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Sony",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Sony@domain.se"
-    }
-  },
-  {
     "ProductId": "9c9d7599-821f-4e23-9910-8c75dbb85e26",
     "ProductCode": "CAR-00001",
     "ProductName": "Subaru",
@@ -105,6 +33,24 @@
       "ManufacturerName": "Nokia",
       "ManufacturerCountry": "USA",
       "ManufacturerEmail": "Nokia@domain.com"
+    }
+  },
+  {
+    "ProductId": "765cda4a-f234-4a33-94b2-2b0d0bedd851",
+    "ProductCode": "ELE-00001",
+    "ProductName": "Headphones",
+    "ProductDescription": "Sony Wh-x7834 ultra surround 3d special extra extra",
+    "ProductPrice": 3499.99,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Sony",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Sony@domain.se"
     }
   }
 ]
