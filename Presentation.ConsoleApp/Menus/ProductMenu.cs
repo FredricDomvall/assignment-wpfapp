@@ -42,7 +42,7 @@ internal class ProductMenu
         switch (option)
         {
             case "1":
-                await ShowProductsInList();
+                ShowProductsInList();
                 break;
             case "2":
                 await AddNewProductToList();
@@ -58,11 +58,11 @@ internal class ProductMenu
         }
         await DisplayProductMenu();
     }
-    private async Task ShowProductsInList()
+    private void ShowProductsInList()
     {
         Console.Clear();
         Console.WriteLine("----------  PRODUCT LIST  ----------");
-        var productResult = await _productService.GetAllProductsFromListAsync();
+        var productResult = _productService.GetAllProductsFromList();
         if (!productResult.Statement || productResult.Outcome is null || !productResult.Outcome.Any())
         {
             Console.WriteLine(productResult.Answer);
@@ -123,7 +123,7 @@ internal class ProductMenu
     {
         Console.Clear();
         Console.WriteLine("---------- EDIT PRODUCT ----------");
-        var productResult = await _productService.GetAllProductsFromListAsync();
+        var productResult = _productService.GetAllProductsFromList();
         if (!productResult.Statement || productResult.Outcome is null || !productResult.Outcome.Any())
         {
             Console.WriteLine(productResult.Answer);
@@ -177,7 +177,7 @@ internal class ProductMenu
 
     private async Task<string> ChooseCategoryForNewProduct()
     {
-        var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var categoryResult = _categoryService.GetAllCategoriesFromList();
         while (!categoryResult.Statement || categoryResult.Outcome is null || !categoryResult.Outcome.Any())
         {
             Console.WriteLine(categoryResult.Answer);
@@ -186,7 +186,7 @@ internal class ProductMenu
             Console.ReadKey();
             Category newCategory = new();
             await _categoryMenu.AddNewCategoryToList();
-            categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
+            categoryResult = _categoryService.GetAllCategoriesFromList();
         }
 
         var categories = categoryResult.Outcome!.ToList();
@@ -207,7 +207,7 @@ internal class ProductMenu
     }
     private async Task<Manufacturer> ChooseManufacturerForNewProduct()
     {
-        var manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var manufacturerResult =  _manufacturerService.GetAllManufacturersFromList();
         while (!manufacturerResult.Statement || manufacturerResult.Outcome is null || !manufacturerResult.Outcome.Any())
         {
             Console.WriteLine(manufacturerResult.Answer);
@@ -215,7 +215,7 @@ internal class ProductMenu
             Console.ReadKey();
             Manufacturer newManufacturer = new();
             await ManufacturerMenu.AddNewManufacturerToList();
-            manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+            manufacturerResult = _manufacturerService.GetAllManufacturersFromList();
         }
 
         var manufacturers = manufacturerResult.Outcome!.ToList();

@@ -62,7 +62,7 @@
         <Border Grid.Row="1" Grid.Column="0" Padding="2" Margin="10 +0"
         BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="#FFF">
             <StackPanel>
-                <TextBlock Text="{Binding CurrentProductDetails.ProductId}" Margin="0,2" FontSize="10" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductId}" Margin="0,2" FontSize="10" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding CurrentProductDetails.ProductName}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                 <StackPanel Margin="0 5 0 5" Orientation="Horizontal">
                     <StackPanel HorizontalAlignment="Left" Width="120">

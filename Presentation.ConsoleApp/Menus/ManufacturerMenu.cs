@@ -25,7 +25,7 @@ public class ManufacturerMenu
         switch (option)
         {
             case "1":
-                await ShowManufacturersInList();
+                ShowManufacturersInList();
                 break;
             case "2":
                 await AddNewManufacturerToList();
@@ -38,11 +38,11 @@ public class ManufacturerMenu
         }
         await DisplayManufacturerMenu();
     }
-    private async Task ShowManufacturersInList()
+    private void ShowManufacturersInList()
     {
         Console.Clear();
         Console.WriteLine("----------  MANUFACTURER LIST  ----------");
-        var manufacturerResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var manufacturerResult = _manufacturerService.GetAllManufacturersFromList();
         if (!manufacturerResult.Statement || manufacturerResult.Outcome is null)
         {
             Console.WriteLine(manufacturerResult.Answer);

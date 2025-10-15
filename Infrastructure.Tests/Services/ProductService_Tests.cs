@@ -92,7 +92,7 @@ public class ProductService_Tests
         Assert.DoesNotContain(productExistsInList.Outcome!, p => p.ProductName == "");
     }
     [Fact]
-    public async Task GetAllProductsFromList_ShouldReturnEmptyList_WhenNoProductsExist()
+    public void GetAllProductsFromList_ShouldReturnEmptyList_WhenNoProductsExist()
     {
         if (File.Exists(_testFilePath))
             File.Delete(_testFilePath);
