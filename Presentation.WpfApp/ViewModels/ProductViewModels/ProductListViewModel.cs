@@ -73,24 +73,4 @@ public partial class ProductListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = productUpdateViewModel;
     }
     [RelayCommand]
-    private void NavigateToProductDeleteView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var productDeleteViewModel = _serviceProvider.GetRequiredService<ProductDeleteViewModel>();
-        mainViewModel.CurrentViewModel = productDeleteViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToManufacturerListView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
-        mainViewModel.CurrentViewModel = manufacturerListViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToCategoryListView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
-        mainViewModel.CurrentViewModel = categoryListViewModel;
-    }
 }
