@@ -16,5 +16,11 @@
     "ManufacturerName": "Nokia",
     "ManufacturerCountry": "USA",
     "ManufacturerEmail": "Nokia@domain.com"
+  },
+  {
+    "ManufacturerId": "414e367d-b479-4699-b357-6818bec50504",
+    "ManufacturerName": "test",
+    "ManufacturerCountry": "test",
+    "ManufacturerEmail": "test@test.test"
   }
 ]
