@@ -25,7 +25,8 @@ public partial class ProductCreateViewModel : ObservableObject
         _productService = productService;
         _manufacturerService = manufacturerService;
         _categoryService = categoryService;
-        
+        LoadOtherLists();
+
     }
     [ObservableProperty]
     private string _title = "Create New Product";
