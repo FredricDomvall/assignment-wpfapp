@@ -16,5 +16,23 @@
       "ManufacturerCountry": "Sweden",
       "ManufacturerEmail": "Sony@domain.se"
     }
+  },
+  {
+    "ProductId": "f54c33e3-f5fa-4299-bef9-bf2397ef20b6",
+    "ProductCode": "ELE-00002",
+    "ProductName": "testproduct",
+    "ProductDescription": "testbeskrivning",
+    "ProductPrice": 12.34,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Volvo",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Volvo@domain.se"
+    }
   }
 ]
