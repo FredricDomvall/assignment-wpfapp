@@ -38,7 +38,7 @@
   {
     "ProductId": "1ba52884-d8f1-47fe-9c9f-47126c7de1ed",
     "ProductCode": "ELE-00002",
-    "ProductName": "testproductA",
+    "ProductName": "UpdatedProduct",
     "ProductDescription": null,
     "ProductPrice": 12.34,
     "Category": {
