@@ -68,7 +68,6 @@ public class ProductService : IProductService
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
     }
-
     public AnswerOutcome<IEnumerable<Product>> GetAllProductsFromList()
     {   
         if (!_productList.Any())
@@ -76,26 +75,6 @@ public class ProductService : IProductService
 
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
-
-    public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
-    {
-        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
-        if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
-            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Outcome = productsFromFile.Outcome};
-
-        _productList = productsFromFile.Outcome;
-        return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
-    }
-
-    public async Task<AnswerOutcome<bool>> SaveListToFileAsync()
-    {
-        if (!_productList.Any())
-            return new AnswerOutcome<bool> { Statement = false };
-
-        await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _productList);
-        return new AnswerOutcome<bool> { Statement = true };
-    }
-
     public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Guid productId, ProductForm productForm)
     {
         var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == productId);
@@ -126,10 +105,7 @@ public class ProductService : IProductService
                 errorMessages += priceValidationResult.Answer + "\n";
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
-
-
     }
-
     public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
     {
         if (!_productList.Any(p => p.ProductId == productId))
@@ -138,5 +114,22 @@ public class ProductService : IProductService
         _productList.RemoveAll(p => p.ProductId == productId);
         await SaveListToFileAsync();
         return new AnswerOutcome<bool> { Statement = true, Answer = "Product deleted successfully." };
+    }
+    public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
+    {
+        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
+        if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
+            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Outcome = productsFromFile.Outcome };
+
+        _productList = productsFromFile.Outcome;
+        return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
+    }
+    public async Task<AnswerOutcome<bool>> SaveListToFileAsync()
+    {
+        if (!_productList.Any())
+            return new AnswerOutcome<bool> { Statement = false };
+
+        await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _productList);
+        return new AnswerOutcome<bool> { Statement = true };
     }
 }

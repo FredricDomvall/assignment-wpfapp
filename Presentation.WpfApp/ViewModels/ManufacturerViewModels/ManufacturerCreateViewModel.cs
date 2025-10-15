@@ -29,19 +29,13 @@ public partial class ManufacturerCreateViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Manufacturer> _manufacturers = new();
 
-    private void LoadManufacturers()
-    {
-        var loadManufacturersResult = _manufacturerService.GetAllManufacturersFromList();
-        if (loadManufacturersResult.Statement is true)
-            Manufacturers = new ObservableCollection<Manufacturer>(loadManufacturersResult.Outcome!);
-        else
-            Manufacturers = new ObservableCollection<Manufacturer>();
-    }
-
     [RelayCommand]
     private async Task SaveNewManufacturer()
     {
-        var addResult = await _manufacturerService.AddManufacturerToListAsync(NewManufacturer!);
+        NewManufacturer!.ManufacturerName = NewManufacturer.ManufacturerName;
+        NewManufacturer.ManufacturerCountry = NewManufacturer.ManufacturerCountry;
+        NewManufacturer.ManufacturerEmail = NewManufacturer.ManufacturerEmail;
+        var addResult = await _manufacturerService.AddManufacturerToListAsync(NewManufacturer);
         if (addResult.Statement is true)
         {
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();

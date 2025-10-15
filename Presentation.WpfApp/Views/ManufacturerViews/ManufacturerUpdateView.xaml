@@ -22,16 +22,14 @@
             <Button Command="{Binding NavigateToManufacturerListViewCommand}" Content="Back to Manufacturer List" FontStyle="Italic" Height="50" Margin="0,0,0,10"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <Label Content="{Binding _currentManufacturerDetails.ManufacturerId}" />
+            <Label Content="{Binding CurrentManufacturerDetails.ManufacturerId}" />
             <TextBox Margin="0,5" Text="{Binding CurrentManufacturerDetails.ManufacturerId}" IsReadOnly="True"/>
-            <Label Content="{Binding _currentManufacturerDetails.ManufacturerName}" />
+            <Label Content="{Binding CurrentManufacturerDetails.ManufacturerName}" />
             <TextBox Margin="0,5" Text="{Binding CurrentManufacturerDetails.ManufacturerName}"/>
-            <Label Content="{Binding _currentManufacturerDetails.ManufacturerEmail}" />
+            <Label Content="{Binding CurrentManufacturerDetails.ManufacturerEmail}" />
             <TextBox Margin="0,5" Text="{Binding CurrentManufacturerDetails.ManufacturerEmail}"/>
-            <Label Content="{Binding _currentManufacturerDetails.ManufacturerCountry}" />
+            <Label Content="{Binding CurrentManufacturerDetails.ManufacturerCountry}" />
             <TextBox Margin="0,5" Text="{Binding CurrentManufacturerDetails.ManufacturerCountry}"/>
-            <Label Content="{Binding _currentManufacturerDetails.ManufacturerDescription}" />
-            <TextBox Margin="0,5" Text="{Binding CurrentManufacturerDetails.ManufacturerDescription}"/>
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom" Grid.Column="1" Margin="10">
             <Button Command="{Binding UpdateManufacturerCommand}" Content="Update Manufacturer" FontStyle="Italic" Height="50" Margin="0,0,0,10"/>

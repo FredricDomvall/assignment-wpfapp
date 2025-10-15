@@ -14,6 +14,7 @@ public partial class CategoryUpdateViewModel : ObservableObject
     {
         _serviceProvider = serviceProvider;
         _categoryService = categoryService;
+
     }
 
     [ObservableProperty]
@@ -39,6 +40,13 @@ public partial class CategoryUpdateViewModel : ObservableObject
         };
 
         var updateResult = await _categoryService.UpdateCategoryInListByIdAsync(CurrentCategoryDetails.CategoryId, categoryToUpdate);
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
+        mainViewModel.CurrentViewModel = categoryListViewModel;
+    }
+    [RelayCommand]
+    private void NavigateToCategoryListView()
+    {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
         mainViewModel.CurrentViewModel = categoryListViewModel;

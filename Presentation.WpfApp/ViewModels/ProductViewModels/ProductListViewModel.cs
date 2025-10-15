@@ -68,8 +68,9 @@ public partial class ProductListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = startViewModel;
     }
     [RelayCommand]
-    private void NavigateToProductUpdateView()
+    private void NavigateToProductUpdateView(Product product)
     {
+        ShowProductDetails(product);
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productUpdateViewModel = _serviceProvider.GetRequiredService<ProductUpdateViewModel>();
         productUpdateViewModel.CurrentProductDetails = CurrentProductDetails;

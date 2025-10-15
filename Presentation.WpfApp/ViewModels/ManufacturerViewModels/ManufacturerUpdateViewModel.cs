@@ -45,4 +45,11 @@ public partial class ManufacturerUpdateViewModel : ObservableObject
         var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
         mainViewModel.CurrentViewModel = manufacturerListViewModel;
     }
+    [RelayCommand]
+    private void NavigateToManufacturerListView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
+        mainViewModel.CurrentViewModel = manufacturerListViewModel;
+    }
 }

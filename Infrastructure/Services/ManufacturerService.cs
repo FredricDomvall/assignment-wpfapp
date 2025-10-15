@@ -55,11 +55,37 @@ public class ManufacturerService : IManufacturerService
 
         return new AnswerOutcome<IEnumerable<Manufacturer>> { Statement = true, Answer = "Success.", Outcome = _manufacturerList };
     }
-    public Task<AnswerOutcome<Manufacturer>> UpdateManufacturerInListByIdAsync(Guid manufacturerId, Manufacturer manufacturer)
+    public async Task<AnswerOutcome<Manufacturer>> UpdateManufacturertInListByIdAsync(Guid manufacturerId, Manufacturer manufacturer)
     {
-        throw new NotImplementedException();
-    }
+        var manufacturerToUpdate = _manufacturerList.FirstOrDefault(p => p.ManufacturerId == manufacturerId);
+        if (manufacturerToUpdate == null)
+            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = "manufacturer with the specified ID does not exist." };
 
+        var nameValidationResult = ValidationHelper.ValidateString(manufacturer.ManufacturerName!);
+        var emailValidationResult = ValidationHelper.ValidateEmail(manufacturer.ManufacturerEmail!);
+        var countryValidationResult = ValidationHelper.ValidateString(manufacturer.ManufacturerCountry!);
+
+        if (nameValidationResult.Statement is true && emailValidationResult.Statement is true && countryValidationResult.Statement is true)
+        {
+            manufacturerToUpdate.ManufacturerName = manufacturer.ManufacturerName!;
+            manufacturerToUpdate.ManufacturerCountry = manufacturer.ManufacturerCountry!;
+            manufacturerToUpdate.ManufacturerEmail = manufacturer.ManufacturerEmail!;
+
+            await SaveListToFileAsync();
+            return new AnswerOutcome<Manufacturer> { Statement = true, Answer = "Success.", Outcome = manufacturerToUpdate };
+        }
+        else
+        {
+            string errorMessages = "";
+            if (nameValidationResult.Statement is false)
+                errorMessages += nameValidationResult.Answer + "\n";
+            if (emailValidationResult.Statement is false)
+                errorMessages += emailValidationResult.Answer + "\n";
+            if (countryValidationResult.Statement is false)
+                errorMessages += countryValidationResult.Answer + "\n";
+            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = errorMessages.Trim() };
+        }
+    }
     public async Task<AnswerOutcome<bool>> DeleteManufacturerFromListByIdAsync(Guid manufacturerId)
     {
         if (!_manufacturerList.Any(m => m.ManufacturerId == manufacturerId))
@@ -87,6 +113,38 @@ public class ManufacturerService : IManufacturerService
 
         await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _manufacturerList);
         return new AnswerOutcome<bool> { Statement = true };
+    }
+
+    public async Task<AnswerOutcome<Manufacturer>> UpdateManufacturerInListByIdAsync(Guid manufacturerId, Manufacturer manufacturerForm)
+    {
+        var manufacturerToUpdate = _manufacturerList.FirstOrDefault(m => m.ManufacturerId == manufacturerId);
+        if (manufacturerToUpdate == null)
+            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = "Manufacturer with the specified ID does not exist." };
+
+        var nameValidationResult = ValidationHelper.ValidateString(manufacturerForm.ManufacturerName!);
+        var countryValidationResult = ValidationHelper.ValidateString(manufacturerForm.ManufacturerCountry!);
+        var emailValidationResult = ValidationHelper.ValidateEmail(manufacturerForm.ManufacturerEmail!);
+
+        if (nameValidationResult.Statement && countryValidationResult.Statement && emailValidationResult.Statement)
+        {
+            manufacturerToUpdate.ManufacturerName = manufacturerForm.ManufacturerName!;
+            manufacturerToUpdate.ManufacturerCountry = manufacturerForm.ManufacturerCountry!;
+            manufacturerToUpdate.ManufacturerEmail = manufacturerForm.ManufacturerEmail!;
+
+            await SaveListToFileAsync();
+            return new AnswerOutcome<Manufacturer> { Statement = true, Answer = "Success.", Outcome = manufacturerToUpdate };
+        }
+        else
+        {
+            string errorMessages = "";
+            if (!nameValidationResult.Statement)
+                errorMessages += nameValidationResult.Answer + "\n";
+            if (!countryValidationResult.Statement)
+                errorMessages += countryValidationResult.Answer + "\n";
+            if (!emailValidationResult.Statement)
+                errorMessages += emailValidationResult.Answer + "\n";
+            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = errorMessages.Trim() };
+        }
     }
 }
 

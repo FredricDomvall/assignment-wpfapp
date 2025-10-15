@@ -75,10 +75,12 @@ public partial class CategoryListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void NavigateToCategoryUpdateView()
+    private void NavigateToCategoryUpdateView(Category category)
     {
+        ShowCategoryDetails(category);
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryUpdateViewModel = _serviceProvider.GetRequiredService<CategoryUpdateViewModel>();
+        categoryUpdateViewModel.CurrentCategoryDetails = CurrentCategoryDetails;
         mainViewModel.CurrentViewModel = categoryUpdateViewModel;
     }
 

@@ -29,15 +29,6 @@ public partial class CategoryCreateViewModel : ObservableObject
     [ObservableProperty]
     private Category? _newCategory = new Category();
 
-    private void LoadCategories()
-    {
-        var loadCategoriesResult = _categoryService.GetAllCategoriesFromList();
-        if (loadCategoriesResult.Statement is true)
-            Categories = new ObservableCollection<Category>(loadCategoriesResult.Outcome!);
-        else
-            Categories = new ObservableCollection<Category>();
-    }
-
     [RelayCommand]
     private async Task SaveNewCategory()
     {

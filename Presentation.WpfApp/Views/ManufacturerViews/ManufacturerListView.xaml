@@ -48,7 +48,7 @@
                             <StackPanel Orientation="Horizontal" Margin="35 0 0 0">
                                 <Button Content="Details" Command="{Binding DataContext.ShowManufacturerDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="40" />
                                 <Button Content="Edit" Command="{Binding DataContext.NavigateToManufacturerUpdateViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="40" />
-                                <Button Content="Delete" Command="{Binding DataContext.DeleteManufacturersCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="40" />
+                                <Button Content="Delete" Command="{Binding DataContext.DeleteManufacturerCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="40" />
                             </StackPanel>
                         </StackPanel>
                     </Grid>

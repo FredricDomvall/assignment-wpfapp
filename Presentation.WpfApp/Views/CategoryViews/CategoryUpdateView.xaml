@@ -22,12 +22,13 @@
             <Button Command="{Binding NavigateToCategoryListViewCommand}" Content="Back to Category List" FontStyle="Italic" Height="50"  Margin="0,0,0,10"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <Label Content="{Binding _currentCategoryDetails.CategoryId}" />
+            <Label Content="{Binding CurrentCategoryDetails.CategoryId}" />
             <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryId}"/>
-            <Label Content="{Binding _currentCategoryDetails.CategoryName}" />
+            <Label Content="{Binding CurrentCategoryDetails.CategoryName}" />
             <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryName}"/>
-            <Label Content="{Binding _currentCategoryDetails.CategoryDescription}" />
-            <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryDescription}"/>
+            <Label Content="{Binding CurrentCategoryDetails.CategoryPrefix}" />
+            <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryPrefix}"/>
+
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom" Grid.Column="1" Margin="10">
             <Button Command="{Binding UpdateCategoryCommand}" Content="Update Category" FontStyle="Italic" Height="50"  Margin="0,0,0,10"/>

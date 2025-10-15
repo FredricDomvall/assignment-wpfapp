@@ -62,9 +62,30 @@ public class CategoryService : ICategoryService
  
         return new AnswerOutcome<IEnumerable<Category>> { Statement = true, Answer = "Success.", Outcome = _categoryList };
     }
-    public Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Guid categoryId, Category category)
+    public async Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Guid categoryId, Category category)
     {
-        throw new NotImplementedException();
+        var categoryToUpdate = _categoryList.FirstOrDefault(c => c.CategoryId == categoryId);
+        if (categoryToUpdate == null)
+            return new AnswerOutcome<Category> { Statement = false, Answer = "Category with the specified ID does not exist." };
+
+        var nameValidationResult = ValidationHelper.ValidateString(category.CategoryName!);
+        // No price validation for Category
+
+        if (nameValidationResult.Statement is true)
+        {
+            categoryToUpdate.CategoryName = category.CategoryName!;
+            categoryToUpdate.CategoryPrefix = category.CategoryPrefix!;
+
+            await SaveListToFileAsync();
+            return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = categoryToUpdate };
+        }
+        else
+        {
+            string errorMessages = "";
+            if (nameValidationResult.Statement is false)
+                errorMessages += nameValidationResult.Answer + "\n";
+            return new AnswerOutcome<Category> { Statement = false, Answer = errorMessages.Trim() };
+        }
     }
 
     public async Task<AnswerOutcome<bool>> DeleteCategoryFromListByIdAsync(Guid categoryId)

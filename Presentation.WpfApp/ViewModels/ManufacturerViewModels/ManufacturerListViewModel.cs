@@ -43,7 +43,8 @@ public partial class ManufacturerListViewModel : ObservableObject
         else
             ManufacturerList = new ObservableCollection<Manufacturer>();
     }
-    private async Task DeleteCategory(Manufacturer manufacturer)
+    [RelayCommand]
+    private async Task DeleteManufacturer(Manufacturer manufacturer)
     {
         if (manufacturer is null) return;
         var deleteResult = await _manufacturerService.DeleteManufacturerFromListByIdAsync(manufacturer.ManufacturerId);
@@ -66,10 +67,12 @@ public partial class ManufacturerListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = startViewModel;
     }
     [RelayCommand]
-    private void NavigateToManufacturerUpdateView()
+    private void NavigateToManufacturerUpdateView(Manufacturer manufacturer)
     {
+        ShowManufacturerDetails(manufacturer);
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var manufacturerUpdateViewModel = _serviceProvider.GetRequiredService<ManufacturerUpdateViewModel>();
+        manufacturerUpdateViewModel.CurrentManufacturerDetails = CurrentManufacturerDetails;
         mainViewModel.CurrentViewModel = manufacturerUpdateViewModel;
     }
 }
