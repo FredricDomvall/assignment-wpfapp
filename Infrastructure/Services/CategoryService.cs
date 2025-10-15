@@ -62,7 +62,20 @@ public class CategoryService : ICategoryService
  
         return new AnswerOutcome<IEnumerable<Category>> { Statement = true, Answer = "Success.", Outcome = _categoryList };
     }
+    public Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Guid categoryId, Category category)
+    {
+        throw new NotImplementedException();
+    }
 
+    public async Task<AnswerOutcome<bool>> DeleteCategoryFromListByIdAsync(Guid categoryId)
+    {
+        if (!_categoryList.Any(c => c.CategoryId == categoryId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Category with the specified ID does not exist." };
+
+        _categoryList.RemoveAll(c => c.CategoryId == categoryId);
+        await SaveListToFileAsync();
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Category deleted successfully." };
+    }
     public async Task<AnswerOutcome<IEnumerable<Category>>> LoadListFromFileAsync()
     {
         var categoriesFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);

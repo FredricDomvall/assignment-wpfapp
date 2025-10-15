@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
@@ -44,6 +45,14 @@ public partial class CategoryListViewModel : ObservableObject
             CategoryList = new ObservableCollection<Category>(loadResult.Outcome!);
         else
             CategoryList = new ObservableCollection<Category>();
+    }
+    [RelayCommand]
+    private async Task DeleteCategory(Category category)
+    {
+        if (category is null) return;
+        var deleteResult = await _categoryService.DeleteCategoryFromListByIdAsync(category.CategoryId);
+        if (deleteResult.Statement is true)
+            LoadCategories();
     }
 
     /***********************************************************************************

@@ -55,7 +55,20 @@ public class ManufacturerService : IManufacturerService
 
         return new AnswerOutcome<IEnumerable<Manufacturer>> { Statement = true, Answer = "Success.", Outcome = _manufacturerList };
     }
+    public Task<AnswerOutcome<Manufacturer>> UpdateManufacturerInListByIdAsync(Guid manufacturerId, Manufacturer manufacturer)
+    {
+        throw new NotImplementedException();
+    }
 
+    public async Task<AnswerOutcome<bool>> DeleteManufacturerFromListByIdAsync(Guid manufacturerId)
+    {
+        if (!_manufacturerList.Any(m => m.ManufacturerId == manufacturerId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer with the specified ID does not exist." };
+
+        _manufacturerList.RemoveAll(m => m.ManufacturerId == manufacturerId);
+        await SaveListToFileAsync();
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Manufacturer deleted successfully." };
+    }
     public async Task<AnswerOutcome<IEnumerable<Manufacturer>>> LoadListFromFileAsync()
     {
         var manufacturersFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
