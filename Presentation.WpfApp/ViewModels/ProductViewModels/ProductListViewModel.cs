@@ -41,11 +41,7 @@ public partial class ProductListViewModel : ObservableObject
         else
             ProductList = new ObservableCollection<Product>();
     }
-    [RelayCommand]
-    private async Task RefreshProductList()
-    {
-        await LoadProductsAsync();
-    }
+
     [RelayCommand]
     private async Task DeleteProduct(Product product)
     {

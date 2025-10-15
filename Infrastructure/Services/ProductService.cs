@@ -25,8 +25,6 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
-        await LoadListFromFileAsync();
-
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
@@ -71,9 +69,8 @@ public class ProductService : IProductService
     }
 
     public async Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync()
-    {
-        var result = await LoadListFromFileAsync();
-        if (result.Statement is false || !_productList.Any())
+    {   
+        if (!_productList.Any())
             return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Answer = "No products available.", Outcome = _productList };
 
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
@@ -100,7 +97,6 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Guid productId, ProductForm productForm)
     {
-        await LoadListFromFileAsync();
         var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == productId);
         if (productToUpdate == null)
             return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
@@ -135,8 +131,6 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
     {
-        await LoadListFromFileAsync();
-
         if (!_productList.Any(p => p.ProductId == productId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified ID does not exist." };
        

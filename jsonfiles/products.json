@@ -1,23 +1,5 @@
 [
   {
-    "ProductId": "9c9d7599-821f-4e23-9910-8c75dbb85e26",
-    "ProductCode": "CAR-00001",
-    "ProductName": "Subaru",
-    "ProductDescription": null,
-    "ProductPrice": 678934.98,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Cars",
-      "CategoryPrefix": "CAR"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Volvo",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Volvo@domain.se"
-    }
-  },
-  {
     "ProductId": "df9b81a5-9bbc-402b-9355-591375ffb128",
     "ProductCode": "ELE-00004",
     "ProductName": "Mobile",
