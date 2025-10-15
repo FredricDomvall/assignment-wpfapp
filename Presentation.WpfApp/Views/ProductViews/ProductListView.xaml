@@ -59,8 +59,8 @@
                         <!-- Column 3: Buttons (span both rows) -->
                         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0">
                             <Button Content="Details" Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="75" Height="50" />
-                            <Button Content="Edit" Width="75" Height="50" />
-                            <Button Content="Delete" Width="75" Height="50" />
+                            <Button Content="Edit" Command="{Binding DataContext.NavigateToProductUpdateViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="75" Height="50" />
+                            <Button Content="Delete" Command="{Binding DataContext.DeleteProductCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="75" Height="50" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

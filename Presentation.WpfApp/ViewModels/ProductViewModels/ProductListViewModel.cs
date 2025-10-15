@@ -47,6 +47,14 @@ public partial class ProductListViewModel : ObservableObject
     {
         await LoadProductsAsync();
     }
+    [RelayCommand]
+    private async Task DeleteProduct(Product product)
+    {
+        if (product is null) return;
+        var deleteResult = await _productService.DeleteProductFromListByIdAsync(product.ProductId);
+        if (deleteResult.Statement is true)
+            await LoadProductsAsync();
+    }
     /***********************************************************************************
      *                          ONLY NAVIGATION COMMANDS BELOW                         *
      ***********************************************************************************/
@@ -69,27 +77,7 @@ public partial class ProductListViewModel : ObservableObject
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productUpdateViewModel = _serviceProvider.GetRequiredService<ProductUpdateViewModel>();
+        productUpdateViewModel.CurrentProductDetails = CurrentProductDetails;
         mainViewModel.CurrentViewModel = productUpdateViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToProductDeleteView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var productDeleteViewModel = _serviceProvider.GetRequiredService<ProductDeleteViewModel>();
-        mainViewModel.CurrentViewModel = productDeleteViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToManufacturerListView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
-        mainViewModel.CurrentViewModel = manufacturerListViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToCategoryListView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
-        mainViewModel.CurrentViewModel = categoryListViewModel;
     }
 }
