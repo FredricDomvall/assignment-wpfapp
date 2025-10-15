@@ -27,7 +27,6 @@ public class ManufacturerService : IManufacturerService
         if (nameValidationResult.Statement && countryValidationResult.Statement &&
             emailValidationResult.Statement && guidValidationResult.Statement && uniqueValidationResult.Statement)
         {
-            await LoadListFromFileAsync();
             _manufacturerList.Add(manufacturer);
             await SaveListToFileAsync();
             return new AnswerOutcome<Manufacturer> { Statement = true, Answer = "Success.", Outcome = manufacturer };
@@ -49,10 +48,9 @@ public class ManufacturerService : IManufacturerService
         }
     }
 
-    public async Task<AnswerOutcome<IEnumerable<Manufacturer>>> GetAllManufacturersFromListAsync()
-    {
-        var result = await LoadListFromFileAsync();
-        if (!result.Statement || !_manufacturerList.Any())
+    public AnswerOutcome<IEnumerable<Manufacturer>> GetAllManufacturersFromList()
+    { 
+        if (!_manufacturerList.Any())
             return new AnswerOutcome<IEnumerable<Manufacturer>> { Statement = false, Answer = "No manufacturers available.", Outcome = _manufacturerList };
 
         return new AnswerOutcome<IEnumerable<Manufacturer>> { Statement = true, Answer = "Success.", Outcome = _manufacturerList };
@@ -61,6 +59,7 @@ public class ManufacturerService : IManufacturerService
     public async Task<AnswerOutcome<IEnumerable<Manufacturer>>> LoadListFromFileAsync()
     {
         var manufacturersFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
+
         if (manufacturersFromFile.Outcome == null || manufacturersFromFile.Outcome.Count == 0)
             return new AnswerOutcome<IEnumerable<Manufacturer>> { Statement = false, Outcome = manufacturersFromFile.Outcome };
 

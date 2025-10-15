@@ -36,7 +36,6 @@ public class CategoryService : ICategoryService
             newCategory.CategoryName = categoryForm.CategoryName!;
             newCategory.CategoryPrefix = categoryForm.CategoryPrefix!;
 
-            await LoadListFromFileAsync();
             _categoryList.Add(newCategory);
             await SaveListToFileAsync();
             return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = newCategory };
@@ -56,9 +55,11 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<AnswerOutcome<IEnumerable<Category>>> GetAllCategoriesFromListAsync()
+    public AnswerOutcome<IEnumerable<Category>> GetAllCategoriesFromList()
     {
-        await LoadListFromFileAsync();
+        if (!_categoryList.Any())
+            return new AnswerOutcome<IEnumerable<Category>> { Statement = false, Answer = "No categories available.", Outcome = _categoryList };
+ 
         return new AnswerOutcome<IEnumerable<Category>> { Statement = true, Answer = "Success.", Outcome = _categoryList };
     }
 
