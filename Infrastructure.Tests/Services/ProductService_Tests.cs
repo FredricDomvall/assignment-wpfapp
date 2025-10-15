@@ -42,7 +42,7 @@ public class ProductService_Tests
 
         //Act
         var validResult = await productService.AddProductToListAsync(validProduct);
-        var productExistsInList = await productService.GetAllProductsFromListAsync();
+        var productExistsInList = productService.GetAllProductsFromList();
 
         //Assert
         Assert.True(validResult.Statement);
@@ -81,7 +81,7 @@ public class ProductService_Tests
         
         // Act
         var invalidResult = await productService.AddProductToListAsync(invalidProduct);
-        var productExistsInList = await productService.GetAllProductsFromListAsync();
+        var productExistsInList = productService.GetAllProductsFromList();
         // Assert
         Assert.False(invalidResult.Statement);
 
@@ -112,7 +112,7 @@ public class ProductService_Tests
         IProductService productService = new ProductService(productJsonFileRepository, manufacturerService, categoryService, fileSources);
         
         // Act
-        var result = await productService.GetAllProductsFromListAsync();
+        var result = productService.GetAllProductsFromList();
         
         // Assert
         Assert.False(result.Statement);

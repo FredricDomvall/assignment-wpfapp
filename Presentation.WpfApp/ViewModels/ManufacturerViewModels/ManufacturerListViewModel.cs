@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+
 using Microsoft.Extensions.DependencyInjection;
-using Presentation.WpfApp.ViewModels.CategoryViewModels;
-using Presentation.WpfApp.ViewModels.ProductViewModels;
+
 using System.Collections.ObjectModel;
 
 namespace Presentation.WpfApp.ViewModels.ManufacturerViewModels;
@@ -43,6 +43,14 @@ public partial class ManufacturerListViewModel : ObservableObject
         else
             ManufacturerList = new ObservableCollection<Manufacturer>();
     }
+    private async Task DeleteCategory(Manufacturer manufacturer)
+    {
+        if (manufacturer is null) return;
+        var deleteResult = await _manufacturerService.DeleteManufacturerFromListByIdAsync(manufacturer.ManufacturerId);
+        if (deleteResult.Statement is true)
+            LoadManufacturers();
+    }
+
     [RelayCommand]
     private void NavigateToManufacturerCreateView()
     {
