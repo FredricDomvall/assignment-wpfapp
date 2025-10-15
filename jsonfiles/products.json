@@ -16,5 +16,41 @@
       "ManufacturerCountry": "Sweden",
       "ManufacturerEmail": "Sony@domain.se"
     }
+  },
+  {
+    "ProductId": "e98bf16b-e4d7-42de-92cd-c6bdbb32280d",
+    "ProductCode": "ELE-00002",
+    "ProductName": "Cellphone",
+    "ProductDescription": "bl baskl dknldakna lkndaldknsaldaskndaslnadslads ",
+    "ProductPrice": 123.67,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "ELE"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Nokia",
+      "ManufacturerCountry": "USA",
+      "ManufacturerEmail": "Nokia@domain.com"
+    }
+  },
+  {
+    "ProductId": "39d44d33-7b4c-4def-812d-d31ea2ccf5aa",
+    "ProductCode": "CAR-00001",
+    "ProductName": "Ferrari Enzo",
+    "ProductDescription": "superduper mega sport car. you cant even afford to look at it unless your a very very wealthy person",
+    "ProductPrice": 1500000.23,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Cars",
+      "CategoryPrefix": "CAR"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Volvo",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Volvo@domain.se"
+    }
   }
 ]
