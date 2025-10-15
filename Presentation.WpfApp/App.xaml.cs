@@ -74,8 +74,10 @@ public partial class App : Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         await _host.StartAsync();
-
         base.OnStartup(e);
+
+        var productService = _host.Services.GetRequiredService<IProductService>();
+        await productService.LoadListFromFileAsync();
 
         var mainViewModel = _host.Services.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _host.Services.GetRequiredService<StartViewModel>();
