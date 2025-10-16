@@ -6,6 +6,7 @@ using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 public partial class ManufacturerListViewModel : ObservableObject
@@ -26,10 +27,14 @@ public partial class ManufacturerListViewModel : ObservableObject
 
     [ObservableProperty]
     private Manufacturer? _currentManufacturerDetails;
+    [ObservableProperty] // Controls the visibility of the details section (chatGPT made me do it)
+    private Visibility? _detailsVisibility = Visibility.Collapsed;
     [RelayCommand]
     private void ShowManufacturerDetails(Manufacturer manufacturer)
     {
+
         CurrentManufacturerDetails = manufacturer;
+        DetailsVisibility = manufacturer != null ? Visibility.Visible : Visibility.Collapsed;
     }
 
     [ObservableProperty]

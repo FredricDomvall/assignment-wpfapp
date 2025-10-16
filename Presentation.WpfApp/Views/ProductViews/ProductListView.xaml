@@ -67,28 +67,25 @@
                 <StackPanel Margin="0 5 0 5" Orientation="Horizontal">
                     <StackPanel HorizontalAlignment="Left" Width="120">
                         <TextBlock Text="{Binding CurrentProductDetails.ProductPrice, StringFormat='  Price: {0} kr'}" Margin="0,2" TextWrapping="Wrap"/>
-                   </StackPanel>
+                    </StackPanel>
                     <StackPanel>
                         <TextBlock Text="{Binding CurrentProductDetails.ProductCode, StringFormat='Art-nr: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
                     </StackPanel>
                 </StackPanel>
+                <TextBlock Text="Category:" FontWeight="SemiBold" TextWrapping="Wrap" Visibility="{Binding DetailsVisibility}"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName}" Visibility="{Binding DetailsVisibility}" Margin="15,0,0,0" TextWrapping="Wrap" />
                 
-                <TextBlock Text="testkategori:" FontWeight="SemiBold" TextWrapping="Wrap"
-           Visibility="{Binding DetailsVisibility}"/>
-                <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName}" 
-           Margin="15,0,0,0" TextWrapping="Wrap"
-           Visibility="{Binding DetailsVisibility}"/>
+                <TextBlock Text="Manufacturer:" FontWeight="SemiBold" TextWrapping="Wrap" Visibility="{Binding DetailsVisibility}"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerName}" Visibility="{Binding DetailsVisibility}" Margin="15,0,0,0" TextWrapping="Wrap" />
                 
-                <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName, StringFormat='Category: '}" FontWeight="SemiBold" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName}" Margin="15,0,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="Manufacturer:" FontWeight="SemiBold" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerName}" Margin="15,0,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="Email:" FontWeight="SemiBold" Margin="0,2,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerEmail}" Margin="15,2,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="Country:" FontWeight="SemiBold" Margin="0,2,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerCountry}" Margin="15,2,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="Description:" FontWeight="SemiBold" Margin="0,2,0,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding CurrentProductDetails.ProductDescription}" Margin="15,2,0,0" TextWrapping="Wrap"/>
+                <TextBlock Text="Email:" FontWeight="SemiBold" Margin="0,2,0,0" TextWrapping="Wrap" Visibility="{Binding DetailsVisibility}"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerEmail}" Visibility="{Binding DetailsVisibility}" Margin="15,2,0,0" TextWrapping="Wrap" />
+                
+                <TextBlock Text="Country:" FontWeight="SemiBold" Margin="0,2,0,0" TextWrapping="Wrap" Visibility="{Binding DetailsVisibility}"/>
+                <TextBlock Text="{Binding CurrentProductDetails.Manufacturer.ManufacturerCountry}" Visibility="{Binding DetailsVisibility}" Margin="15,2,0,0" TextWrapping="Wrap" />
+                
+                <TextBlock Text="Description:" FontWeight="SemiBold" Margin="0,2,0,0" TextWrapping="Wrap" Visibility="{Binding DetailsVisibility}"/>
+                <TextBlock Text="{Binding CurrentProductDetails.ProductDescription}" Visibility="{Binding DetailsVisibility}" Margin="15,2,0,0" TextWrapping="Wrap" />
             </StackPanel>
         </Border>
 
