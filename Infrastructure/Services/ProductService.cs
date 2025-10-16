@@ -36,13 +36,13 @@ public class ProductService : IProductService
 
         //i have to make these validations elswhere to clead this method later. probably a validation service or helper
 
-        var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
+        var nameValidationResult = ProductValidationHelper.ValidateName(productForm.ProductName!);
         validationResults.Add(nameValidationResult);
-        var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
+        var priceValidationResult = ProductValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
         validationResults.Add(priceValidationResult);
-        var guidValidationResult = ValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
+        var guidValidationResult = ProductValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
         validationResults.Add(guidValidationResult);
-        var uniqueValidationResult = ValidationHelper.ValidateProductUnique(newProduct, _productList);
+        var uniqueValidationResult = ProductValidationHelper.ValidateProductUnique(newProduct, _productList);
         validationResults.Add(uniqueValidationResult);
         var categoryValidationResult = ProductValidationHelper.ValidateCategory(productForm.CategoryName!);
         validationResults.Add(categoryValidationResult);
@@ -86,8 +86,8 @@ public class ProductService : IProductService
         if (productToUpdate == null)
             return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
 
-        var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
-        var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
+        var nameValidationResult = ProductValidationHelper.ValidateName(productForm.ProductName!);
+        var priceValidationResult = ProductValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
 
         if (nameValidationResult.Statement is true && priceValidationResult.Statement is true)
         {

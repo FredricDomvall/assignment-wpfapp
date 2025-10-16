@@ -17,24 +17,6 @@ public static class ValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
-    public static AnswerOutcome<bool> ValidateDecimalPrice(string decimalPrice)
-    {
-        var result = decimal.TryParse(decimalPrice, out decimal parsedPrice);
-        if (!result)
-        {
-            if (string.IsNullOrWhiteSpace(decimalPrice))
-                return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be left empty." };
-
-            if (decimalPrice is null)
-                return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be null." };
-
-            return new AnswerOutcome<bool> { Statement = false, Answer = "price must be a decimal value." };
-        }
-        else if (parsedPrice <= 0)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
-
-        return new AnswerOutcome<bool> { Statement = true };
-    }
     public static AnswerOutcome<bool> ValidateGuidId<T>(Guid Id)
     {
         if (Id == Guid.Empty)
@@ -63,23 +45,7 @@ public static class ValidationHelper
     /*
             Below validation for unique values in lists can be changed to generic handlig, Improve later
      */
-    public static AnswerOutcome<bool> ValidateProductUnique(Product checkProduct, List<Product> productList)
-    {
-        if (productList.Any(product => product.ProductName == checkProduct.ProductName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
 
-        return new AnswerOutcome<bool> { Statement = true };
-    }
-    public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> categoryList)
-    {
-        if (categoryList.Any(category => category.CategoryName == checkCategory.CategoryName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCategory name must be unique." };
-
-        if (categoryList.Any(category => category.CategoryId == checkCategory.CategoryId))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tCategory Id must be unique." };
-
-        return new AnswerOutcome<bool> { Statement = true };
-    }
     public static AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> customerList)
     {
         if (string.IsNullOrWhiteSpace(prefix))
