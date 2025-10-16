@@ -4,6 +4,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductListViewModel : ObservableObject
@@ -24,14 +25,20 @@ public partial class ProductListViewModel : ObservableObject
 
     [ObservableProperty]
     private Product? _currentProductDetails;
+
+    [ObservableProperty] // Controls the visibility of the details section (chatGPT made me do it)
+    private Visibility? _detailsVisibility = Visibility.Collapsed;
     [RelayCommand]
     private void ShowProductDetails(Product product)
     {
+
         CurrentProductDetails = product;
+        DetailsVisibility = product != null ? Visibility.Visible : Visibility.Collapsed;
     }
 
     [ObservableProperty]
     private ObservableCollection<Product> _productList = new();
+
 
     private void LoadProducts()
     {
