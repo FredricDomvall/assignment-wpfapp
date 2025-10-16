@@ -36,18 +36,18 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <!-- Column 1: Name -->
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Width="130">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Width="160">
                                 <TextBox Text="Name" BorderThickness="0" Margin="2 0 0 0" FontWeight="Bold" Background="Transparent"/>
                                 <TextBlock Text="{Binding ProductName, StringFormat='{} {0}'}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent"/>
                             </StackPanel>
                             <!-- Column 2: Price -->
-                            <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Left" Width="115">
+                            <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Left" Width="110">
                                 <TextBox Text="Price" BorderThickness="0" Margin="2 0 0 0" FontWeight="Bold" Background="Transparent"/>
                                 <TextBlock Text="{Binding ProductPrice, StringFormat='{} {0} kr'}" FontWeight="Bold" FontSize="14" Foreground="#2D4159" Background="Transparent" Padding="0,0,10,0"/>
                             </StackPanel>
 
                             <!-- Column 3: Buttons (span both rows) cleaned -->
-                            <StackPanel Orientation="Horizontal" Margin="35 0 0 0">
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
                                 <Button Content="Details" Command="{Binding DataContext.ShowProductDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="25" />
                                 <Button Content="Edit" Command="{Binding DataContext.NavigateToProductUpdateViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="25" />
                                 <Button Content="Delete" Command="{Binding DataContext.DeleteProductCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="60" Height="25" />

@@ -42,8 +42,11 @@ public static class ProductValidationHelper
 
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be a decimal value." };
         }
-        else if (parsedPrice <= 0)
+        if (parsedPrice < 0)
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
+
+        if (parsedPrice >= 10000000)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Price cant be greater than: 9999999,99." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }

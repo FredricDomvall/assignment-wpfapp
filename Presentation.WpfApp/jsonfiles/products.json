@@ -40,7 +40,7 @@
     "ProductCode": "CAR-00001",
     "ProductName": "Ferrari Enzo",
     "ProductDescription": "superduper mega sport car. you cant even afford to look at it unless your a very very wealthy person",
-    "ProductPrice": 1500000.23,
+    "ProductPrice": 9999999.55,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Cars",
@@ -95,78 +95,6 @@
     "ProductName": "Xperia",
     "ProductDescription": "cellphone, my favorite",
     "ProductPrice": 2499.99,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Sony",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Sony@domain.se"
-    }
-  },
-  {
-    "ProductId": "9c587aaa-c27c-4c5a-b96d-a5d50f4522be",
-    "ProductCode": "ELE-00006",
-    "ProductName": "test",
-    "ProductDescription": "test",
-    "ProductPrice": 12.34,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Volvo",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Volvo@domain.se"
-    }
-  },
-  {
-    "ProductId": "fe4392b9-ac50-45d3-bc29-21cfbebd9ecc",
-    "ProductCode": "ELE-00007",
-    "ProductName": "test a",
-    "ProductDescription": "test",
-    "ProductPrice": 12.34,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Volvo",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Volvo@domain.se"
-    }
-  },
-  {
-    "ProductId": "59c2126b-3409-4266-bf82-b66c38bc08d8",
-    "ProductCode": "ELE-00008",
-    "ProductName": "abcdefghijklm",
-    "ProductDescription": "abcdefghijklm",
-    "ProductPrice": 1,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Nokia",
-      "ManufacturerCountry": "USA",
-      "ManufacturerEmail": "Nokia@domain.com"
-    }
-  },
-  {
-    "ProductId": "9f5ea973-c836-4e85-80df-907fc5eb4288",
-    "ProductCode": "ELE-00009",
-    "ProductName": "mmmmmmmmmmmmm",
-    "ProductDescription": "aa",
-    "ProductPrice": 1,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Electronics",
