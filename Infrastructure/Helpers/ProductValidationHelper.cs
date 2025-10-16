@@ -17,13 +17,15 @@ public static class ProductValidationHelper
     public static AnswerOutcome<bool> ValidateName(string stringInputs)
     {
         if (string.IsNullOrWhiteSpace(stringInputs))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tText-inputs can not be left empty" };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name can not be left empty" };
 
         if (stringInputs.Length < 3)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tText-inputs be at least 3 characters long." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name be at least 3 characters long." };
+        if (stringInputs.Length > 10)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name can not be longer than 10 characters." };
 
         if (stringInputs.Any(char.IsDigit))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tText-inputs not contain numbers." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name not contain numbers." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
@@ -78,6 +80,20 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
+    public static AnswerOutcome<bool> ValidationControl(ProductForm checkProduct, List<Product> productList)
+    {
+        List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
+        validationResults.Add(ValidateName(checkProduct.ProductName!));
+        validationResults.Add(ValidateDecimalPrice(checkProduct.ProductPrice!));
+        validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
+        validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
+        validationResults.Add(ValidateProductUnique(checkProduct, productList));
+        var finalValidationResult = ValidateAllValidationResults(validationResults);
+        if (finalValidationResult.Statement is true)
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        else
+            return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
+    }
     public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
     {
         string errorMessages = "";
@@ -93,19 +109,4 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
     }
-    public static AnswerOutcome<bool> ValidationControl(ProductForm checkProduct, List<Product> productList)
-    {
-        List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
-        validationResults.Add(ValidateName(checkProduct.ProductName!));
-        validationResults.Add(ValidateDecimalPrice(checkProduct.ProductPrice!));
-        validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
-        validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
-        validationResults.Add(ValidateProductUnique(checkProduct, productList));
-        var finalValidationResult = ValidateAllValidationResults(validationResults);
-        if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
-        else
-            return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
-    }
-
 }
