@@ -24,10 +24,12 @@ public partial class ProductUpdateViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateProduct()
     {
-
-
         var updateResult = await _productService.UpdateProductInListByIdAsync(CurrentProductDetails!);
+        if (updateResult.Statement is false)
+            CurrentProductDetails = updateResult.Outcome;
         MessageBox.Show(updateResult.Answer);
+
+        await _productService.LoadListFromFileAsync();
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;

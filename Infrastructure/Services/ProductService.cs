@@ -85,8 +85,6 @@ public class ProductService : IProductService
         originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
         originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
 
-
-
         ProductForm productForm = new ProductForm
         {
             ProductName = product.ProductName,
@@ -108,7 +106,7 @@ public class ProductService : IProductService
             originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
             originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
 
-            return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };
+            return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer, Outcome = originalProduct };
         }
 
         productToUpdate.ProductName = productForm.ProductName!;
