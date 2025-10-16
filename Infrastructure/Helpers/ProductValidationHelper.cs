@@ -42,11 +42,10 @@ public static class ProductValidationHelper
 
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be a decimal value." };
         }
-        if (parsedPrice < 0)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
-
-        if (parsedPrice >= 10000000)
+        else if (parsedPrice >= 5)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Price cant be greater than: 9999999,99." };
+        else if (parsedPrice < 0)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
@@ -83,7 +82,7 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
-    public static AnswerOutcome<bool> ValidationControl(ProductForm checkProduct, List<Product> productList)
+    public static AnswerOutcome<bool> ProductCreateValidationControl(ProductForm checkProduct, List<Product> productList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
         validationResults.Add(ValidateName(checkProduct.ProductName!));
@@ -97,6 +96,21 @@ public static class ProductValidationHelper
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
+    public static AnswerOutcome<bool> ProductUpdateValidationControl(ProductForm checkProduct, List<Product> productList)
+    {
+        List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
+        validationResults.Add(ValidateName(checkProduct.ProductName!));
+        validationResults.Add(ValidateDecimalPrice(checkProduct.ProductPrice!));
+        validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
+        validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
+
+        var finalValidationResult = ValidateAllValidationResults(validationResults);
+        if (finalValidationResult.Statement is true)
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        else
+            return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
+    }
+
     public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
     {
         string errorMessages = "";
@@ -112,4 +126,5 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
     }
+
 }

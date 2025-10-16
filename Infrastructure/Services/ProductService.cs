@@ -39,8 +39,8 @@ public class ProductService : IProductService
         } while (!result.Statement);
 
 
-        var ValidationResult = ProductValidationHelper.ValidationControl(productForm, _productList);
-        if (ValidationResult.Statement is true)
+        var validationResult = ProductValidationHelper.ProductCreateValidationControl(productForm, _productList);
+        if (validationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
@@ -57,7 +57,7 @@ public class ProductService : IProductService
         }
         else
         {
-            errorMessages = ValidationResult.Answer!;
+            errorMessages = validationResult.Answer!;
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
     }
@@ -68,36 +68,38 @@ public class ProductService : IProductService
 
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
-    public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Guid productId, ProductForm productForm)
+    public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Product product)
     {
-        var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == productId);
+        var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == product.ProductId);
         if (productToUpdate == null)
             return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
 
-        var nameValidationResult = ProductValidationHelper.ValidateName(productForm.ProductName!);
-        var priceValidationResult = ProductValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
-
-        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true)
+        
+        ProductForm productForm = new ProductForm
         {
-            productToUpdate.ProductName = productForm.ProductName!;
-            productToUpdate.ProductPrice = decimal.Parse(productForm.ProductPrice!);
-            productToUpdate.Category.CategoryName = productForm.CategoryName!;
-            productToUpdate.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
-            productToUpdate.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
-            productToUpdate.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
+            ProductName = product.ProductName,
+            ProductPrice = product.ProductPrice.ToString(),
+            CategoryName = product.Category.CategoryName,
+            ManufacturerName = product.Manufacturer.ManufacturerName,
+            ManufacturerCountry = product.Manufacturer.ManufacturerCountry,
+            ManufacturerEmail = product.Manufacturer.ManufacturerEmail
+        };
 
-            await SaveListToFileAsync();
-            return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = productToUpdate };
-        }
-        else
-        {
-            string errorMessages = "";
-            if (nameValidationResult.Statement is false)
-                errorMessages += nameValidationResult.Answer + "\n";
-            if (priceValidationResult.Statement is false)
-                errorMessages += priceValidationResult.Answer + "\n";
-            return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
-        }
+        var validationResult = ProductValidationHelper.ProductUpdateValidationControl(productForm, _productList);
+        if (validationResult.Statement is false)
+            return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };
+
+
+        productToUpdate.ProductName = productForm.ProductName!;
+        productToUpdate.ProductPrice = decimal.Parse(productForm.ProductPrice!);
+        productToUpdate.Category.CategoryName = productForm.CategoryName!;
+        productToUpdate.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
+        productToUpdate.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
+        productToUpdate.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
+
+        await SaveListToFileAsync();
+        return new AnswerOutcome<Product> { Statement = true, Answer = validationResult.Answer };
+
     }
     public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
     {

@@ -88,23 +88,5 @@
       "ManufacturerCountry": "Japan",
       "ManufacturerEmail": "Nintendo@Nintendo.com"
     }
-  },
-  {
-    "ProductId": "23775ed9-3b4e-493d-a336-56247e956896",
-    "ProductCode": "ELE-00005",
-    "ProductName": "Xperia",
-    "ProductDescription": "cellphone, my favorite",
-    "ProductPrice": 2499.99,
-    "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
-      "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
-    },
-    "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Sony",
-      "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Sony@domain.se"
-    }
   }
 ]
