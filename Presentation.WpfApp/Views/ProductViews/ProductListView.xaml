@@ -30,7 +30,7 @@
             <Button Command="{Binding NavigateToProductCreateViewCommand}" Content="Create Product" FontStyle="Italic" />
         </StackPanel>
 
-        <ListView ItemsSource="{Binding ProductList}" Grid.Column="1"  Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch">
+        <ListView Background="White" Opacity="0.8" ItemsSource="{Binding ProductList}" Grid.Column="1"  Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Product}">
                     <Grid>
@@ -59,8 +59,8 @@
         </ListView>
 
         <!-- Details panel shown when a listobject is selected -->
-        <Border Grid.Row="1" Grid.Column="0" Padding="2" Margin="10 +0"
-        BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="#FFF">
+        <Border  Grid.Row="1" Grid.Column="0" Padding="2" Margin="10 +0"
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="White" Opacity="0.8">
             <StackPanel>
                 <TextBlock Text="{Binding CurrentProductDetails.ProductId}" Margin="0,2" FontSize="10" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding CurrentProductDetails.ProductName}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap"/>

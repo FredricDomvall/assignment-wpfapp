@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Assets\Images\abstract.png" />
+    <None Remove="Assets\Images\background.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
+    <Resource Include="Assets\Images\background.png" />
   </ItemGroup>
 
   <ItemGroup>

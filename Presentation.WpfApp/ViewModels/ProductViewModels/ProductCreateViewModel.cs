@@ -4,6 +4,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductCreateViewModel : ObservableObject
@@ -60,10 +61,10 @@ public partial class ProductCreateViewModel : ObservableObject
     private async Task SaveNewProduct()
     {
         
-        NewProduct!.CategoryName = SelectedCategory!.CategoryName;
-        NewProduct.ManufacturerName = SelectedManufacturer!.ManufacturerName;
-        NewProduct.ManufacturerCountry = SelectedManufacturer.ManufacturerCountry;
-        NewProduct.ManufacturerEmail = SelectedManufacturer.ManufacturerEmail;
+        NewProduct!.CategoryName = SelectedCategory?.CategoryName;
+        NewProduct.ManufacturerName = SelectedManufacturer?.ManufacturerName;
+        NewProduct.ManufacturerCountry = SelectedManufacturer?.ManufacturerCountry;
+        NewProduct.ManufacturerEmail = SelectedManufacturer?.ManufacturerEmail;
         
         var addResult = await _productService.AddProductToListAsync(NewProduct);
         if (addResult.Statement is true)
@@ -72,6 +73,7 @@ public partial class ProductCreateViewModel : ObservableObject
             var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
             mainViewModel.CurrentViewModel = productListViewModel;
         }
+        else MessageBox.Show(addResult.Answer!);
 
     }
     [RelayCommand]

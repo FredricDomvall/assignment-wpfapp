@@ -27,13 +27,16 @@ public partial class ManufacturerListViewModel : ObservableObject
 
     [ObservableProperty]
     private Manufacturer? _currentManufacturerDetails;
-    [ObservableProperty] // Controls the visibility of the details section (chatGPT made me do it)
+    [ObservableProperty]
     private Visibility? _detailsVisibility = Visibility.Collapsed;
+    [ObservableProperty]
+    private Visibility? _detailsVisibilityInfo = Visibility.Visible;
     [RelayCommand]
     private void ShowManufacturerDetails(Manufacturer manufacturer)
     {
         CurrentManufacturerDetails = manufacturer;
         DetailsVisibility = manufacturer != null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibilityInfo = Visibility.Collapsed;
     }
 
     [ObservableProperty]

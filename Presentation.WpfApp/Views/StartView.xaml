@@ -10,10 +10,10 @@
              xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
              xmlns:manufacturerVM="clr-namespace:Presentation.WpfApp.ViewModels.ManufacturerViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:StartViewModel}"
-             Background="Transparent"
+             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="White" Opacity="0.8">
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="*"/>
@@ -25,46 +25,49 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Welcome to the Product Management System" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" 
-                   FontSize="24" FontStyle="Italic" 
-                   FontWeight="Bold"
-                   Margin="0 0 0 0">
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="#fff"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="0"/>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Welcome to the Product Management System" 
+           HorizontalAlignment="Center" 
+           VerticalAlignment="Center"
+           Foreground="#e0e0e0"
+           FontSize="28"
+           FontStyle="Italic" 
+           FontWeight="Bold"
+           Margin="0 0 0 0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="#fff"/>
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="0"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
-            <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
-                <TextBlock Text="Use the buttons below to manage products, categories, and manufacturers." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="Objects in the lists right now" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="Filsources ar set in: Infrastructure/Configurations/FileSources.cs" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="10 40 10 10"/>
-            </StackPanel>
-
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+            <TextBlock Text="Filsources are set in: Infrastructure/Configurations/FileSources.cs" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#2D4159" FontWeight="Bold" Margin="10 5 10 30"/>
+            <TextBlock Text="Use the buttons below to manage products, categories, and manufacturers." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5 20"/>
+            <TextBlock Text="Objects in the lists right now" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="0 30 0 0"/>
+        </StackPanel>
+        
         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe8f3;" Foreground="SteelBlue"/>
-            <TextBlock Text="{Binding ProductList.Count, StringFormat='Products: {0}'}" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
-            <Button Content="Manage Products" Command="{Binding NavigateToProductListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40"/>
+            <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe8f3;" Foreground="SteelBlue" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding ProductList.Count, StringFormat='Products: {0}'}" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+            <Button Content="Manage Products" Command="{Binding NavigateToProductListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe8ec;" Foreground="DarkOrange"/>
-            <TextBlock Text="{Binding CategoryList.Count, StringFormat='Categories: {0}'}" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
-            <Button Content="Manage Categories" Command="{Binding NavigateToCategoryListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40"/>
+            <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe8ec;" Foreground="DarkOrange" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding CategoryList.Count, StringFormat='Categories: {0}'}" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+            <Button Content="Manage Categories" Command="{Binding NavigateToCategoryListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe731;" Foreground="DarkGreen"/>
-            <TextBlock Text="{Binding ManufacturerList.Count, StringFormat='Manufacturers: {0}'}"  FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
-            <Button Content="Manage Manufacturers" Command="{Binding NavigateToManufacturerListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" />
+            <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe731;" Foreground="DarkGreen" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding ManufacturerList.Count, StringFormat='Manufacturers: {0}'}"  FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+            <Button Content="Manage Manufacturers" Command="{Binding NavigateToManufacturerListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
         
 

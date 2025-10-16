@@ -25,27 +25,33 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
-
+        string errorMessages = "";
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
 
+
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
-         
-        newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
-        newProduct.ProductCode = GeneratorHelper.GenerateArticleNumber(newProduct.Category.CategoryPrefix, _productList);
+
+        //i have to make these validations elswhere to clead this method later. probably a validation service or helper
 
         var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
         var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
         var guidValidationResult = ValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
         var uniqueValidationResult = ValidationHelper.ValidateProductUnique(newProduct, _productList);
+        var categoryValidationResult = ProductValidationHelper.ValidateCategory(productForm.CategoryName!);
+        var ManufacturerValidationResult = ProductValidationHelper.ValidateManufacturer(productForm.ManufacturerName!);
+        var productExistenceResult = ProductValidationHelper.ValidateProductAlreadyExists(newProduct.ProductId, productForm.ProductName!, _productList);
 
-        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true 
-         && guidValidationResult.Statement is true && uniqueValidationResult.Statement is true)
+        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true && categoryValidationResult.Statement is true &&
+            ManufacturerValidationResult.Statement is true && productExistenceResult.Statement is true && guidValidationResult.Statement is true &&
+            uniqueValidationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
             newProduct.Category.CategoryName = productForm.CategoryName!;
+            newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
+            newProduct.ProductCode = GeneratorHelper.GenerateArticleNumber(newProduct.Category.CategoryPrefix, _productList);
             newProduct.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
             newProduct.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
             newProduct.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
@@ -56,7 +62,7 @@ public class ProductService : IProductService
         }
         else
         {
-            string errorMessages = "";
+            errorMessages = "";
             if (nameValidationResult.Statement is false)
                 errorMessages += nameValidationResult.Answer + "\n";
             if (priceValidationResult.Statement is false)
@@ -65,6 +71,13 @@ public class ProductService : IProductService
                 errorMessages += guidValidationResult.Answer + "\n";
             if (uniqueValidationResult.Statement is false)
                 errorMessages += uniqueValidationResult.Answer + "\n";
+            if (categoryValidationResult.Statement is false)
+                errorMessages += categoryValidationResult.Answer + "\n";
+            if (ManufacturerValidationResult.Statement is false)
+                errorMessages += ManufacturerValidationResult.Answer + "\n";
+            if (productExistenceResult.Statement is false)
+                errorMessages += productExistenceResult.Answer + "\n";
+
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
     }

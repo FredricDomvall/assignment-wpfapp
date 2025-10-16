@@ -29,7 +29,7 @@
             <Button Command="{Binding NavigateToManufacturerCreateViewCommand}" Content="Create Manufacturer" FontStyle="Italic" />
         </StackPanel>
 
-        <ListView ItemsSource="{Binding ManufacturerList}" Grid.Column="1" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch">
+        <ListView ItemsSource="{Binding ManufacturerList}" Grid.Column="1" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch" Background="White" Opacity="0.9">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Manufacturer}">
                     <Grid>
@@ -58,7 +58,7 @@
 
         <!-- Details panel shown when a listobject is selected -->
         <Border Grid.Row="1" Grid.Column="0" Padding="2" Margin="10,0"
-        BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="Transparent">
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="white" Opacity="0.9">
             <StackPanel>
                 <TextBlock Text="Click Edit-button to show details of the selected Manufacturer." FontStyle="Italic" Margin="8 60 8 25" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#c4c4c4" Visibility="{Binding DetailsVisibilityInfo}"/>
                 <TextBlock Text="{Binding CurrentManufacturerDetails.ManufacturerName}" FontWeight="Bold" TextWrapping="Wrap" FontSize="25" Margin="0 0 0 30" HorizontalAlignment="Center" Foreground="#2D4159" Visibility="{Binding DetailsVisibility}"/>

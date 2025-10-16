@@ -17,7 +17,7 @@
         mc:Ignorable="d"
         Title="Product Management System" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
-        <Image Source="pack://application:,,,/Assets/Images/abstract.png" Stretch="UniformToFill" Panel.ZIndex="-1"/>
+        <Image Source="pack://application:,,,/Assets/Images/background.png" Panel.ZIndex="-1"/>
         <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">

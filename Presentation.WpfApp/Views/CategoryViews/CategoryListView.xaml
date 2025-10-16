@@ -29,7 +29,7 @@
             <Button Command="{Binding NavigateToCategoryCreateViewCommand}" Content="Create Category" FontStyle="Italic" />
         </StackPanel>
 
-        <ListView ItemsSource="{Binding CategoryList}" Grid.Column="1" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch">
+        <ListView Background="White" Opacity="0.8" ItemsSource="{Binding CategoryList}" Grid.Column="1" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Category}">
                     <Grid>
@@ -54,7 +54,7 @@
         <!-- Details panel shown when a listobject is selected -->
         <!-- Category details panel shown when a category is selected -->
         <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10 0"
-        BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="White" Opacity="0.8">
             <StackPanel>
                 <TextBlock Text="Click Edit-button to show details of the selected Category." FontStyle="Italic" Margin="8 60 8 25" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#c4c4c4" Visibility="{Binding DetailsVisibilityInfo}"/>
                 

@@ -18,12 +18,6 @@
     "ManufacturerEmail": "Nokia@domain.com"
   },
   {
-    "ManufacturerId": "1a0b30e5-70ed-46ab-8501-980e0e6ac991",
-    "ManufacturerName": "Toyota",
-    "ManufacturerCountry": "Finland",
-    "ManufacturerEmail": "toyota@toyota.com"
-  },
-  {
     "ManufacturerId": "609ba991-bde9-4ff9-8e27-04a699b04619",
     "ManufacturerName": "Nintendo",
     "ManufacturerCountry": "Japan",
