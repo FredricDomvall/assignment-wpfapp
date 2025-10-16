@@ -4,10 +4,13 @@ namespace Infrastructure.Helpers;
 
 public static class ProductValidationHelper
 {
-    public static AnswerOutcome<bool> ValidateGuidId<T>(Guid Id)
+    public static AnswerOutcome<bool> ValidateGuidId(Guid Id, List<Product> productsList)
     {
         if (Id == Guid.Empty)
             return new AnswerOutcome<bool> { Statement = false, Answer = "\tId was not set properly." };
+        if (productsList.Any(p => p.ProductId == Id))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tId already exists in the list." };
+
 
         return new AnswerOutcome<bool> { Statement = true };
     }
@@ -68,14 +71,14 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Product with the specified ID and name do not exist."};
     }
-    public static AnswerOutcome<bool> ValidateProductUnique(Product checkProduct, List<Product> productList)
+    public static AnswerOutcome<bool> ValidateProductUnique(ProductForm checkProduct, List<Product> productList)
     {
         if (productList.Any(product => product.ProductName == checkProduct.ProductName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
-    public static AnswerOutcome<string> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
+    public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
     {
         string errorMessages = "";
 
@@ -85,9 +88,24 @@ public static class ProductValidationHelper
             foreach (var item in productserviceListResult)
                 if (item.Statement is false)
                     errorMessages += item.Answer + "\n";
-            return new AnswerOutcome<string> { Statement = false, Answer = "One or more Validationcontrols failed.", Outcome = errorMessages };
+            return new AnswerOutcome<bool> { Statement = false, Answer = errorMessages };
         }
 
-        return new AnswerOutcome<string> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
     }
+    public static AnswerOutcome<bool> ValidationControl(ProductForm checkProduct, List<Product> productList)
+    {
+        List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
+        validationResults.Add(ValidateName(checkProduct.ProductName!));
+        validationResults.Add(ValidateDecimalPrice(checkProduct.ProductPrice!));
+        validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
+        validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
+        validationResults.Add(ValidateProductUnique(checkProduct, productList));
+        var finalValidationResult = ValidateAllValidationResults(validationResults);
+        if (finalValidationResult.Statement is true)
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        else
+            return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
+    }
+
 }

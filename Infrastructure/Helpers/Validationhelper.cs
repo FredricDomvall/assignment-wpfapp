@@ -4,6 +4,13 @@ using System.Text.RegularExpressions;
 namespace Infrastructure.Helpers;
 public static class ValidationHelper
 {
+    public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> CategoryList)
+    {
+        if (CategoryList.Any(Category => Category.CategoryName == checkCategory.CategoryName))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
+
+        return new AnswerOutcome<bool> { Statement = true };
+    }
     public static AnswerOutcome<bool> ValidateString(string stringInputs)
     {
         if (string.IsNullOrWhiteSpace(stringInputs))

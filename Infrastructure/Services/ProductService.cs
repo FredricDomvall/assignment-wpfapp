@@ -25,34 +25,22 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
-        List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
-
+       
         string errorMessages = "";
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
+         
+        var result = new AnswerOutcome<bool> { Statement = false};
+        do
+        {
+            newProduct.ProductId = GeneratorHelper.GenerateGuidId();
+            result = ProductValidationHelper.ValidateGuidId(newProduct.ProductId, _productList);
+        } while (!result.Statement);
 
-        newProduct.ProductId = GeneratorHelper.GenerateGuidId();
 
-        //i have to make these validations elswhere to clead this method later. probably a validation service or helper
-
-        var nameValidationResult = ProductValidationHelper.ValidateName(productForm.ProductName!);
-        validationResults.Add(nameValidationResult);
-        var priceValidationResult = ProductValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
-        validationResults.Add(priceValidationResult);
-        var guidValidationResult = ProductValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
-        validationResults.Add(guidValidationResult);
-        var uniqueValidationResult = ProductValidationHelper.ValidateProductUnique(newProduct, _productList);
-        validationResults.Add(uniqueValidationResult);
-        var categoryValidationResult = ProductValidationHelper.ValidateCategory(productForm.CategoryName!);
-        validationResults.Add(categoryValidationResult);
-        var ManufacturerValidationResult = ProductValidationHelper.ValidateManufacturer(productForm.ManufacturerName!);
-        validationResults.Add(ManufacturerValidationResult);
-        var productExistenceResult = ProductValidationHelper.ValidateProductAlreadyExists(newProduct.ProductId, productForm.ProductName!, _productList);
-        validationResults.Add(productExistenceResult);
-
-        var finalValidationResult = ProductValidationHelper.ValidateAllValidationResults(validationResults);
-        if (finalValidationResult.Statement is true)
+        var ValidationResult = ProductValidationHelper.ValidationControl(productForm, _productList);
+        if (ValidationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
@@ -69,7 +57,7 @@ public class ProductService : IProductService
         }
         else
         {
-            errorMessages = finalValidationResult.Outcome!;
+            errorMessages = ValidationResult.Answer!;
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
     }
