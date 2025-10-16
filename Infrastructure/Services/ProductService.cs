@@ -74,7 +74,19 @@ public class ProductService : IProductService
         if (productToUpdate == null)
             return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
 
-        
+        var originalProduct = new Product();
+        originalProduct.Category = new Category();
+        originalProduct.Manufacturer = new Manufacturer();
+        originalProduct.ProductId = productToUpdate.ProductId;
+        originalProduct.ProductName = productToUpdate.ProductName;
+        originalProduct.ProductPrice = productToUpdate.ProductPrice;
+        originalProduct.Category.CategoryName = productToUpdate.Category.CategoryName;
+        originalProduct.Manufacturer.ManufacturerName = productToUpdate.Manufacturer.ManufacturerName;
+        originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
+        originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
+
+
+
         ProductForm productForm = new ProductForm
         {
             ProductName = product.ProductName,
@@ -87,8 +99,17 @@ public class ProductService : IProductService
 
         var validationResult = ProductValidationHelper.ProductUpdateValidationControl(productForm, _productList);
         if (validationResult.Statement is false)
-            return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };
+        {
+            originalProduct.ProductId = productToUpdate.ProductId;
+            originalProduct.ProductName = productToUpdate.ProductName;
+            originalProduct.ProductPrice = productToUpdate.ProductPrice;
+            originalProduct.Category.CategoryName = productToUpdate.Category.CategoryName;
+            originalProduct.Manufacturer.ManufacturerName = productToUpdate.Manufacturer.ManufacturerName;
+            originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
+            originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
 
+            return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };
+        }
 
         productToUpdate.ProductName = productForm.ProductName!;
         productToUpdate.ProductPrice = decimal.Parse(productForm.ProductPrice!);

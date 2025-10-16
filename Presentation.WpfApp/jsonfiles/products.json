@@ -74,9 +74,9 @@
   {
     "ProductId": "5bc76e46-281f-46b8-9272-ebe5ac41e168",
     "ProductCode": "ELE-00004",
-    "ProductName": "Nintendo Switch",
+    "ProductName": "Switch",
     "ProductDescription": "gameconsole for tv usage",
-    "ProductPrice": 3499.50,
+    "ProductPrice": 4499.99,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Electronics",
