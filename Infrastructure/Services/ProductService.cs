@@ -52,6 +52,7 @@ public class ProductService : IProductService
         var productExistenceResult = ProductValidationHelper.ValidateProductAlreadyExists(newProduct.ProductId, productForm.ProductName!, _productList);
         validationResults.Add(productExistenceResult);
 
+        var finalValidationResult = ValidationService
         if (nameValidationResult.Statement is true && priceValidationResult.Statement is true && categoryValidationResult.Statement is true &&
             ManufacturerValidationResult.Statement is true && productExistenceResult.Statement is true && guidValidationResult.Statement is true &&
             uniqueValidationResult.Statement is true)

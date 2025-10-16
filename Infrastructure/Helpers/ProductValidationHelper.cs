@@ -30,4 +30,20 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Product with the specified ID and name do not exist."};
     }
+
+    public static AnswerOutcome<string> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
+    {
+        string errorMessages = "";
+
+        bool allValid = productserviceListResult.All(r => r.Statement is true);
+        if (allValid is not true)
+        {
+            foreach (var item in productserviceListResult)
+                if (item.Statement is false)
+                    errorMessages += item.Answer + "\t";
+            return new AnswerOutcome<string> { Statement = false, Answer = "One or more Validationcontrols failed.", Outcome = errorMessages };
+        }
+
+        return new AnswerOutcome<string> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+    }
 }
