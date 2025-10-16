@@ -19,37 +19,31 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="75"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Welcome to the Product Management System" 
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Welcome to the Product Management System" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    FontSize="24" FontStyle="Italic" 
-                   Foreground="#c4c4c4" 
                    FontWeight="Bold"
                    Margin="0 0 0 0">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="#a0a0a0"/>
+                    <Setter Property="Foreground" Value="#fff"/>
                     <Setter Property="Effect">
                         <Setter.Value>
-                            <DropShadowEffect Color="#000000" BlurRadius="0" ShadowDepth="0"/>
+                            <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="0"/>
                         </Setter.Value>
                     </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#fff"/>
-                            <Setter Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="0"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
                 </Style>
             </TextBlock.Style>
         </TextBlock>
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
                 <TextBlock Text="Use the buttons below to manage products, categories, and manufacturers." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
                 <TextBlock Text="Objects in the lists right now" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
                 <TextBlock Text="{Binding ProductList.Count, StringFormat='Products: {0}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
@@ -58,20 +52,18 @@
                 <TextBlock Text="Filsources ar set in: Infrastructure/Configurations/FileSources.cs" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="10 40 10 10"/>
             </StackPanel>
         
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Products" Width="175" Height="40" Margin="25 0 " Command="{Binding NavigateToProductListViewCommand}"/>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
+                <Button Content="Manage Products" Command="{Binding NavigateToProductListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Categories" Width="175" Height="40" Margin="25 0 " Command="{Binding NavigateToCategoryListViewCommand}"/>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                <Button Content="Manage Categories" Command="{Binding NavigateToCategoryListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Manufacturers" Width="175" Height="40" Margin="25 0" Command="{Binding NavigateToManufacturerListViewCommand}"/>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
+                <Button Content="Manage Manufacturers" Command="{Binding NavigateToManufacturerListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" />
             </StackPanel>
-        </StackPanel>
+        
 
     </Grid>
 </UserControl>
