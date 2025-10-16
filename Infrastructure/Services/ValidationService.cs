@@ -5,11 +5,19 @@ namespace Infrastructure.Services;
 
 public class ValidationService
 {
-    private List<AnswerOutcome<bool>> _validationResults = new();
-
-    public AnswerOutcome<List<AnswerOutcome<bool>>> ProductValidationResults(List<AnswerOutcome<bool>> productserviceListResult )
+    public <AnswerOutcome<string> ProductValidationResults(List<AnswerOutcome<bool>> productserviceListResult )
     {
+        string errorMessages = "";
 
-        return new AnswerOutcome<List<AnswerOutcome<bool>>> { Statement = true, Answer = "Validation results retrieved.", Outcome = productserviceListResult };
+        bool allValid = productserviceListResult.All(r => r.Statement is true);
+        if(allValid is not true)
+        {
+            foreach (var item in productserviceListResult)
+                if (item.Statement is false)
+                    errorMessages += item.Answer + "\t";
+            return new AnswerOutcome<string> { Statement = false, Answer = "One or more Validationcontrols failed.", Outcome = errorMessages };
+        }
+            
+        return new AnswerOutcome<string> { Statement = true, Answer = "All Validationcontrols passed successfully." };
     }
 }
