@@ -38,12 +38,19 @@ public class ProductService : IProductService
         //i have to make these validations elswhere to clead this method later. probably a validation service or helper
 
         var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
+        validationResults.Add(nameValidationResult);
         var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
+        validationResults.Add(priceValidationResult);
         var guidValidationResult = ValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
+        validationResults.Add(guidValidationResult);
         var uniqueValidationResult = ValidationHelper.ValidateProductUnique(newProduct, _productList);
+        validationResults.Add(uniqueValidationResult);
         var categoryValidationResult = ProductValidationHelper.ValidateCategory(productForm.CategoryName!);
+        validationResults.Add(categoryValidationResult);
         var ManufacturerValidationResult = ProductValidationHelper.ValidateManufacturer(productForm.ManufacturerName!);
+        validationResults.Add(ManufacturerValidationResult);
         var productExistenceResult = ProductValidationHelper.ValidateProductAlreadyExists(newProduct.ProductId, productForm.ProductName!, _productList);
+        validationResults.Add(productExistenceResult);
 
         if (nameValidationResult.Statement is true && priceValidationResult.Statement is true && categoryValidationResult.Statement is true &&
             ManufacturerValidationResult.Statement is true && productExistenceResult.Statement is true && guidValidationResult.Statement is true &&

@@ -18,16 +18,16 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Manufacturer is set properly.", Outcome = true };
     }
-    public static AnswerOutcome<Product> ValidateProductAlreadyExists(Guid productId, string productName, List<Product> productList)
+    public static AnswerOutcome<bool> ValidateProductAlreadyExists(Guid productId, string productName, List<Product> productList)
     {
         bool existingProductId = productList.Any(p => p.ProductId == productId);
         if (existingProductId is true)
-            return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID already exists (odds minimal so press create again)"};
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified ID already exists (odds minimal so press create again)"};
 
         bool existingProductName = productList.Any(p => p.ProductName == productName);
         if(existingProductName is true)
-            return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified name already exists." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified name already exists." };
 
-        return new AnswerOutcome<Product> { Statement = true, Answer = "Product with the specified ID and name do not exist."};
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Product with the specified ID and name do not exist."};
     }
 }
