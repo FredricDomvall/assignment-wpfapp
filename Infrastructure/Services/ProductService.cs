@@ -32,7 +32,6 @@ public class ProductService : IProductService
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
 
-
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
 
         //i have to make these validations elswhere to clead this method later. probably a validation service or helper
@@ -52,10 +51,8 @@ public class ProductService : IProductService
         var productExistenceResult = ProductValidationHelper.ValidateProductAlreadyExists(newProduct.ProductId, productForm.ProductName!, _productList);
         validationResults.Add(productExistenceResult);
 
-        var finalValidationResult = ValidationService
-        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true && categoryValidationResult.Statement is true &&
-            ManufacturerValidationResult.Statement is true && productExistenceResult.Statement is true && guidValidationResult.Statement is true &&
-            uniqueValidationResult.Statement is true)
+        var finalValidationResult = ProductValidationHelper.ValidateAllValidationResults(validationResults);
+        if (finalValidationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
@@ -72,22 +69,7 @@ public class ProductService : IProductService
         }
         else
         {
-            errorMessages = "";
-            if (nameValidationResult.Statement is false)
-                errorMessages += nameValidationResult.Answer + "\n";
-            if (priceValidationResult.Statement is false)
-                errorMessages += priceValidationResult.Answer + "\n";
-            if (guidValidationResult.Statement is false)
-                errorMessages += guidValidationResult.Answer + "\n";
-            if (uniqueValidationResult.Statement is false)
-                errorMessages += uniqueValidationResult.Answer + "\n";
-            if (categoryValidationResult.Statement is false)
-                errorMessages += categoryValidationResult.Answer + "\n";
-            if (ManufacturerValidationResult.Statement is false)
-                errorMessages += ManufacturerValidationResult.Answer + "\n";
-            if (productExistenceResult.Statement is false)
-                errorMessages += productExistenceResult.Answer + "\n";
-
+            errorMessages = finalValidationResult.Outcome!;
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
     }

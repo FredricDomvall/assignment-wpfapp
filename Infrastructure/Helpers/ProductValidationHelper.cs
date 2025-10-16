@@ -40,7 +40,7 @@ public static class ProductValidationHelper
         {
             foreach (var item in productserviceListResult)
                 if (item.Statement is false)
-                    errorMessages += item.Answer + "\t";
+                    errorMessages += item.Answer + "\n";
             return new AnswerOutcome<string> { Statement = false, Answer = "One or more Validationcontrols failed.", Outcome = errorMessages };
         }
 

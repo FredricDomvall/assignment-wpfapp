@@ -23,15 +23,15 @@ public static class ValidationHelper
         if (!result)
         {
             if (string.IsNullOrWhiteSpace(decimalPrice))
-                return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice can not be left empty." };
+                return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be left empty." };
 
             if (decimalPrice is null)
-                return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice can not be null." };
+                return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be null." };
 
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice must be a decimal value." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "price must be a decimal value." };
         }
         else if (parsedPrice <= 0)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprice must be greater than zero." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
