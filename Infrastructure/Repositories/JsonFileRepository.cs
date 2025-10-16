@@ -9,10 +9,14 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
     {
         try
         {
-            if(!File.Exists(filePath))
-                return new AnswerOutcome<List<T>> {Statement = false, Answer = "File doesnt exist", Outcome = new List<T>() };
+            if (!File.Exists(filePath))
+                return new AnswerOutcome<List<T>> { Statement = false, Answer = "File doesnt exist", Outcome = new List<T>() };
 
             var jsonData = await File.ReadAllTextAsync(filePath);
+
+            if (string.IsNullOrWhiteSpace(jsonData))
+                return new AnswerOutcome<List<T>> { Statement = false, Answer = "File is empty", Outcome = new List<T>() };
+
             var productData = JsonSerializer.Deserialize<List<T>>(jsonData);
 
             if (productData == null)
@@ -20,7 +24,7 @@ public class JsonFileRepository<T> : IJsonFileRepository<T>
 
             return new AnswerOutcome<List<T>> { Statement = true, Outcome = productData };
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return new AnswerOutcome<List<T>> { Statement = false, Answer = ex.Message, Outcome = new List<T>() };
         }

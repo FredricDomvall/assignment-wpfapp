@@ -58,7 +58,7 @@
 
         <!-- Details panel shown when a listobject is selected -->
         <Border Grid.Row="1" Grid.Column="0" Padding="2" Margin="10,0"
-        BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="#FFF">
+        BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Background="Transparent">
             <StackPanel>
                 <TextBlock Text="{Binding CurrentManufacturerDetails.ManufacturerName}" FontWeight="Bold" TextWrapping="Wrap" FontSize="25" Margin="0 0 0 30" HorizontalAlignment="Center" Foreground="#2D4159"/>
                 <TextBlock Text="ID:" FontWeight="Bold" FontSize="13" Foreground="#2D4159" Padding="0,0,0,2"/>

@@ -1,7 +1,17 @@
 ﻿namespace Infrastructure.Configurations;
 public class FileSources
 {
-    public string ProductFileSource { get; set; } = "D:\\Projects\\Nackademin\\C-Sharp\\Assignments\\VG-Assignment\\VG-Assignment\\Assignment\\jsonfiles\\products.json";
-    public string CategoryFileSource { get; set; } = "D:\\Projects\\Nackademin\\C-Sharp\\Assignments\\VG-Assignment\\VG-Assignment\\Assignment\\jsonfiles\\categories.json";
-    public string ManufacturerFileSource { get; set; } = "D:\\Projects\\Nackademin\\C-Sharp\\Assignments\\VG-Assignment\\VG-Assignment\\Assignment\\jsonfiles\\manufacturers.json";
+    public FileSources()
+    {
+        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var projectRoot = Path.GetFullPath(Path.Combine(baseDirectory, @"..\..\.."));
+
+        ProductFileSource = Path.Combine(projectRoot, "jsonfiles", "products.json");
+        CategoryFileSource = Path.Combine(projectRoot, "jsonfiles", "categories.json");
+        ManufacturerFileSource = Path.Combine(projectRoot, "jsonfiles", "manufacturers.json");
+    }
+    
+    public string ProductFileSource { get; set; }
+    public string CategoryFileSource { get; set; }
+    public string ManufacturerFileSource { get; set; }
 }

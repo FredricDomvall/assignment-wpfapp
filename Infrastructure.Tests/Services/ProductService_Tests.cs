@@ -3,11 +3,120 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Moq;
 
 namespace Infrastructure.Tests.Services;
 public class ProductService_Tests
 {
-    private readonly string _testFilePath = "jsonfile_for_testing.json";
+        private readonly Mock<IJsonFileRepository<Product>> _mockRepository;
+        private readonly Mock<IManufacturerService> _mockManufacturerService;
+        private readonly Mock<ICategoryService> _mockCategoryService;
+        private readonly ProductService _productService;
+
+        public ProductService_Tests()
+        {
+            _mockRepository = new Mock<IJsonFileRepository<Product>>();
+            _mockManufacturerService = new Mock<IManufacturerService>();
+            _mockCategoryService = new Mock<ICategoryService>();
+
+            var fileSources = new FileSources { ProductFileSource = "testProducts.json" };
+            _productService = new ProductService(
+                _mockRepository.Object,
+                _mockManufacturerService.Object,
+                _mockCategoryService.Object,
+                fileSources
+            );
+        }
+
+        [Fact]
+        public async Task AddProductToListAsync_ValidProductForm_ShouldReturnSuccess()
+        {
+            // Arrange
+            _mockRepository
+                .Setup(r => r.WriteToJsonFileAsync(It.IsAny<string>(), It.IsAny<List<Product>>()))
+                .ReturnsAsync(new AnswerOutcome<bool> { Statement = true });
+
+            var productForm = new ProductForm
+            {
+                ProductName = "Laptop",
+                ProductPrice = "1200",
+                CategoryName = "Electronics",
+                ManufacturerName = "Dell",
+                ManufacturerCountry = "USA",
+                ManufacturerEmail = "support@dell.com"
+            };
+
+            // Act
+            var result = await _productService.AddProductToListAsync(productForm);
+
+            // Assert
+            Assert.True(result.Statement);
+            Assert.Equal("Success.", result.Answer);
+            Assert.NotNull(result.Outcome);
+        }
+
+        [Fact]
+        public async Task AddProductToListAsync_InvalidProductForm_ShouldReturnFalse()
+        {
+            // Arrange
+            var productForm = new ProductForm
+            {
+                ProductName = "",
+                ProductPrice = "abc",
+                CategoryName = "Electronics",
+                ManufacturerName = "Dell",
+                ManufacturerCountry = "USA",
+                ManufacturerEmail = "support@dell.com"
+            };
+
+            // Act
+            var result = await _productService.AddProductToListAsync(productForm);
+
+            // Assert
+            Assert.False(result.Statement);
+        }
+
+        [Fact]
+        public async Task DeleteProductFromListByIdAsync_IdNotFound_ShouldReturnFalse()
+        {
+            // Arrange
+            var nonExistingId = Guid.NewGuid();
+
+            // Act
+            var result = await _productService.DeleteProductFromListByIdAsync(nonExistingId);
+
+            // Assert
+            Assert.False(result.Statement);
+            Assert.Equal("Product with the specified ID does not exist.", result.Answer);
+        }
+
+        [Fact]
+        public async Task SaveListToFileAsync_EmptyList_ShouldReturnFalse()
+        {
+            // Arrange
+
+            // Act
+            var result = await _productService.SaveListToFileAsync();
+
+            // Assert
+            Assert.False(result.Statement);
+        }
+
+        [Fact]
+        public async Task LoadListFromFileAsync_FileEmpty_ShouldReturnFalse()
+        {
+            // Arrange
+            _mockRepository
+                .Setup(r => r.ReadFromJsonFileAsync(It.IsAny<string>()))
+                .ReturnsAsync(new AnswerOutcome<List<Product>> { Outcome = new List<Product>(), Statement = false });
+
+            // Act
+            var result = await _productService.LoadListFromFileAsync();
+
+            // Assert
+            Assert.False(result.Statement);
+        }
+        private readonly string _testFilePath = "jsonfile_for_testing.json";
     [Fact]
     public async Task AddProductToList_ShouldAddProductToList_WhenValidInput()
     {
@@ -121,6 +230,3 @@ public class ProductService_Tests
     }
 
 }
-
-
-

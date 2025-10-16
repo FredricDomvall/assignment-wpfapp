@@ -15,8 +15,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="75"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Welcome to the Product Management System" 
@@ -24,7 +25,8 @@
                    VerticalAlignment="Center" 
                    FontSize="24" FontStyle="Italic" 
                    Foreground="#c4c4c4" 
-                   FontWeight="Bold">
+                   FontWeight="Bold"
+                   Margin="0 0 0 0">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Foreground" Value="#a0a0a0"/>
@@ -46,17 +48,28 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,40,0,0" >
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Use the buttons below to manage products, categories, and manufacturers." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
+                <TextBlock Text="Objects in the lists right now" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
+                <TextBlock Text="{Binding ProductList.Count, StringFormat='Products: {0}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
+                <TextBlock Text="{Binding CategoryList.Count, StringFormat='Categories: {0}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
+                <TextBlock Text="{Binding ManufacturerList.Count, StringFormat='Manufacturers: {0}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5"/>
+                <TextBlock Text="Filsources ar set in: Infrastructure/Configurations/FileSources.cs" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="10 40 10 10"/>
+            </StackPanel>
+        
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Products" Width="175" Height="40" Margin="10 30" Command="{Binding NavigateToProductListViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Products" Width="175" Height="40" Margin="25 0 " Command="{Binding NavigateToProductListViewCommand}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Categories" Width="175" Height="40" Margin="10 30" Command="{Binding NavigateToCategoryListViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Categories" Width="175" Height="40" Margin="25 0 " Command="{Binding NavigateToCategoryListViewCommand}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Manufacturers" Width="175" Height="40" Margin="10 30" Command="{Binding NavigateToManufacturerListViewCommand}"/>
+                <Button FontStyle="Italic" Background="#c4c4c4" Content="Manage Manufacturers" Width="175" Height="40" Margin="25 0" Command="{Binding NavigateToManufacturerListViewCommand}"/>
             </StackPanel>
         </StackPanel>
 
