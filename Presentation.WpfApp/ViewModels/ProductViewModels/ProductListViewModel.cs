@@ -3,9 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Presentation.WpfApp.ViewModels.CategoryViewModels;
-using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductListViewModel : ObservableObject
@@ -19,41 +18,48 @@ public partial class ProductListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _productService = productService;
         _productRepository = productFileRepository;
+        LoadProducts();
     }
     [ObservableProperty]
     private string _title = "Product List";
 
     [ObservableProperty]
     private Product? _currentProductDetails;
+
+    [ObservableProperty] // Controls the visibility of the details section (chatGPT made me do it)
+    private Visibility? _detailsVisibility = Visibility.Collapsed;
+
+    [ObservableProperty]
+    private Visibility? _detailsVisibilityInfo = Visibility.Visible;
     [RelayCommand]
     private void ShowProductDetails(Product product)
     {
         CurrentProductDetails = product;
+        DetailsVisibility = product is not null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibilityInfo = Visibility.Collapsed;
+
     }
 
     [ObservableProperty]
     private ObservableCollection<Product> _productList = new();
 
-    private async Task LoadProductsAsync()
+
+    private void LoadProducts()
     {
-        var loadResult = await _productService.GetAllProductsFromListAsync();
+        var loadResult = _productService.GetAllProductsFromList();
         if (loadResult.Statement is true)
             ProductList = new ObservableCollection<Product>(loadResult.Outcome!);
         else
             ProductList = new ObservableCollection<Product>();
     }
-    [RelayCommand]
-    private async Task RefreshProductList()
-    {
-        await LoadProductsAsync();
-    }
+
     [RelayCommand]
     private async Task DeleteProduct(Product product)
     {
         if (product is null) return;
         var deleteResult = await _productService.DeleteProductFromListByIdAsync(product.ProductId);
         if (deleteResult.Statement is true)
-            await LoadProductsAsync();
+            LoadProducts();
     }
     /***********************************************************************************
      *                          ONLY NAVIGATION COMMANDS BELOW                         *
@@ -73,8 +79,9 @@ public partial class ProductListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = startViewModel;
     }
     [RelayCommand]
-    private void NavigateToProductUpdateView()
+    private void NavigateToProductUpdateView(Product product)
     {
+        ShowProductDetails(product);
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productUpdateViewModel = _serviceProvider.GetRequiredService<ProductUpdateViewModel>();
         productUpdateViewModel.CurrentProductDetails = CurrentProductDetails;

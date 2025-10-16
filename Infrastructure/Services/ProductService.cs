@@ -25,28 +25,33 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
-        await LoadListFromFileAsync();
-
+        string errorMessages = "";
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
 
+
         newProduct.ProductId = GeneratorHelper.GenerateGuidId();
-         
-        newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
-        newProduct.ProductCode = GeneratorHelper.GenerateArticleNumber(newProduct.Category.CategoryPrefix, _productList);
+
+        //i have to make these validations elswhere to clead this method later. probably a validation service or helper
 
         var nameValidationResult = ValidationHelper.ValidateString(productForm.ProductName!);
         var priceValidationResult = ValidationHelper.ValidateDecimalPrice(productForm.ProductPrice!);
         var guidValidationResult = ValidationHelper.ValidateGuidId<Product>(newProduct.ProductId);
         var uniqueValidationResult = ValidationHelper.ValidateProductUnique(newProduct, _productList);
+        var categoryValidationResult = ProductValidationHelper.ValidateCategory(productForm.CategoryName!);
+        var ManufacturerValidationResult = ProductValidationHelper.ValidateManufacturer(productForm.ManufacturerName!);
+        var productExistenceResult = ProductValidationHelper.ValidateProductAlreadyExists(newProduct.ProductId, productForm.ProductName!, _productList);
 
-        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true 
-         && guidValidationResult.Statement is true && uniqueValidationResult.Statement is true)
+        if (nameValidationResult.Statement is true && priceValidationResult.Statement is true && categoryValidationResult.Statement is true &&
+            ManufacturerValidationResult.Statement is true && productExistenceResult.Statement is true && guidValidationResult.Statement is true &&
+            uniqueValidationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
             newProduct.ProductPrice = decimal.Parse(productForm.ProductPrice!);
             newProduct.Category.CategoryName = productForm.CategoryName!;
+            newProduct.Category.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(productForm.CategoryName!);
+            newProduct.ProductCode = GeneratorHelper.GenerateArticleNumber(newProduct.Category.CategoryPrefix, _productList);
             newProduct.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
             newProduct.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
             newProduct.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
@@ -57,7 +62,7 @@ public class ProductService : IProductService
         }
         else
         {
-            string errorMessages = "";
+            errorMessages = "";
             if (nameValidationResult.Statement is false)
                 errorMessages += nameValidationResult.Answer + "\n";
             if (priceValidationResult.Statement is false)
@@ -66,41 +71,25 @@ public class ProductService : IProductService
                 errorMessages += guidValidationResult.Answer + "\n";
             if (uniqueValidationResult.Statement is false)
                 errorMessages += uniqueValidationResult.Answer + "\n";
+            if (categoryValidationResult.Statement is false)
+                errorMessages += categoryValidationResult.Answer + "\n";
+            if (ManufacturerValidationResult.Statement is false)
+                errorMessages += ManufacturerValidationResult.Answer + "\n";
+            if (productExistenceResult.Statement is false)
+                errorMessages += productExistenceResult.Answer + "\n";
+
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
     }
-
-    public async Task<AnswerOutcome<IEnumerable<Product>>> GetAllProductsFromListAsync()
-    {
-        var result = await LoadListFromFileAsync();
-        if (result.Statement is false || !_productList.Any())
+    public AnswerOutcome<IEnumerable<Product>> GetAllProductsFromList()
+    {   
+        if (!_productList.Any())
             return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Answer = "No products available.", Outcome = _productList };
 
         return new AnswerOutcome<IEnumerable<Product>> { Statement = true, Answer = "Success.", Outcome = _productList };
     }
-
-    public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
-    {
-        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
-        if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
-            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Outcome = productsFromFile.Outcome};
-
-        _productList = productsFromFile.Outcome;
-        return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
-    }
-
-    public async Task<AnswerOutcome<bool>> SaveListToFileAsync()
-    {
-        if (!_productList.Any())
-            return new AnswerOutcome<bool> { Statement = false };
-
-        await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _productList);
-        return new AnswerOutcome<bool> { Statement = true };
-    }
-
     public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Guid productId, ProductForm productForm)
     {
-        await LoadListFromFileAsync();
         var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == productId);
         if (productToUpdate == null)
             return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
@@ -129,19 +118,31 @@ public class ProductService : IProductService
                 errorMessages += priceValidationResult.Answer + "\n";
             return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
         }
-
-
     }
-
     public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)
     {
-        await LoadListFromFileAsync();
-
         if (!_productList.Any(p => p.ProductId == productId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified ID does not exist." };
        
         _productList.RemoveAll(p => p.ProductId == productId);
         await SaveListToFileAsync();
         return new AnswerOutcome<bool> { Statement = true, Answer = "Product deleted successfully." };
+    }
+    public async Task<AnswerOutcome<IEnumerable<Product>>> LoadListFromFileAsync()
+    {
+        var productsFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);
+        if (productsFromFile.Outcome == null || productsFromFile.Outcome.Count == 0)
+            return new AnswerOutcome<IEnumerable<Product>> { Statement = false, Outcome = productsFromFile.Outcome };
+
+        _productList = productsFromFile.Outcome;
+        return new AnswerOutcome<IEnumerable<Product>> { Statement = true };
+    }
+    public async Task<AnswerOutcome<bool>> SaveListToFileAsync()
+    {
+        if (!_productList.Any())
+            return new AnswerOutcome<bool> { Statement = false };
+
+        await _jsonFileRepository.WriteToJsonFileAsync(_filePath, _productList);
+        return new AnswerOutcome<bool> { Statement = true };
     }
 }

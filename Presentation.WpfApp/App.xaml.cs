@@ -51,8 +51,6 @@ public partial class App : Application
                 services.AddTransient<ProductUpdateViewModel>();
                 services.AddTransient<ProductUpdateView>();
 
-                services.AddTransient<ProductDeleteViewModel>();
-
                 services.AddTransient<CategoryCreateViewModel>();
                 services.AddTransient<CategoryCreateView>();
 
@@ -62,8 +60,6 @@ public partial class App : Application
                 services.AddTransient<CategoryUpdateViewModel>();
                 services.AddTransient<CategoryUpdateView>();
 
-                services.AddTransient<CategoryDeleteViewModel>();
-
                 services.AddTransient<ManufacturerCreateViewModel>();
                 services.AddTransient<ManufacturerCreateView>();
 
@@ -72,16 +68,21 @@ public partial class App : Application
 
                 services.AddTransient<ManufacturerUpdateViewModel>();
                 services.AddTransient<ManufacturerUpdateView>();
-
-                services.AddTransient<ManufacturerDeleteViewModel>();
             })
             .Build();
     }
     protected override async void OnStartup(StartupEventArgs e)
     {
         await _host.StartAsync();
-
         base.OnStartup(e);
+
+        var productService = _host.Services.GetRequiredService<IProductService>();
+        var categoryService = _host.Services.GetRequiredService<ICategoryService>();
+        var manufacturerService = _host.Services.GetRequiredService<IManufacturerService>();
+
+        await productService.LoadListFromFileAsync();
+        await categoryService.LoadListFromFileAsync();
+        await manufacturerService.LoadListFromFileAsync();
 
         var mainViewModel = _host.Services.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _host.Services.GetRequiredService<StartViewModel>();

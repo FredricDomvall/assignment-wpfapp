@@ -2,11 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+
 using Microsoft.Extensions.DependencyInjection;
-using Presentation.WpfApp.ViewModels.CategoryViewModels;
-using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
-using Presentation.WpfApp.ViewModels.ProductViewModels;
+
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 public partial class ManufacturerListViewModel : ObservableObject
@@ -20,37 +20,45 @@ public partial class ManufacturerListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _manufacturerService = manufacturerService;
         _manufacturerRepository = manufacturerFileRepository;
+        LoadManufacturers();
     }
     [ObservableProperty]
     private string _title = "Manufacturer List";
 
     [ObservableProperty]
     private Manufacturer? _currentManufacturerDetails;
+    [ObservableProperty]
+    private Visibility? _detailsVisibility = Visibility.Collapsed;
+    [ObservableProperty]
+    private Visibility? _detailsVisibilityInfo = Visibility.Visible;
     [RelayCommand]
     private void ShowManufacturerDetails(Manufacturer manufacturer)
     {
         CurrentManufacturerDetails = manufacturer;
+        DetailsVisibility = manufacturer != null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibilityInfo = Visibility.Collapsed;
     }
 
     [ObservableProperty]
     private ObservableCollection<Manufacturer> _manufacturerList = new();
 
-    private async Task LoadManufacturersAsync()
+    private void LoadManufacturers()
     {
-        var loadResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var loadResult = _manufacturerService.GetAllManufacturersFromList();
         if (loadResult.Statement is true)
             ManufacturerList = new ObservableCollection<Manufacturer>(loadResult.Outcome!);
         else
             ManufacturerList = new ObservableCollection<Manufacturer>();
     }
     [RelayCommand]
-    private async Task RefreshManufacturerList()
+    private async Task DeleteManufacturer(Manufacturer manufacturer)
     {
-        await LoadManufacturersAsync();
+        if (manufacturer is null) return;
+        var deleteResult = await _manufacturerService.DeleteManufacturerFromListByIdAsync(manufacturer.ManufacturerId);
+        if (deleteResult.Statement is true)
+            LoadManufacturers();
     }
-    /***********************************************************************************
-     *                          ONLY NAVIGATION COMMANDS BELOW                         *
-     ***********************************************************************************/
+
     [RelayCommand]
     private void NavigateToManufacturerCreateView()
     {
@@ -66,31 +74,12 @@ public partial class ManufacturerListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = startViewModel;
     }
     [RelayCommand]
-    private void NavigateToManufacturerUpdateView()
+    private void NavigateToManufacturerUpdateView(Manufacturer manufacturer)
     {
+        ShowManufacturerDetails(manufacturer);
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var manufacturerUpdateViewModel = _serviceProvider.GetRequiredService<ManufacturerUpdateViewModel>();
+        manufacturerUpdateViewModel.CurrentManufacturerDetails = CurrentManufacturerDetails;
         mainViewModel.CurrentViewModel = manufacturerUpdateViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToManufacturerDeleteView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var manufacturerDeleteViewModel = _serviceProvider.GetRequiredService<ManufacturerDeleteViewModel>();
-        mainViewModel.CurrentViewModel = manufacturerDeleteViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToProductListView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
-        mainViewModel.CurrentViewModel = productListViewModel;
-    }
-    [RelayCommand]
-    private void NavigateToCategoryListView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
-        mainViewModel.CurrentViewModel = categoryListViewModel;
     }
 }

@@ -36,7 +36,6 @@ public class CategoryService : ICategoryService
             newCategory.CategoryName = categoryForm.CategoryName!;
             newCategory.CategoryPrefix = categoryForm.CategoryPrefix!;
 
-            await LoadListFromFileAsync();
             _categoryList.Add(newCategory);
             await SaveListToFileAsync();
             return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = newCategory };
@@ -56,12 +55,48 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<AnswerOutcome<IEnumerable<Category>>> GetAllCategoriesFromListAsync()
+    public AnswerOutcome<IEnumerable<Category>> GetAllCategoriesFromList()
     {
-        await LoadListFromFileAsync();
+        if (!_categoryList.Any())
+            return new AnswerOutcome<IEnumerable<Category>> { Statement = false, Answer = "No categories available.", Outcome = _categoryList };
+ 
         return new AnswerOutcome<IEnumerable<Category>> { Statement = true, Answer = "Success.", Outcome = _categoryList };
     }
+    public async Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Guid categoryId, Category category)
+    {
+        var categoryToUpdate = _categoryList.FirstOrDefault(c => c.CategoryId == categoryId);
+        if (categoryToUpdate == null)
+            return new AnswerOutcome<Category> { Statement = false, Answer = "Category with the specified ID does not exist." };
 
+        var nameValidationResult = ValidationHelper.ValidateString(category.CategoryName!);
+        // No price validation for Category
+
+        if (nameValidationResult.Statement is true)
+        {
+            categoryToUpdate.CategoryName = category.CategoryName!;
+            categoryToUpdate.CategoryPrefix = category.CategoryPrefix!;
+
+            await SaveListToFileAsync();
+            return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = categoryToUpdate };
+        }
+        else
+        {
+            string errorMessages = "";
+            if (nameValidationResult.Statement is false)
+                errorMessages += nameValidationResult.Answer + "\n";
+            return new AnswerOutcome<Category> { Statement = false, Answer = errorMessages.Trim() };
+        }
+    }
+
+    public async Task<AnswerOutcome<bool>> DeleteCategoryFromListByIdAsync(Guid categoryId)
+    {
+        if (!_categoryList.Any(c => c.CategoryId == categoryId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Category with the specified ID does not exist." };
+
+        _categoryList.RemoveAll(c => c.CategoryId == categoryId);
+        await SaveListToFileAsync();
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Category deleted successfully." };
+    }
     public async Task<AnswerOutcome<IEnumerable<Category>>> LoadListFromFileAsync()
     {
         var categoriesFromFile = await _jsonFileRepository.ReadFromJsonFileAsync(_filePath);

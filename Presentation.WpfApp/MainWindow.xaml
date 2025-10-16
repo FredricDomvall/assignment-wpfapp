@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.WpfApp"
-        
         xmlns:viewmodels="clr-namespace:Presentation.WpfApp.ViewModels"
         xmlns:productVM="clr-namespace:Presentation.WpfApp.ViewModels.ProductViewModels"
         xmlns:categoryVM="clr-namespace:Presentation.WpfApp.ViewModels.CategoryViewModels"
@@ -14,18 +13,16 @@
         xmlns:manufacturerViews="clr-namespace:Presentation.WpfApp.Views.ManufacturerViews"
         xmlns:productViews="clr-namespace:Presentation.WpfApp.Views.ProductViews"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-        
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
+        mc:Ignorable="d"
+        Title="Product Management System" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Image Source="pack://application:,,,/Assets/Images/background.png" Panel.ZIndex="-1"/>
         <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
-
                 <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
                     <views:StartView />
                 </DataTemplate>
-                
                 <DataTemplate DataType="{x:Type productVM:ProductCreateViewModel}">
                     <productViews:ProductCreateView />
                 </DataTemplate>
@@ -35,10 +32,6 @@
                 <DataTemplate DataType="{x:Type productVM:ProductUpdateViewModel}">
                     <productViews:ProductUpdateView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type productVM:ProductDeleteViewModel}">
-                    <productViews:ProductUpdateView />
-                </DataTemplate>
-
                 <DataTemplate DataType="{x:Type categoryVM:CategoryCreateViewModel}">
                     <categoryViews:CategoryCreateView />
                 </DataTemplate>
@@ -48,10 +41,6 @@
                 <DataTemplate DataType="{x:Type categoryVM:CategoryUpdateViewModel}">
                     <categoryViews:CategoryUpdateView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type categoryVM:CategoryDeleteViewModel}">
-                    <categoryViews:CategoryUpdateView />
-                </DataTemplate>
-
                 <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerCreateViewModel}">
                     <manufacturerViews:ManufacturerCreateView />
                 </DataTemplate>
@@ -61,10 +50,6 @@
                 <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerUpdateViewModel}">
                     <manufacturerViews:ManufacturerUpdateView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type manufacturerVM:ManufacturerDeleteViewModel}">
-                    <manufacturerViews:ManufacturerUpdateView />
-                </DataTemplate>
-
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

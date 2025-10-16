@@ -2,11 +2,12 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Presentation.WpfApp.ViewModels.CategoryViewModels;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.CategoryViewModels;
 public partial class CategoryListViewModel : ObservableObject
@@ -20,6 +21,7 @@ public partial class CategoryListViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _categoryService = categoryService;
         _categoryRepository = categoryFileRepository;
+        LoadCategories();
     }
 
     [ObservableProperty]
@@ -27,29 +29,37 @@ public partial class CategoryListViewModel : ObservableObject
 
     [ObservableProperty]
     private Category? _currentCategoryDetails;
+    [ObservableProperty]
+    private Visibility? _detailsVisibility = Visibility.Collapsed;
+    [ObservableProperty]
+    private Visibility? _detailsVisibilityInfo = Visibility.Visible;
 
     [RelayCommand]
     private void ShowCategoryDetails(Category category)
     {
         CurrentCategoryDetails = category;
+        DetailsVisibility = category != null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibilityInfo = Visibility.Collapsed;
     }
 
     [ObservableProperty]
     private ObservableCollection<Category> _categoryList = new();
 
-    private async Task LoadCategoriesAsync()
+    private void LoadCategories()
     {
-        var loadResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var loadResult = _categoryService.GetAllCategoriesFromList();
         if (loadResult.Statement is true)
             CategoryList = new ObservableCollection<Category>(loadResult.Outcome!);
         else
             CategoryList = new ObservableCollection<Category>();
     }
-
     [RelayCommand]
-    private async Task RefreshCategoryList()
+    private async Task DeleteCategory(Category category)
     {
-        await LoadCategoriesAsync();
+        if (category is null) return;
+        var deleteResult = await _categoryService.DeleteCategoryFromListByIdAsync(category.CategoryId);
+        if (deleteResult.Statement is true)
+            LoadCategories();
     }
 
     /***********************************************************************************
@@ -72,19 +82,13 @@ public partial class CategoryListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void NavigateToCategoryUpdateView()
+    private void NavigateToCategoryUpdateView(Category category)
     {
+        ShowCategoryDetails(category);
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryUpdateViewModel = _serviceProvider.GetRequiredService<CategoryUpdateViewModel>();
+        categoryUpdateViewModel.CurrentCategoryDetails = CurrentCategoryDetails;
         mainViewModel.CurrentViewModel = categoryUpdateViewModel;
-    }
-
-    [RelayCommand]
-    private void NavigateToCategoryDeleteView()
-    {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        var categoryDeleteViewModel = _serviceProvider.GetRequiredService<CategoryDeleteViewModel>();
-        mainViewModel.CurrentViewModel = categoryDeleteViewModel;
     }
 
     [RelayCommand]

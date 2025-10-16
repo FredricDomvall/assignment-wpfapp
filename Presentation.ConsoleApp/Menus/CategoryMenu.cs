@@ -26,7 +26,7 @@ internal class CategoryMenu
         switch (option)
         {
             case "1":
-                await ShowCategoriesInList();
+                ShowCategoriesInList();
                 break;
             case "2":
                 await AddNewCategoryToList();
@@ -39,11 +39,11 @@ internal class CategoryMenu
         }
         await DisplayCategoryMenu();
     }
-    private async Task ShowCategoriesInList()
+    private void ShowCategoriesInList()
     {
         Console.Clear();
         Console.WriteLine("----------  CATEGORY LIST  ----------");
-        var categoryResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var categoryResult = _categoryService.GetAllCategoriesFromList();
         if (!categoryResult.Statement || categoryResult.Outcome is null)
         {
             Console.WriteLine(categoryResult.Answer);

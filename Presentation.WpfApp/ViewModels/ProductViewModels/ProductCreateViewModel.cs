@@ -4,6 +4,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ProductViewModels;
 public partial class ProductCreateViewModel : ObservableObject
@@ -25,7 +26,8 @@ public partial class ProductCreateViewModel : ObservableObject
         _productService = productService;
         _manufacturerService = manufacturerService;
         _categoryService = categoryService;
-        
+        LoadOtherLists();
+
     }
     [ObservableProperty]
     private string _title = "Create New Product";
@@ -40,35 +42,29 @@ public partial class ProductCreateViewModel : ObservableObject
     [ObservableProperty]
     private ProductForm? _newProduct = new ProductForm();
 
-    private async Task LoadOtherListsAsync()
+    private void LoadOtherLists()
     {
-        var loadCategoriesResult = await _categoryService.GetAllCategoriesFromListAsync();
+        var loadCategoriesResult = _categoryService.GetAllCategoriesFromList();
         if (loadCategoriesResult.Statement is true)
             Categories = new ObservableCollection<Category>(loadCategoriesResult.Outcome!);
         else
             Categories = new ObservableCollection<Category>();
 
-        var loadManufacturersResult = await _manufacturerService.GetAllManufacturersFromListAsync();
+        var loadManufacturersResult = _manufacturerService.GetAllManufacturersFromList();
         if (loadManufacturersResult.Statement is true)
             Manufacturers = new ObservableCollection<Manufacturer>(loadManufacturersResult.Outcome!);
         else
             Manufacturers = new ObservableCollection<Manufacturer>();
     }
-    [RelayCommand]
-    private async Task RefreshOtherLists()
-    {
-        await LoadOtherListsAsync();
-    }
-
 
     [RelayCommand]
     private async Task SaveNewProduct()
     {
         
-        NewProduct!.CategoryName = SelectedCategory!.CategoryName;
-        NewProduct.ManufacturerName = SelectedManufacturer!.ManufacturerName;
-        NewProduct.ManufacturerCountry = SelectedManufacturer.ManufacturerCountry;
-        NewProduct.ManufacturerEmail = SelectedManufacturer.ManufacturerEmail;
+        NewProduct!.CategoryName = SelectedCategory?.CategoryName;
+        NewProduct.ManufacturerName = SelectedManufacturer?.ManufacturerName;
+        NewProduct.ManufacturerCountry = SelectedManufacturer?.ManufacturerCountry;
+        NewProduct.ManufacturerEmail = SelectedManufacturer?.ManufacturerEmail;
         
         var addResult = await _productService.AddProductToListAsync(NewProduct);
         if (addResult.Statement is true)
@@ -77,6 +73,7 @@ public partial class ProductCreateViewModel : ObservableObject
             var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
             mainViewModel.CurrentViewModel = productListViewModel;
         }
+        else MessageBox.Show(addResult.Answer!);
 
     }
     [RelayCommand]
@@ -86,9 +83,4 @@ public partial class ProductCreateViewModel : ObservableObject
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;
     }
-
-    /***********************************************************************************
-     *                          ONLY NAVIGATION METHODS BELOW                          *
-     ***********************************************************************************/
-
 }

@@ -4,11 +4,15 @@
              xmlns:local="clr-namespace:Presentation.WpfApp"
              >
     <Application.Resources>
-        
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Assets/Resources/Styles.xaml"/>
+                <ResourceDictionary Source="Assets/Resources/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            
+
         </ResourceDictionary>
 
     </Application.Resources>
