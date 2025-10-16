@@ -25,6 +25,8 @@ public class ProductService : IProductService
 
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
+        List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
+
         string errorMessages = "";
         Product newProduct = new Product();
         newProduct.Category = new Category();
