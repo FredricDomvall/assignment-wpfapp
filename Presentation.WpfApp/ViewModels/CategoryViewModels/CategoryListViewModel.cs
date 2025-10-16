@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 using Presentation.WpfApp.ViewModels.ProductViewModels;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.CategoryViewModels;
 public partial class CategoryListViewModel : ObservableObject
@@ -28,11 +29,17 @@ public partial class CategoryListViewModel : ObservableObject
 
     [ObservableProperty]
     private Category? _currentCategoryDetails;
+    [ObservableProperty]
+    private Visibility? _detailsVisibility = Visibility.Collapsed;
+    [ObservableProperty]
+    private Visibility? _detailsVisibilityInfo = Visibility.Visible;
 
     [RelayCommand]
     private void ShowCategoryDetails(Category category)
     {
         CurrentCategoryDetails = category;
+        DetailsVisibility = category != null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibilityInfo = Visibility.Collapsed;
     }
 
     [ObservableProperty]

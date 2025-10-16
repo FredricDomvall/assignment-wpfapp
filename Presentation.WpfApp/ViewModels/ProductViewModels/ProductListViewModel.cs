@@ -28,12 +28,16 @@ public partial class ProductListViewModel : ObservableObject
 
     [ObservableProperty] // Controls the visibility of the details section (chatGPT made me do it)
     private Visibility? _detailsVisibility = Visibility.Collapsed;
+
+    [ObservableProperty]
+    private Visibility? _detailsVisibilityInfo = Visibility.Visible;
     [RelayCommand]
     private void ShowProductDetails(Product product)
     {
-
         CurrentProductDetails = product;
-        DetailsVisibility = product != null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibility = product is not null ? Visibility.Visible : Visibility.Collapsed;
+        DetailsVisibilityInfo = Visibility.Collapsed;
+
     }
 
     [ObservableProperty]

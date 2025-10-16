@@ -56,6 +56,8 @@
         <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="10 0"
         BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="#FFF">
             <StackPanel>
+                <TextBlock Text="Click Edit-button to show details of the selected Category." FontStyle="Italic" Margin="8 60 8 25" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#c4c4c4" Visibility="{Binding DetailsVisibilityInfo}"/>
+                
                 <TextBlock Text="{Binding CurrentCategoryDetails.CategoryName}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding CurrentCategoryDetails.CategoryId}" Margin="0,20" FontSize="10" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding CurrentCategoryDetails.CategoryPrefix, StringFormat='Prefix: {0}'}" FontSize="18" FontWeight="bold" Margin="0,190" TextWrapping="Wrap"/>

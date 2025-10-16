@@ -72,6 +72,8 @@
                         <TextBlock Text="{Binding CurrentProductDetails.ProductCode, StringFormat='Art-nr: {0}'}" Margin="0,2" TextWrapping="Wrap"/>
                     </StackPanel>
                 </StackPanel>
+                <TextBlock Text="Click Edit-button to show product details of selected product." FontStyle="Italic" Margin="10 10 10 25" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#c4c4c4" Visibility="{Binding DetailsVisibilityInfo}"/>
+
                 <TextBlock Text="Category:" FontWeight="SemiBold" TextWrapping="Wrap" Visibility="{Binding DetailsVisibility}"/>
                 <TextBlock Text="{Binding CurrentProductDetails.Category.CategoryName}" Visibility="{Binding DetailsVisibility}" Margin="15,0,0,0" TextWrapping="Wrap" />
                 

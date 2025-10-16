@@ -32,7 +32,6 @@ public partial class ManufacturerListViewModel : ObservableObject
     [RelayCommand]
     private void ShowManufacturerDetails(Manufacturer manufacturer)
     {
-
         CurrentManufacturerDetails = manufacturer;
         DetailsVisibility = manufacturer != null ? Visibility.Visible : Visibility.Collapsed;
     }
