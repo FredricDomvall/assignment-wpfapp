@@ -61,14 +61,14 @@ public static class CategoryValidationHelper
 
         else return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-    public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
+    public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> categoryServiceListResult)
     {
         string errorMessages = "";
 
-        bool allValid = productserviceListResult.All(r => r.Statement is true);
+        bool allValid = categoryServiceListResult.All(r => r.Statement is true);
         if (allValid is not true)
         {
-            foreach (var item in productserviceListResult)
+            foreach (var item in categoryServiceListResult)
                 if (item.Statement is false)
                     errorMessages += item.Answer + "\n";
 
