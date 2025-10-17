@@ -4,6 +4,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.ManufacturerViewModels;
 public partial class ManufacturerCreateViewModel : ObservableObject
@@ -35,13 +36,15 @@ public partial class ManufacturerCreateViewModel : ObservableObject
         NewManufacturer!.ManufacturerName = NewManufacturer.ManufacturerName;
         NewManufacturer.ManufacturerCountry = NewManufacturer.ManufacturerCountry;
         NewManufacturer.ManufacturerEmail = NewManufacturer.ManufacturerEmail;
-        var addResult = await _manufacturerService.AddManufacturerToListAsync(NewManufacturer);
-        if (addResult.Statement is true)
+        var createManufacturerResult = await _manufacturerService.AddManufacturerToListAsync(NewManufacturer);
+
+        if (createManufacturerResult.Statement is true)
         {
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
             mainViewModel.CurrentViewModel = manufacturerListViewModel;
         }
+        else MessageBox.Show(createManufacturerResult.Answer);
     }
 
     [RelayCommand]
