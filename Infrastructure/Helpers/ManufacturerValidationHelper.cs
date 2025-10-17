@@ -60,11 +60,11 @@ public static class ManufacturerValidationHelper
     {
         var otherManufacturers = manufacturerList.Where(m => m.ManufacturerId != checkManufacturer.ManufacturerId).ToList();
 
-        if (otherManufacturers.Any(m => m.ManufacturerName == checkManufacturer.ManufacturerName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer name must be unique." };
-
         if (otherManufacturers.Any(m => m.ManufacturerId == checkManufacturer.ManufacturerId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer Id must be unique." };
+
+        if (otherManufacturers.Any(m => m.ManufacturerName == checkManufacturer.ManufacturerName))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer name must be unique." };
 
         if (otherManufacturers.Any(m => m.ManufacturerEmail == checkManufacturer.ManufacturerEmail))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer email must be unique." };

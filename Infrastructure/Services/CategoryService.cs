@@ -21,13 +21,12 @@ public class CategoryService : ICategoryService
         do
         {
             categoryForm.CategoryId = GeneratorHelper.GenerateGuidId();
-            result = CategoryValidationHelper.ValidateGuidId(categoryForm.CategoryId, _categoryList);
-            
+            result = CategoryValidationHelper.ValidateGuidId(categoryForm.CategoryId, _categoryList);    
         } while (!result.Statement);
+
         categoryForm.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(categoryForm.CategoryName!);
         
         var validationResult = CategoryValidationHelper.CategoryCreateValidationControl(categoryForm, _categoryList);
-
 
         if (validationResult.Statement is true)
         {
@@ -37,11 +36,11 @@ public class CategoryService : ICategoryService
 
             _categoryList.Add(newCategory);
             await SaveListToFileAsync();
+
             return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = newCategory };
         }
         
-        return new AnswerOutcome<Category> { Statement = false, Answer = validationResult.Answer };
-        
+        return new AnswerOutcome<Category> { Statement = false, Answer = validationResult.Answer };      
     }
 
     public AnswerOutcome<IEnumerable<Category>> GetAllCategoriesFromList()
@@ -64,9 +63,9 @@ public class CategoryService : ICategoryService
             CategoryName = categoryToUpdate.CategoryName
         };
 
-        var nameValidationResult = CategoryValidationHelper.ValidateCategoryName(category.CategoryName!);
+        var validationResult = CategoryValidationHelper.ValidateCategoryUnique(category, _categoryList);
 
-        if (nameValidationResult.Statement is true)
+        if (validationResult.Statement is true)
         {
             categoryToUpdate.CategoryName = category.CategoryName!;
             categoryToUpdate.CategoryPrefix = category.CategoryPrefix!;
@@ -75,7 +74,7 @@ public class CategoryService : ICategoryService
             return new AnswerOutcome<Category> { Statement = true, Answer = $"Successfully changed Categoryname to: {categoryToUpdate.CategoryName}" };
         }
         
-        return new AnswerOutcome<Category> { Statement = false, Answer = nameValidationResult.Answer, Outcome = originalCategory };
+        return new AnswerOutcome<Category> { Statement = false, Answer = validationResult.Answer, Outcome = originalCategory };
        
     }
 

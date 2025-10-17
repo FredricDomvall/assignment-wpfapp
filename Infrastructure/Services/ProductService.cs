@@ -36,7 +36,7 @@ public class ProductService : IProductService
         } while (!result.Statement);
 
 
-        var validationResult = ProductValidationHelper.ProductCreateValidationControl(productForm, _productList);
+        var validationResult = ProductValidationHelper.ProductCreateValidationControl(newProduct.ProductId, productForm, _productList);
         if (validationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
@@ -79,17 +79,8 @@ public class ProductService : IProductService
         originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
         originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
 
-        ProductForm productForm = new ProductForm
-        {
-            ProductName = product.ProductName,
-            ProductPrice = product.ProductPrice.ToString(),
-            CategoryName = product.Category.CategoryName,
-            ManufacturerName = product.Manufacturer.ManufacturerName,
-            ManufacturerCountry = product.Manufacturer.ManufacturerCountry,
-            ManufacturerEmail = product.Manufacturer.ManufacturerEmail
-        };
 
-        var validationResult = ProductValidationHelper.ProductUpdateValidationControl(productForm, _productList);
+        var validationResult = ProductValidationHelper.ProductUpdateValidationControl(product, _productList);
         if (validationResult.Statement is false)
         {
             originalProduct.ProductId = productToUpdate.ProductId;
@@ -102,13 +93,6 @@ public class ProductService : IProductService
 
             return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer, Outcome = originalProduct };
         }
-
-        productToUpdate.ProductName = productForm.ProductName!;
-        productToUpdate.ProductPrice = decimal.Parse(productForm.ProductPrice!);
-        productToUpdate.Category.CategoryName = productForm.CategoryName!;
-        productToUpdate.Manufacturer.ManufacturerName = productForm.ManufacturerName!;
-        productToUpdate.Manufacturer.ManufacturerCountry = productForm.ManufacturerCountry!;
-        productToUpdate.Manufacturer.ManufacturerEmail = productForm.ManufacturerEmail!;
 
         await SaveListToFileAsync();
         return new AnswerOutcome<Product> { Statement = true, Answer = validationResult.Answer };

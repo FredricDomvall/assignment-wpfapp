@@ -63,46 +63,48 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Manufacturer is set properly.", Outcome = true };
     }
-    public static AnswerOutcome<bool> ValidateProductAlreadyExists(Guid productId, string productName, List<Product> productList)
+    public static AnswerOutcome<bool> ValidateProductUnique(Guid productId, string productName, List<Product> productList)
     {
-        bool existingProductId = productList.Any(p => p.ProductId == productId);
-        if (existingProductId is true)
+        var otherProducts = productList.Where(p => p.ProductId != productId).ToList();
+ 
+        if (otherProducts.Any(p => p.ProductId == productId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified ID already exists (odds minimal so press create again)"};
 
-        bool existingProductName = productList.Any(p => p.ProductName == productName);
-        if(existingProductName is true)
+        if(otherProducts.Any(p => p.ProductName == productName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified name already exists." };
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Product with the specified ID and name do not exist."};
     }
-    public static AnswerOutcome<bool> ValidateProductUnique(ProductForm checkProduct, List<Product> productList)
-    {
-        if (productList.Any(product => product.ProductName == checkProduct.ProductName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
-
-        return new AnswerOutcome<bool> { Statement = true };
-    }
-    public static AnswerOutcome<bool> ProductCreateValidationControl(ProductForm checkProduct, List<Product> productList)
+    public static AnswerOutcome<bool> ProductCreateValidationControl(Guid Id, ProductForm checkProduct, List<Product> productList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
         validationResults.Add(ValidateName(checkProduct.ProductName!));
         validationResults.Add(ValidateDecimalPrice(checkProduct.ProductPrice!));
         validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
         validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
-        validationResults.Add(ValidateProductUnique(checkProduct, productList));
+        validationResults.Add(ValidateProductUnique(Id, checkProduct.ProductName!, productList));
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
             return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-    public static AnswerOutcome<bool> ProductUpdateValidationControl(ProductForm checkProduct, List<Product> productList)
+    public static AnswerOutcome<bool> ProductUpdateValidationControl(Product product, List<Product> productList)
     {
+        ProductForm checkProduct = new ProductForm
+        {
+            ProductName = product.ProductName,
+            ProductPrice = product.ProductPrice.ToString(),
+            CategoryName = product.Category?.CategoryName,
+            ManufacturerName = product.Manufacturer?.ManufacturerName
+        };
+
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
         validationResults.Add(ValidateName(checkProduct.ProductName!));
         validationResults.Add(ValidateDecimalPrice(checkProduct.ProductPrice!));
         validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
         validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
+        validationResults.Add(ValidateProductUnique(product.ProductId, checkProduct.ProductName, productList));
 
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
@@ -126,5 +128,4 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
     }
-
 }

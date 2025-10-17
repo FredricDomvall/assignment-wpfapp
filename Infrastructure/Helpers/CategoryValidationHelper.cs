@@ -7,8 +7,6 @@ public static class CategoryValidationHelper
     {
         if (Id == Guid.Empty)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id was not set properly." };
-        if (categoryList.Any(c => c.CategoryId == Id))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
@@ -30,27 +28,28 @@ public static class CategoryValidationHelper
         if (string.IsNullOrWhiteSpace(prefix))
             return new AnswerOutcome<bool> { Statement = false, Answer = "prefix can not be left empty." };
 
-        if (categoryList.Any(c => c.CategoryPrefix == prefix))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "prefix must be unique." };
         return new AnswerOutcome<bool> { Statement = true };
     }
     public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> categoryList)
     {
-        if (categoryList.Any(c => c.CategoryName == checkCategory.CategoryName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Category name must be unique." };
+        var otherCategories = categoryList.Where(c => c.CategoryId != checkCategory.CategoryId).ToList();
 
-        if (categoryList.Any(c => c.CategoryId == checkCategory.CategoryId))
+        if (otherCategories.Any(c => c.CategoryId == checkCategory.CategoryId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
-        if (categoryList.Any(c => c.CategoryPrefix == checkCategory.CategoryPrefix))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "prefix must be unique." };
-        return new AnswerOutcome<bool> { Statement = true };
+        if (otherCategories.Any(c => c.CategoryName == checkCategory.CategoryName))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Category name must be unique." };
 
+        if (otherCategories.Any(c => c.CategoryPrefix == checkCategory.CategoryPrefix))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "prefix must be unique." };
+        
+        return new AnswerOutcome<bool> { Statement = true };
     }
     public static AnswerOutcome<bool> CategoryCreateValidationControl(Category checkCategory, List<Category> categoryList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
 
+        validationResults.Add(ValidateGuidId(checkCategory.CategoryId, categoryList));
         validationResults.Add(ValidateCategoryName(checkCategory.CategoryName!));
         validationResults.Add(ValidateCategoryPrefix(checkCategory.CategoryPrefix, categoryList));
         validationResults.Add(ValidateCategoryUnique(checkCategory, categoryList));
