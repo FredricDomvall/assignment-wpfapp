@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -27,20 +28,13 @@ public partial class ManufacturerUpdateViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateManufacturer()
     {
-        if (CurrentManufacturerDetails is null)
-        {
-            MessageBox.Show("All Fields Required. Try again!");
-            return;
-        }
+        var updateResult = await _manufacturerService.UpdateManufacturerInListByIdAsync(CurrentManufacturerDetails!);
+        if (updateResult.Statement is false)
+            CurrentManufacturerDetails = updateResult.Outcome;
 
-        var manufacturerToUpdate = new Manufacturer
-        {
-            ManufacturerName = CurrentManufacturerDetails.ManufacturerName,
-            ManufacturerEmail = CurrentManufacturerDetails.ManufacturerEmail,
-            ManufacturerCountry = CurrentManufacturerDetails.ManufacturerCountry
-        };
+        MessageBox.Show(updateResult.Answer);
 
-        var updateResult = await _manufacturerService.UpdateManufacturerInListByIdAsync(CurrentManufacturerDetails.ManufacturerId, manufacturerToUpdate);
+        await _manufacturerService.LoadListFromFileAsync();
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var manufacturerListViewModel = _serviceProvider.GetRequiredService<ManufacturerListViewModel>();
         mainViewModel.CurrentViewModel = manufacturerListViewModel;

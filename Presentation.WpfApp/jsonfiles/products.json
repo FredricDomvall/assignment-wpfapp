@@ -40,7 +40,7 @@
     "ProductCode": "CAR-00001",
     "ProductName": "Ferrari Enzo",
     "ProductDescription": "superduper mega sport car. you cant even afford to look at it unless your a very very wealthy person",
-    "ProductPrice": 1500000.23,
+    "ProductPrice": 9999999.55,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Cars",
@@ -74,9 +74,9 @@
   {
     "ProductId": "5bc76e46-281f-46b8-9272-ebe5ac41e168",
     "ProductCode": "ELE-00004",
-    "ProductName": "Nintendo Switch",
+    "ProductName": "Switch",
     "ProductDescription": "gameconsole for tv usage",
-    "ProductPrice": 3499.50,
+    "ProductPrice": 4499.99,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Electronics",
@@ -90,21 +90,21 @@
     }
   },
   {
-    "ProductId": "23775ed9-3b4e-493d-a336-56247e956896",
-    "ProductCode": "ELE-00005",
-    "ProductName": "Xperia",
-    "ProductDescription": "cellphone, my favorite",
-    "ProductPrice": 2499.99,
+    "ProductId": "41bb5df9-5542-4b44-a112-f3973cbf65c4",
+    "ProductCode": "CAR-00002",
+    "ProductName": "Snes",
+    "ProductDescription": "great retro console",
+    "ProductPrice": 999,
     "Category": {
       "CategoryId": "00000000-0000-0000-0000-000000000000",
       "CategoryName": "Electronics",
-      "CategoryPrefix": "ELE"
+      "CategoryPrefix": "CAR"
     },
     "Manufacturer": {
       "ManufacturerId": "00000000-0000-0000-0000-000000000000",
-      "ManufacturerName": "Sony",
+      "ManufacturerName": "Nintendo",
       "ManufacturerCountry": "Sweden",
-      "ManufacturerEmail": "Sony@domain.se"
+      "ManufacturerEmail": "Nintendo@domain.se"
     }
   }
 ]

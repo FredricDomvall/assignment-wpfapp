@@ -24,22 +24,12 @@ public partial class ProductUpdateViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateProduct()
     {
-        ProductForm productToUpdate = new ProductForm();
-        if (CurrentProductDetails is null)
-        {
-            MessageBox.Show("All Fields Required. Try again!");
-            return;
-        }
-        productToUpdate.ProductName = CurrentProductDetails.ProductName;
-        productToUpdate.ProductPrice = CurrentProductDetails.ProductPrice.ToString();
-        productToUpdate.ProductCode = CurrentProductDetails.ProductCode;
-        productToUpdate.ProductDescription = CurrentProductDetails.ProductDescription;
-        productToUpdate.CategoryName = CurrentProductDetails.Category.CategoryName;
-        productToUpdate.ManufacturerName = CurrentProductDetails.Manufacturer.ManufacturerName;
-        productToUpdate.ManufacturerEmail = CurrentProductDetails.Manufacturer.ManufacturerEmail;
-        productToUpdate.ManufacturerCountry = CurrentProductDetails.Manufacturer.ManufacturerCountry;
+        var updateResult = await _productService.UpdateProductInListByIdAsync(CurrentProductDetails!);
+        if (updateResult.Statement is false)
+            CurrentProductDetails = updateResult.Outcome;
+        MessageBox.Show(updateResult.Answer);
 
-        var updateResult = await _productService.UpdateProductInListByIdAsync(CurrentProductDetails.ProductId, productToUpdate);
+        await _productService.LoadListFromFileAsync();
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
         mainViewModel.CurrentViewModel = productListViewModel;

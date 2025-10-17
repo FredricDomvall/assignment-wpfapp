@@ -4,6 +4,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WpfApp.ViewModels.CategoryViewModels;
 public partial class CategoryCreateViewModel : ObservableObject
@@ -32,13 +33,15 @@ public partial class CategoryCreateViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveNewCategory()
     {
-        var addResult = await _categoryService.AddCategoryToListAsync(NewCategory!);
-        if (addResult.Statement is true)
+        var createCategoryResult = await _categoryService.AddCategoryToListAsync(NewCategory!);
+        
+        if (createCategoryResult.Statement is true)
         {
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
             mainViewModel.CurrentViewModel = categoryListViewModel;
         }
+        else MessageBox.Show(createCategoryResult.Answer);
     }
 
     [RelayCommand]

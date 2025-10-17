@@ -17,20 +17,18 @@ public class CategoryService : ICategoryService
     public async Task<AnswerOutcome<Category>> AddCategoryToListAsync(Category categoryForm)
     {
         Category newCategory = new Category();
-        categoryForm.CategoryId = GeneratorHelper.GenerateGuidId();
-        
+        var result = new AnswerOutcome<bool> { Statement = false };
+        do
+        {
+            categoryForm.CategoryId = GeneratorHelper.GenerateGuidId();
+            result = CategoryValidationHelper.ValidateGuidId(categoryForm.CategoryId, _categoryList);    
+        } while (!result.Statement);
 
-        var nameValidationResult = ValidationHelper.ValidateString(categoryForm.CategoryName!);
-        if (nameValidationResult.Statement is true)
-            categoryForm.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(categoryForm.CategoryName!); 
+        categoryForm.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(categoryForm.CategoryName!);
         
-        var prefixValidationResult = ValidationHelper.ValidateCategoryPrefix(categoryForm.CategoryPrefix!, _categoryList);
-        var guidValidationResult = ValidationHelper.ValidateGuidId<Category>(categoryForm.CategoryId);
-        var uniqueValidationResult = ValidationHelper.ValidateCategoryUnique(categoryForm, _categoryList);
+        var validationResult = CategoryValidationHelper.CategoryCreateValidationControl(categoryForm, _categoryList);
 
-        
-        if (nameValidationResult.Statement is true && prefixValidationResult.Statement is true
-         && guidValidationResult.Statement is true && uniqueValidationResult.Statement is true)
+        if (validationResult.Statement is true)
         {
             newCategory.CategoryId = categoryForm.CategoryId;
             newCategory.CategoryName = categoryForm.CategoryName!;
@@ -38,21 +36,11 @@ public class CategoryService : ICategoryService
 
             _categoryList.Add(newCategory);
             await SaveListToFileAsync();
+
             return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = newCategory };
         }
-        else
-        {
-            string errorMessages = "";
-            if (nameValidationResult.Statement is false)
-                errorMessages += nameValidationResult.Answer + "\n";
-            if (prefixValidationResult.Statement is false)
-                errorMessages += prefixValidationResult.Answer + "\n";
-            if (guidValidationResult.Statement is false)
-                errorMessages += guidValidationResult.Answer + "\n";
-            if (uniqueValidationResult.Statement is false)
-                errorMessages += uniqueValidationResult.Answer + "\n";
-            return new AnswerOutcome<Category> { Statement = false, Answer = errorMessages.Trim() };
-        }
+        
+        return new AnswerOutcome<Category> { Statement = false, Answer = validationResult.Answer };      
     }
 
     public AnswerOutcome<IEnumerable<Category>> GetAllCategoriesFromList()
@@ -62,30 +50,32 @@ public class CategoryService : ICategoryService
  
         return new AnswerOutcome<IEnumerable<Category>> { Statement = true, Answer = "Success.", Outcome = _categoryList };
     }
-    public async Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Guid categoryId, Category category)
+    public async Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Category category)
     {
-        var categoryToUpdate = _categoryList.FirstOrDefault(c => c.CategoryId == categoryId);
+        var categoryToUpdate = _categoryList.FirstOrDefault(c => c.CategoryId == category.CategoryId);
         if (categoryToUpdate == null)
             return new AnswerOutcome<Category> { Statement = false, Answer = "Category with the specified ID does not exist." };
 
-        var nameValidationResult = ValidationHelper.ValidateString(category.CategoryName!);
-        // No price validation for Category
+        var originalCategory = new Category
+        {
+            CategoryId = categoryToUpdate.CategoryId,
+            CategoryPrefix = categoryToUpdate.CategoryPrefix,
+            CategoryName = categoryToUpdate.CategoryName
+        };
 
-        if (nameValidationResult.Statement is true)
+        var validationResult = CategoryValidationHelper.CategoryUpdateValidationControl(category, _categoryList);
+
+        if (validationResult.Statement is true)
         {
             categoryToUpdate.CategoryName = category.CategoryName!;
             categoryToUpdate.CategoryPrefix = category.CategoryPrefix!;
 
             await SaveListToFileAsync();
-            return new AnswerOutcome<Category> { Statement = true, Answer = "Success.", Outcome = categoryToUpdate };
+            return new AnswerOutcome<Category> { Statement = true, Answer = $"Successfully changed Categoryname to: {categoryToUpdate.CategoryName}" };
         }
-        else
-        {
-            string errorMessages = "";
-            if (nameValidationResult.Statement is false)
-                errorMessages += nameValidationResult.Answer + "\n";
-            return new AnswerOutcome<Category> { Statement = false, Answer = errorMessages.Trim() };
-        }
+        
+        return new AnswerOutcome<Category> { Statement = false, Answer = validationResult.Answer, Outcome = originalCategory };
+       
     }
 
     public async Task<AnswerOutcome<bool>> DeleteCategoryFromListByIdAsync(Guid categoryId)

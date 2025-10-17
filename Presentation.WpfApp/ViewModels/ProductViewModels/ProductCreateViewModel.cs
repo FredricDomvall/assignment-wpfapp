@@ -66,14 +66,14 @@ public partial class ProductCreateViewModel : ObservableObject
         NewProduct.ManufacturerCountry = SelectedManufacturer?.ManufacturerCountry;
         NewProduct.ManufacturerEmail = SelectedManufacturer?.ManufacturerEmail;
         
-        var addResult = await _productService.AddProductToListAsync(NewProduct);
-        if (addResult.Statement is true)
+        var createProductResult = await _productService.AddProductToListAsync(NewProduct);
+        if (createProductResult.Statement is true)
         {
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             var productListViewModel = _serviceProvider.GetRequiredService<ProductListViewModel>();
             mainViewModel.CurrentViewModel = productListViewModel;
         }
-        else MessageBox.Show(addResult.Answer!);
+        else MessageBox.Show(createProductResult.Answer!);
 
     }
     [RelayCommand]

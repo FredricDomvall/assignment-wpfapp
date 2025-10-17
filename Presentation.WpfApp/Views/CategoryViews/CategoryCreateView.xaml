@@ -24,13 +24,6 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Category Name:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
         <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5" Text="{Binding NewCategory.CategoryName, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!-- Parent Category (optional) -->
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Parent Category:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" Margin="0,5"
-                      ItemsSource="{Binding Categories}"
-                      SelectedItem="{Binding SelectedParentCategory, Mode=TwoWay}"
-                      DisplayMemberPath="CategoryName"/>
-
         <!-- Validation Messages -->
         <StackPanel x:Name="ValidationMessagesPanel" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,20,5,5">
             <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
