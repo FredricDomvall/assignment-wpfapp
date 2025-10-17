@@ -55,19 +55,19 @@
         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe8f3;" Foreground="SteelBlue" HorizontalAlignment="Center"/>
             <TextBlock Text="{Binding ProductList.Count, StringFormat='Products: {0}'}" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
-            <Button Content="Manage Products" Command="{Binding NavigateToProductListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" HorizontalAlignment="Center"/>
+            <Button Content="Manage Products" Command="{Binding NavigateToProductListViewCommand}" Width="175" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe8ec;" Foreground="DarkOrange" HorizontalAlignment="Center"/>
             <TextBlock Text="{Binding CategoryList.Count, StringFormat='Categories: {0}'}" FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
-            <Button Content="Manage Categories" Command="{Binding NavigateToCategoryListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" HorizontalAlignment="Center"/>
+            <Button Content="Manage Categories" Command="{Binding NavigateToCategoryListViewCommand}"  Width="175" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontFamily="Segoe Fluent Icons" FontSize="32" Text="&#xe731;" Foreground="DarkGreen" HorizontalAlignment="Center"/>
             <TextBlock Text="{Binding ManufacturerList.Count, StringFormat='Manufacturers: {0}'}"  FontSize="16" FontStyle="Italic" Foreground="#2D4159" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
-            <Button Content="Manage Manufacturers" Command="{Binding NavigateToManufacturerListViewCommand}" Background="#c4c4c4" FontStyle="Italic" Width="175" Height="40" HorizontalAlignment="Center"/>
+            <Button Content="Manage Manufacturers" Command="{Binding NavigateToManufacturerListViewCommand}"  Width="175" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
         
 

@@ -88,5 +88,23 @@
       "ManufacturerCountry": "Japan",
       "ManufacturerEmail": "Nintendo@Nintendo.com"
     }
+  },
+  {
+    "ProductId": "41bb5df9-5542-4b44-a112-f3973cbf65c4",
+    "ProductCode": "CAR-00002",
+    "ProductName": "Snes",
+    "ProductDescription": "great retro console",
+    "ProductPrice": 999,
+    "Category": {
+      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryName": "Electronics",
+      "CategoryPrefix": "CAR"
+    },
+    "Manufacturer": {
+      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerName": "Nintendo",
+      "ManufacturerCountry": "Sweden",
+      "ManufacturerEmail": "Nintendo@domain.se"
+    }
   }
 ]

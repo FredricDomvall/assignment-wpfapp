@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -26,20 +27,14 @@ public partial class CategoryUpdateViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateCategory()
     {
-        if (CurrentCategoryDetails is null)
-        {
-            MessageBox.Show("All Fields Required. Try again!");
-            return;
-        }
 
-        var categoryToUpdate = new Category
-        {
-            CategoryId = CurrentCategoryDetails.CategoryId,
-            CategoryName = CurrentCategoryDetails.CategoryName,
-            CategoryPrefix = CurrentCategoryDetails.CategoryPrefix
-        };
+        var updateResult = await _categoryService.UpdateCategoryInListByIdAsync(CurrentCategoryDetails);
+        if (updateResult.Statement is false)
+            CurrentCategoryDetails = updateResult.Outcome;
 
-        var updateResult = await _categoryService.UpdateCategoryInListByIdAsync(CurrentCategoryDetails.CategoryId, categoryToUpdate);
+        MessageBox.Show(updateResult.Answer);
+
+        await _categoryService.LoadListFromFileAsync();
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         var categoryListViewModel = _serviceProvider.GetRequiredService<CategoryListViewModel>();
         mainViewModel.CurrentViewModel = categoryListViewModel;

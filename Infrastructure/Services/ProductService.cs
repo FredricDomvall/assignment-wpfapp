@@ -22,11 +22,8 @@ public class ProductService : IProductService
         _categoryService = categoryService;
         _filePath = filePath.ProductFileSource;
     }
-
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
-       
-        string errorMessages = "";
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
@@ -55,11 +52,8 @@ public class ProductService : IProductService
             await SaveListToFileAsync();
             return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = newProduct };
         }
-        else
-        {
-            errorMessages = validationResult.Answer!;
-            return new AnswerOutcome<Product> { Statement = false, Answer = errorMessages.Trim() };
-        }
+        else return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };
+       
     }
     public AnswerOutcome<IEnumerable<Product>> GetAllProductsFromList()
     {   

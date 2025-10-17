@@ -4,13 +4,6 @@ using System.Text.RegularExpressions;
 namespace Infrastructure.Helpers;
 public static class ValidationHelper
 {
-    public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> CategoryList)
-    {
-        if (CategoryList.Any(Category => Category.CategoryName == checkCategory.CategoryName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tProduct name must be unique." };
-
-        return new AnswerOutcome<bool> { Statement = true };
-    }
     public static AnswerOutcome<bool> ValidateString(string stringInputs)
     {
         if (string.IsNullOrWhiteSpace(stringInputs))
@@ -53,14 +46,7 @@ public static class ValidationHelper
             Below validation for unique values in lists can be changed to generic handlig, Improve later
      */
 
-    public static AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> customerList)
-    {
-        if (string.IsNullOrWhiteSpace(prefix))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprefix can not be left empty." };
-        if (customerList.Any(c => c.CategoryPrefix == prefix))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tprefix must be unique." };
-        return new AnswerOutcome<bool> { Statement = true };
-    }
+
     public static AnswerOutcome<bool> ValidateManufacturerUnique(Manufacturer checkManufacturer, List<Manufacturer> manufacturerList)
     {
         if (manufacturerList.Any(m => m.ManufacturerName == checkManufacturer.ManufacturerName))
