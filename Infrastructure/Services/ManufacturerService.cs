@@ -27,11 +27,8 @@ public class ManufacturerService : IManufacturerService
             await SaveListToFileAsync();
             return new AnswerOutcome<Manufacturer> { Statement = true, Answer = "Success.", Outcome = manufacturer };
         }
-        else
-        {
-
-            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = validationResult.Answer };
-        }
+        
+        return new AnswerOutcome<Manufacturer> { Statement = false, Answer = validationResult.Answer };     
     }
 
     public AnswerOutcome<IEnumerable<Manufacturer>> GetAllManufacturersFromList()
@@ -45,7 +42,7 @@ public class ManufacturerService : IManufacturerService
     {
         var manufacturerToUpdate = _manufacturerList.FirstOrDefault(p => p.ManufacturerId == manufacturer.ManufacturerId);
         if (manufacturerToUpdate == null)
-            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = "manufacturer with the specified ID does not exist." };
+            return new AnswerOutcome<Manufacturer> { Statement = false, Answer = "Manufacturer with the specified ID does not exist." };
 
         var originalManufacturer = new Manufacturer
         {
@@ -55,7 +52,7 @@ public class ManufacturerService : IManufacturerService
             ManufacturerEmail = manufacturerToUpdate.ManufacturerEmail
         };
 
-        var validationResult = ManufacturerValidationHelper.ManufacturerCreateValidationControl(manufacturer, _manufacturerList);
+        var validationResult = ManufacturerValidationHelper.ManufacturerUpdateValidationControl(manufacturer, _manufacturerList);
 
         if (validationResult.Statement is true)
         {

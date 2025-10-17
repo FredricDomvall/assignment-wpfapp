@@ -63,7 +63,7 @@ public class CategoryService : ICategoryService
             CategoryName = categoryToUpdate.CategoryName
         };
 
-        var validationResult = CategoryValidationHelper.ValidateCategoryUnique(category, _categoryList);
+        var validationResult = CategoryValidationHelper.CategoryUpdateValidationControl(category, _categoryList);
 
         if (validationResult.Statement is true)
         {

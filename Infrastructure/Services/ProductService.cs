@@ -35,7 +35,6 @@ public class ProductService : IProductService
             result = ProductValidationHelper.ValidateGuidId(newProduct.ProductId, _productList);
         } while (!result.Statement);
 
-
         var validationResult = ProductValidationHelper.ProductCreateValidationControl(newProduct.ProductId, productForm, _productList);
         if (validationResult.Statement is true)
         {
@@ -52,8 +51,8 @@ public class ProductService : IProductService
             await SaveListToFileAsync();
             return new AnswerOutcome<Product> { Statement = true, Answer = "Success.", Outcome = newProduct };
         }
-        else return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };
-       
+        
+        return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer };  
     }
     public AnswerOutcome<IEnumerable<Product>> GetAllProductsFromList()
     {   
@@ -79,23 +78,22 @@ public class ProductService : IProductService
         originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
         originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
 
-
         var validationResult = ProductValidationHelper.ProductUpdateValidationControl(product, _productList);
-        if (validationResult.Statement is false)
+        
+        if (validationResult.Statement is true)
         {
-            originalProduct.ProductId = productToUpdate.ProductId;
-            originalProduct.ProductName = productToUpdate.ProductName;
-            originalProduct.ProductPrice = productToUpdate.ProductPrice;
-            originalProduct.Category.CategoryName = productToUpdate.Category.CategoryName;
-            originalProduct.Manufacturer.ManufacturerName = productToUpdate.Manufacturer.ManufacturerName;
-            originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
-            originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
+            productToUpdate.ProductName = product.ProductName;
+            productToUpdate.ProductPrice = product.ProductPrice;
+            productToUpdate.Category.CategoryName = product.Category.CategoryName;
+            productToUpdate.Manufacturer.ManufacturerName = product.Manufacturer.ManufacturerName;
+            productToUpdate.Manufacturer.ManufacturerCountry = product.Manufacturer.ManufacturerCountry;
+            productToUpdate.Manufacturer.ManufacturerEmail = product.Manufacturer.ManufacturerEmail;
 
-            return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer, Outcome = originalProduct };
+            await SaveListToFileAsync();
+            return new AnswerOutcome<Product> { Statement = true, Answer = "Product updated successfully.", Outcome = productToUpdate };
         }
 
-        await SaveListToFileAsync();
-        return new AnswerOutcome<Product> { Statement = true, Answer = validationResult.Answer };
+        return new AnswerOutcome<Product> { Statement = false, Answer = validationResult.Answer, Outcome = originalProduct };
 
     }
     public async Task<AnswerOutcome<bool>> DeleteProductFromListByIdAsync(Guid productId)

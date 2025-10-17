@@ -4,13 +4,13 @@ namespace Infrastructure.Helpers;
 
 public static class ProductValidationHelper
 {
-    public static AnswerOutcome<bool> ValidateGuidId(Guid Id, List<Product> productsList)
+    public static AnswerOutcome<bool> ValidateGuidId(Guid productId, List<Product> productsList)
     {
-        if (Id == Guid.Empty)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tId was not set properly." };
-        if (productsList.Any(p => p.ProductId == Id))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "\tId already exists in the list." };
+        if (productId == Guid.Empty)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Id was not set properly." };
 
+        if (productsList.Any(p => p.ProductId == productId))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
@@ -20,9 +20,9 @@ public static class ProductValidationHelper
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product name can not be left empty" };
 
         if (stringInputs.Length < 3)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name be at least 3 characters long." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name must be at least 3 characters long." };
         if (stringInputs.Length > 10)
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name can not be longer than 10 characters." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name cannot be longer than 10 characters." };
 
         if (stringInputs.Any(char.IsDigit))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product name not contain numbers." };
@@ -31,20 +31,19 @@ public static class ProductValidationHelper
     }
     public static AnswerOutcome<bool> ValidateDecimalPrice(string decimalPrice)
     {
-        var result = decimal.TryParse(decimalPrice, out decimal parsedPrice);
-        if (!result)
-        {
-            if (string.IsNullOrWhiteSpace(decimalPrice))
-                return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be left empty." };
+        if (decimalPrice is null)
+            return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be null." };
+        
+        if (string.IsNullOrWhiteSpace(decimalPrice))
+            return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be left empty." };
 
-            if (decimalPrice is null)
-                return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be null." };
-
+        if (!decimal.TryParse(decimalPrice, out decimal parsedPrice))
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be a decimal value." };
-        }
-        else if (parsedPrice >= 10000000)
+        
+        if (parsedPrice >= 10000000)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Price cant be greater than: 9999999,99." };
-        else if (parsedPrice < 0)
+
+        if (parsedPrice < 0)
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
 
         return new AnswerOutcome<bool> { Statement = true };
@@ -54,21 +53,20 @@ public static class ProductValidationHelper
         if (category == null || string.IsNullOrWhiteSpace(category))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Category is not set.", Outcome = false };
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "Category is set.", Outcome = true };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Category is set." };
     }
     public static AnswerOutcome<bool> ValidateManufacturer(string manufacturer)
     {
         if (manufacturer == null || string.IsNullOrWhiteSpace(manufacturer))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer is not set.", Outcome = false };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer is not set." };
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "Manufacturer is set properly.", Outcome = true };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Manufacturer is set properly." };
     }
     public static AnswerOutcome<bool> ValidateProductUnique(Guid productId, string productName, List<Product> productList)
     {
-        var otherProducts = productList.Where(p => p.ProductId != productId).ToList();
- 
-        if (otherProducts.Any(p => p.ProductId == productId))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified ID already exists (odds minimal so press create again)"};
+        //I need to consider taking in whole object of product instead of just name and id so i can validate ProductCode later if needed
+        
+        var otherProducts = productList.Where(p => p.ProductId != productId);
 
         if(otherProducts.Any(p => p.ProductName == productName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified name already exists." };
@@ -112,7 +110,6 @@ public static class ProductValidationHelper
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-
     public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
     {
         string errorMessages = "";
