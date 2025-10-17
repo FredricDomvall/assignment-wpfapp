@@ -31,7 +31,7 @@ public static class ManufacturerValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true };
     }
-    public static AnswerOutcome<bool> ValidateManufacturerGuidId<T>(Guid Id)
+    public static AnswerOutcome<bool> ValidateManufacturerGuidId(Guid Id)
     {
         if (Id == Guid.Empty)
             return new AnswerOutcome<bool> { Statement = false, Answer = "\tId was not set properly." };
@@ -58,13 +58,15 @@ public static class ManufacturerValidationHelper
     }
     public static AnswerOutcome<bool> ValidateManufacturerUnique(Manufacturer checkManufacturer, List<Manufacturer> manufacturerList)
     {
-        if (manufacturerList.Any(m => m.ManufacturerName == checkManufacturer.ManufacturerName))
+        var otherManufacturers = manufacturerList.Where(m => m.ManufacturerId != checkManufacturer.ManufacturerId).ToList();
+
+        if (otherManufacturers.Any(m => m.ManufacturerName == checkManufacturer.ManufacturerName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer name must be unique." };
 
-        if (manufacturerList.Any(m => m.ManufacturerId == checkManufacturer.ManufacturerId))
+        if (otherManufacturers.Any(m => m.ManufacturerId == checkManufacturer.ManufacturerId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer Id must be unique." };
 
-        if (manufacturerList.Any(m => m.ManufacturerEmail == checkManufacturer.ManufacturerEmail))
+        if (otherManufacturers.Any(m => m.ManufacturerEmail == checkManufacturer.ManufacturerEmail))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer email must be unique." };
 
         return new AnswerOutcome<bool> { Statement = true };
@@ -88,7 +90,7 @@ public static class ManufacturerValidationHelper
     public static AnswerOutcome<bool> ManufacturerCreateValidationControl(Manufacturer checkManufacturer, List<Manufacturer> manufacturerList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
-
+        validationResults.Add(ValidateManufacturerGuidId(checkManufacturer.ManufacturerId));
         validationResults.Add(ValidateManufacturerName(checkManufacturer.ManufacturerName!));
         validationResults.Add(ValidateManufacturerEmail(checkManufacturer.ManufacturerEmail));
         validationResults.Add(ValidateManufacturerUnique(checkManufacturer, manufacturerList));
@@ -104,6 +106,7 @@ public static class ManufacturerValidationHelper
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
         validationResults.Add(ValidateManufacturerName(checkManufacturer.ManufacturerName!));
         validationResults.Add(ValidateManufacturerEmail(checkManufacturer.ManufacturerEmail));
+
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
             return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };

@@ -37,7 +37,7 @@ public static class CategoryValidationHelper
     public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> categoryList)
     {
         if (categoryList.Any(c => c.CategoryName == checkCategory.CategoryName))
-            return new AnswerOutcome<bool> { Statement = false, Answer = "Product name must be unique." };
+            return new AnswerOutcome<bool> { Statement = false, Answer = "Category name must be unique." };
 
         if (categoryList.Any(c => c.CategoryId == checkCategory.CategoryId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
