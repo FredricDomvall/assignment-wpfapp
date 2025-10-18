@@ -67,4 +67,33 @@ public class ProductValidator_Tests
         result.Answer.Should().NotBeNullOrWhiteSpace();
     }
 
+    [Fact]
+    public void ValidateDecimalPrice_ValidInput_ReturnsTrue()
+    {
+        // Arrange
+        var validator = new ProductValidator();
+
+        // Act
+        var result = validator.ValidateDecimalPrice("15");
+
+        // Assert
+        result.Statement.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ValidateGuidId_EmptyGuid_ReturnsError()
+    {
+        // Arrange
+        var validator = new ProductValidator();
+        var products = new List<Product>();
+
+        // Act
+        var result = validator.ValidateGuidId(Guid.Empty, products);
+
+        // Assert
+        result.Outcome.Should().BeFalse();
+        result.Answer.Should().NotBeNullOrWhiteSpace();
+    }
+
+
 }
