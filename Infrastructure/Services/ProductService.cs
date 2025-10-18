@@ -2,6 +2,7 @@
 using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Validators;
 
 namespace Infrastructure.Services;
 public class ProductService : IProductService
@@ -24,6 +25,7 @@ public class ProductService : IProductService
     }
     public async Task<AnswerOutcome<Product>> AddProductToListAsync(ProductForm productForm)
     {
+        ProductValidator productCreateValidation = new ProductValidator();
         Product newProduct = new Product();
         newProduct.Category = new Category();
         newProduct.Manufacturer = new Manufacturer();
@@ -32,10 +34,10 @@ public class ProductService : IProductService
         do
         {
             newProduct.ProductId = GeneratorHelper.GenerateGuidId();
-            result = ProductValidationHelper.ValidateGuidId(newProduct.ProductId, _productList);
+            result = productCreateValidation.ValidateGuidId(newProduct.ProductId, _productList);
         } while (!result.Statement);
 
-        var validationResult = ProductValidationHelper.ProductCreateValidationControl(newProduct.ProductId, productForm, _productList);
+        var validationResult = productCreateValidation.ProductCreateValidationControl(newProduct.ProductId, productForm, _productList);
         if (validationResult.Statement is true)
         {
             newProduct.ProductName = productForm.ProductName!;
@@ -63,6 +65,8 @@ public class ProductService : IProductService
     }
     public async Task<AnswerOutcome<Product>> UpdateProductInListByIdAsync(Product product)
     {
+        ProductValidator productUpdateValidation = new ProductValidator();
+
         var productToUpdate = _productList.FirstOrDefault(p => p.ProductId == product.ProductId);
         if (productToUpdate == null)
             return new AnswerOutcome<Product> { Statement = false, Answer = "Product with the specified ID does not exist." };
@@ -78,7 +82,7 @@ public class ProductService : IProductService
         originalProduct.Manufacturer.ManufacturerCountry = productToUpdate.Manufacturer.ManufacturerCountry;
         originalProduct.Manufacturer.ManufacturerEmail = productToUpdate.Manufacturer.ManufacturerEmail;
 
-        var validationResult = ProductValidationHelper.ProductUpdateValidationControl(product, _productList);
+        var validationResult = productUpdateValidation.ProductUpdateValidationControl(product, _productList);
         
         if (validationResult.Statement is true)
         {

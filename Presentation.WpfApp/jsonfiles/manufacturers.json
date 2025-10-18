@@ -12,12 +12,6 @@
     "ManufacturerEmail": "Volvo@domain.se"
   },
   {
-    "ManufacturerId": "ee0ebb3d-4e38-438a-95ec-42ecade53f97",
-    "ManufacturerName": "Nokia",
-    "ManufacturerCountry": "USA",
-    "ManufacturerEmail": "Nokia@domain.com"
-  },
-  {
     "ManufacturerId": "609ba991-bde9-4ff9-8e27-04a699b04619",
     "ManufacturerName": "Nintendo",
     "ManufacturerCountry": "Japan",

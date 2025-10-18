@@ -2,6 +2,7 @@
 using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Validators;
 
 namespace Infrastructure.Services;
 public class ManufacturerService : IManufacturerService
@@ -17,9 +18,11 @@ public class ManufacturerService : IManufacturerService
 
     public async Task<AnswerOutcome<Manufacturer>> AddManufacturerToListAsync(Manufacturer manufacturer)
     {
+        ManufacturerValidator manufacturerCreateValidation = new ManufacturerValidator();
+
         manufacturer.ManufacturerId = GeneratorHelper.GenerateGuidId();
         
-        var validationResult = ManufacturerValidationHelper.ManufacturerCreateValidationControl(manufacturer, _manufacturerList);
+        var validationResult = manufacturerCreateValidation.ManufacturerCreateValidationControl(manufacturer, _manufacturerList);
 
         if (validationResult.Statement is true)
         {
@@ -40,6 +43,8 @@ public class ManufacturerService : IManufacturerService
     }
     public async Task<AnswerOutcome<Manufacturer>> UpdateManufacturerInListByIdAsync(Manufacturer manufacturer)
     {
+        ManufacturerValidator manufacturerUpdateValidation = new ManufacturerValidator();
+
         var manufacturerToUpdate = _manufacturerList.FirstOrDefault(p => p.ManufacturerId == manufacturer.ManufacturerId);
         if (manufacturerToUpdate == null)
             return new AnswerOutcome<Manufacturer> { Statement = false, Answer = "Manufacturer with the specified ID does not exist." };
@@ -52,7 +57,7 @@ public class ManufacturerService : IManufacturerService
             ManufacturerEmail = manufacturerToUpdate.ManufacturerEmail
         };
 
-        var validationResult = ManufacturerValidationHelper.ManufacturerUpdateValidationControl(manufacturer, _manufacturerList);
+        var validationResult = manufacturerUpdateValidation.ManufacturerUpdateValidationControl(manufacturer, _manufacturerList);
 
         if (validationResult.Statement is true)
         {

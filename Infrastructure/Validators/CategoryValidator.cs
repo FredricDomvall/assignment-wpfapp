@@ -1,18 +1,20 @@
 ﻿using Infrastructure.Models;
 
-namespace Infrastructure.Helpers;
-public static class CategoryValidationHelper
+namespace Infrastructure.Validators;
+
+public class CategoryValidator
 {
-    public static AnswerOutcome<bool> ValidateGuidId(Guid categoryId, List<Category> categoryList)
+    public AnswerOutcome<bool> ValidateGuidId(Guid categoryId, List<Category> categoryList)
     {
         if (categoryId == Guid.Empty)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id was not set properly." };
+
         if (categoryList.Any(c => c.CategoryId == categoryId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
-        return new AnswerOutcome<bool> { Statement = true };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for id passed successfully" };
     }
-    public static AnswerOutcome<bool> ValidateCategoryName(string categoryName)
+    public AnswerOutcome<bool> ValidateCategoryName(string categoryName)
     {
         if (string.IsNullOrWhiteSpace(categoryName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Name can not be left empty" };
@@ -23,16 +25,16 @@ public static class CategoryValidationHelper
         if (categoryName.Any(char.IsDigit))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Name can not contain numbers." };
 
-        return new AnswerOutcome<bool> { Statement = true };
-    } 
-    public static AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> categoryList)
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for name passed successfully" };
+    }
+    public AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> categoryList)
     {
         if (string.IsNullOrWhiteSpace(prefix))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Prefix can not be left empty." };
 
         return new AnswerOutcome<bool> { Statement = true };
     }
-    public static AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> categoryList)
+    public AnswerOutcome<bool> ValidateCategoryUnique(Category checkCategory, List<Category> categoryList)
     {
         var otherCategories = categoryList.Where(c => c.CategoryId != checkCategory.CategoryId);
 
@@ -41,10 +43,10 @@ public static class CategoryValidationHelper
 
         if (otherCategories.Any(c => c.CategoryPrefix == checkCategory.CategoryPrefix))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Prefix must be unique." };
-        
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation controls passed succesfully" };
+
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for unique passed succesfully" };
     }
-    public static AnswerOutcome<bool> CategoryCreateValidationControl(Category checkCategory, List<Category> categoryList)
+    public AnswerOutcome<bool> CategoryCreateValidationControl(Category checkCategory, List<Category> categoryList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
 
@@ -55,11 +57,11 @@ public static class CategoryValidationHelper
 
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validation controls passed successfully." };
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for create passed successfully." };
 
         else return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-    public static AnswerOutcome<bool> CategoryUpdateValidationControl(Category checkCategory, List<Category> categoryList)
+    public AnswerOutcome<bool> CategoryUpdateValidationControl(Category checkCategory, List<Category> categoryList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
 
@@ -69,11 +71,11 @@ public static class CategoryValidationHelper
 
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validation controls passed successfully." };
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All validation update passed successfully." };
 
         else return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-    public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> categoryServiceListResult)
+    public AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> categoryServiceListResult)
     {
         string errorMessages = "";
 
@@ -87,7 +89,6 @@ public static class CategoryValidationHelper
             return new AnswerOutcome<bool> { Statement = false, Answer = errorMessages };
         }
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validationcontrols passed successfully." };
     }
-
 }
