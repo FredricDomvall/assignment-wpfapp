@@ -202,4 +202,50 @@ public class ProductValidator_Tests
         result.Outcome.Should().BeFalse();
         result.Answer.Should().NotBeNullOrWhiteSpace();
     }
+    [Fact]
+    public void ProductCreateValidationControl_ValidForm_ReturnsTrue()
+    {
+        // Arrange
+        var validator = new ProductValidator();
+        var form = new ProductForm
+        {
+            ProductName = "NewProduct",
+            ProductPrice = "19",
+            CategoryName = "Cat",
+            ManufacturerName = "Man",
+            ManufacturerCountry = "Country",
+            ManufacturerEmail = "a@b.com"
+        };
+        var productList = new List<Product>();
+
+        // Act
+        var result = validator.ProductCreateValidationControl(Guid.NewGuid(), form, productList);
+
+        (result.Statement).Should().BeTrue();
+    }
+
+    // NEW TESTS FOR ProductUpdateValidationControl AND ValidateAllValidationResults
+
+    [Fact]
+    public void ProductUpdateValidationControl_InvalidProduct_ReturnsError()
+    {
+        // Arrange
+        var existingList = new List<Product>();
+        var product = new Product
+        {
+            ProductId = Guid.NewGuid(),
+            ProductName = "",                // invalid
+            ProductPrice = -10m,             // invalid
+            Category = new Category { CategoryName = "" }, // invalid
+            Manufacturer = new Manufacturer { ManufacturerName = " " } // invalid (whitespace)
+        };
+        var validator = new ProductValidator();
+
+        // Act
+        var result = validator.ProductUpdateValidationControl(product, existingList);
+
+        // Assert
+        result.Statement.Should().BeFalse();
+        result.Answer.Should().NotBeNullOrWhiteSpace();
+    }
 }
