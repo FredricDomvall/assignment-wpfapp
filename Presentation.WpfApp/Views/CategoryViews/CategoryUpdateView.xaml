@@ -13,25 +13,39 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White" Opacity="0.8">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel VerticalAlignment="Bottom" Grid.Column="0" Margin="10">
-            <Button Command="{Binding NavigateToCategoryListViewCommand}" Content="Back to Category List" FontStyle="Italic" Height="50"  Margin="0,0,0,10"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <Label Content="{Binding CurrentCategoryDetails.CategoryId}" />
-            <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryId}"/>
-            <Label Content="{Binding CurrentCategoryDetails.CategoryName}" />
-            <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryName}"/>
-            <Label Content="{Binding CurrentCategoryDetails.CategoryPrefix}" />
-            <TextBox Margin="0,5" Text="{Binding CurrentCategoryDetails.CategoryPrefix}"/>
 
-        </StackPanel>
-        <StackPanel VerticalAlignment="Bottom" Grid.Column="1" Margin="10">
-            <Button Command="{Binding UpdateCategoryCommand}" Content="Update Category" FontStyle="Italic" Height="50"  Margin="0,0,0,10"/>
-        </StackPanel>
+        <Border BorderThickness="1" BorderBrush="#c9c9c9" CornerRadius="10"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#c4c4c4" Opacity="0.9" Padding="0 0 10 10" Margin="100 100 100 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Title, FallbackValue='Update Category'}" FontWeight="Bold" FontSize="18" FontStyle="Italic" Foreground="WhiteSmoke" Padding="0 10 0 10" HorizontalAlignment="Center"/>
+
+                <TextBlock Grid.Row="1" Text="Category Name" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 5 30 5" FontWeight="DemiBold" FontSize="18" FontStyle="Italic" Foreground="gray"/>
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding CurrentCategoryDetails.CategoryName}" VerticalContentAlignment="Center" Margin="0 0 20 0"/>
+
+            </Grid>
+        </Border>
+        <!-- Submit Button -->
+        <Button Grid.Row="2" Grid.Column="0" Content="Cancel" Command="{Binding NavigateToCategoryListViewCommand}" Width="150" Height="35" HorizontalAlignment="Right" Margin="0 10 75 0"/>
+        <!-- Cancel Button -->
+        <Button Grid.Row="2" Grid.Column="1" Content="Update Category" Command="{Binding UpdateCategoryCommand}" Width="150" Height="35" HorizontalAlignment="Left" Margin="75 10 0 0"/>
     </Grid>
 </UserControl>

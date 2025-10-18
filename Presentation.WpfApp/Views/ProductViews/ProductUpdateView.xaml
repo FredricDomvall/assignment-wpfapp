@@ -24,7 +24,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Remove Grid.Row/Grid.Column from children inside Border and wrap them in a Grid -->
         <Border BorderThickness="1" BorderBrush="#c9c9c9" CornerRadius="10"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#c4c4c4" Opacity="0.9" Padding="0 0 10 10" Margin="100 0 100 0">
             <Grid>
                 <Grid.RowDefinitions>
