@@ -52,6 +52,12 @@ public partial class ProductUpdateViewModel : ObservableObject
         else
             Manufacturers = new ObservableCollection<Manufacturer>();
     }
+    partial void OnSelectedCategoryChanged(Category? value)
+    {
+        if (CurrentProductDetails is not null && value is not null)
+            CurrentProductDetails.Category = value;
+    }
+
 
     [RelayCommand]
     private async Task UpdateProduct()

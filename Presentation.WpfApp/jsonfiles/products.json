@@ -6,12 +6,12 @@
     "ProductDescription": "Sony Wh-x7834 ultra surround 3d special extra extra",
     "ProductPrice": 3499.99,
     "Category": {
-      "CategoryId": "00000000-0000-0000-0000-000000000000",
+      "CategoryId": "d87add24-e868-43c4-8ca4-d1a48fb223ef",
       "CategoryName": "Electronics",
       "CategoryPrefix": "ELE"
     },
     "Manufacturer": {
-      "ManufacturerId": "00000000-0000-0000-0000-000000000000",
+      "ManufacturerId": "c968d0fd-1220-4d12-b3cf-45816c5745ae",
       "ManufacturerName": "Sony",
       "ManufacturerCountry": "Sweden",
       "ManufacturerEmail": "Sony@domain.se"
