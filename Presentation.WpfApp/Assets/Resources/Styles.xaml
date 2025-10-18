@@ -2,38 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   
-    <!-- 🌌 GLOBAL BAKGRUNDSSTIL FÖR FÖNSTER -->
-    <Style TargetType="Window">
-        <Setter Property="Background">
-            <Setter.Value>
-                <!-- Djup bakgrund med suddig gradient och svag struktur -->
-                <VisualBrush Stretch="UniformToFill">
-                    <VisualBrush.Visual>
-                        <Grid>
-                            <Rectangle>
-                                <Rectangle.Fill>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,9">
-                                        <GradientStop Color="#1A1C20" Offset="0" />
-                                        <GradientStop Color="#2B2E35" Offset="1" />
-                                    </LinearGradientBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-
-                            <!-- Lägg till en subtil highlight för 3D-effekt -->
-                            <Rectangle Opacity="0.15">
-                                <Rectangle.Fill>
-                                    <RadialGradientBrush Center="0.3,0.3" RadiusX="0.8" RadiusY="0.8">
-                                        <GradientStop Color="#FFFFFF" Offset="0" />
-                                        <GradientStop Color="#00000000" Offset="3" />
-                                    </RadialGradientBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Grid>
-                    </VisualBrush.Visual>
-                </VisualBrush>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <!-- 🟦 KNAPPSTIL MED 3D-EFFEKT -->
     <Style TargetType="Button">
