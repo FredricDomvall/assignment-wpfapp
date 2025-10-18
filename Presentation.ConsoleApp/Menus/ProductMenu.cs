@@ -143,29 +143,35 @@ internal class ProductMenu
             Console.WriteLine($"Editing Product: {selectedProduct.ProductName}");
             Console.Write("Enter new Product Name (or press Enter to keep current): ");
             var newName = Console.ReadLine();
-            string productName = string.IsNullOrWhiteSpace(newName) ? selectedProduct.ProductName : newName;
+            string newProductName = string.IsNullOrWhiteSpace(newName) ? selectedProduct.ProductName : newName;
 
             Console.Write("Enter new Product Price (or press Enter to keep current): ");
             var newPriceInput = Console.ReadLine();
-            decimal productPrice = selectedProduct.ProductPrice;
+            decimal newProductPrice = selectedProduct.ProductPrice;
             if (decimal.TryParse(newPriceInput, out decimal newPrice))
             {
-                productPrice = newPrice;
+                newProductPrice = newPrice;
             }
 
-            // Prepare ProductForm for update
-            var productForm = new ProductForm
+            // Prepare Product for update
+            var updatedProduct = new Product
             {
-                ProductName = productName,
-                ProductPrice = productPrice.ToString(),
-                CategoryName = selectedProduct.Category?.CategoryName ?? "N/A",
-                ManufacturerName = selectedProduct.Manufacturer?.ManufacturerName ?? "N/A",
-                ManufacturerCountry = selectedProduct.Manufacturer?.ManufacturerCountry ?? "N/A",
-                ManufacturerEmail = selectedProduct.Manufacturer?.ManufacturerEmail ?? "N/A"
+                ProductId = selectedProduct.ProductId,
+                ProductName = newProductName,
+                ProductPrice = newProductPrice,
+                ProductCode = selectedProduct.ProductCode,
+                ProductDescription = selectedProduct.ProductDescription,
+                Category = selectedProduct.Category,
+                Manufacturer = selectedProduct.Manufacturer
             };
 
-            var updateResult = await _productService.UpdateProductInListByIdAsync(selectedProduct.ProductId, productForm);
+            var updateResult = await _productService.UpdateProductInListByIdAsync(updatedProduct);
             Console.WriteLine(updateResult.Answer);
+            if (!updateResult.Statement)
+            {
+                Console.WriteLine("Failed to update the product.");
+                updatedProduct = selectedProduct;
+            }
         }
         else
         {
