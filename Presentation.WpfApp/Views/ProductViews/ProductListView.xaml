@@ -91,8 +91,8 @@
             </StackPanel>
         </Border>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Margin="30,10,30,10">
-            <Button Content="Back To Startmenu" Command="{Binding NavigateToStartViewCommand}" FontStyle="Italic"/>
+        <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,10,10,10">
+            <Button Content="Back To Startmenu" Command="{Binding NavigateToStartViewCommand}" Background="#c4c4c4" FontStyle="Italic"/>
         </StackPanel>
     </Grid>
 </UserControl>
