@@ -28,7 +28,7 @@ public partial class CategoryUpdateViewModel : ObservableObject
     private async Task UpdateCategory()
     {
 
-        var updateResult = await _categoryService.UpdateCategoryInListByIdAsync(CurrentCategoryDetails);
+        var updateResult = await _categoryService.UpdateCategoryInListByIdAsync(CurrentCategoryDetails!);
         if (updateResult.Statement is false)
             CurrentCategoryDetails = updateResult.Outcome;
 

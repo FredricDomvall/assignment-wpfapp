@@ -16,57 +16,61 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Product Name -->
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding NewProduct.ProductName}" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5" Text="{Binding NewProduct.ProductName, UpdateSourceTrigger=PropertyChanged}"/>
+        <!-- Remove Grid.Row/Grid.Column from children inside Border and wrap them in a Grid -->
+        <Border BorderThickness="1" BorderBrush="#c9c9c9" CornerRadius="10"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#c4c4c4" Opacity="0.9" Padding="0 0 10 10" Margin="100 0 100 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
 
-        <!-- Description -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding NewProduct.ProductDescription}" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding NewProduct.ProductDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Title, FallbackValue='Create New Product'}" FontWeight="Bold" FontSize="18" FontStyle="Italic" Foreground="WhiteSmoke" Padding="0 10 0 10" HorizontalAlignment="Center"/>
+                <!-- Product Name -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="20 5 0 5" FontWeight="DemiBold" FontSize="18" FontStyle="Italic" Foreground="gray"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="0 5" Text="{Binding NewProduct.ProductName, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!-- Price -->
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Price:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5" Text="{Binding NewProduct.ProductPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                <!-- Description -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" VerticalAlignment="Center" Margin="20 5 0 5" FontWeight="DemiBold" FontSize="18" FontStyle="Italic" Foreground="gray"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="0 5" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding NewProduct.ProductDescription, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!-- Category -->
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Category:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5" 
-                  ItemsSource="{Binding Categories}" 
-                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" 
-                  DisplayMemberPath="CategoryName"/>
+                <!-- Price -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Price:" VerticalAlignment="Center" Margin="20 5 0 5" FontWeight="DemiBold" FontSize="18" FontStyle="Italic" Foreground="gray"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="0 5" Text="{Binding NewProduct.ProductPrice, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!-- Manufacturer -->
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Manufacturer:" VerticalAlignment="Center" Margin="20,5,0,5" FontStyle="Italic" Foreground="Gray"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,5"
-                  ItemsSource="{Binding Manufacturers}"
-                  SelectedItem="{Binding SelectedManufacturer, Mode=TwoWay}"
-                  DisplayMemberPath="ManufacturerName"/>
+                <!-- Category -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Category:" VerticalAlignment="Center" Margin="20 5 0 5" FontWeight="DemiBold" FontSize="18" FontStyle="Italic" Foreground="gray"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" Margin="0 5" 
+                      ItemsSource="{Binding Categories}" 
+                      SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" 
+                      DisplayMemberPath="CategoryName"/>
 
-        <!-- Info Row (unchanged, now on row 8) -->
-        <StackPanel x:Name="ValidationMessagesPanel" Grid.Row="8" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,20,5,5" Visibility="Collapsed">
-            <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
-            <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
-            <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
-            <TextBlock Text="* All fields are required." FontStyle="Italic" Foreground="Gray" Height="25" VerticalAlignment="Center" Margin="0,5"/>
-        </StackPanel>
-        <!-- Refresh Lists Button -->
-        <Button Content="Refresh lists" Command="{Binding RefreshOtherListsCommand}"/>
+                <!-- Manufacturer -->
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Manufacturer:" VerticalAlignment="Center" Margin="20 5 0 5" FontWeight="DemiBold" FontSize="18" FontStyle="Italic" Foreground="gray"/>
+                <ComboBox Grid.Row="5" Grid.Column="1" Margin="0 5"
+                      ItemsSource="{Binding Manufacturers}"
+                      SelectedItem="{Binding SelectedManufacturer, Mode=TwoWay}"
+                      DisplayMemberPath="ManufacturerName"/>
+
+            </Grid>
+        </Border>
         <!-- Submit Button -->
-        <Button Grid.Row="9" Grid.Column="1" Content="Create Product" Command="{Binding SaveNewProductCommand}" Width="150" Height="35" HorizontalAlignment="Right" Margin="0,10,100,0"/>
+        <Button Grid.Row="1" Grid.Column="0" Content="Cancel" Command="{Binding CancelNewProductCreationCommand}" Width="150" Height="35" HorizontalAlignment="Right" Margin="0 10 75 0"/>
         <!-- Cancel Button -->
-        <Button Grid.Row="9" Grid.Column="1" Content="Cancel" Command="{Binding CancelNewProductCreationCommand}" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,10,25,0"/>
+        <Button Grid.Row="9" Grid.Column="1" Content="Create Product" Command="{Binding SaveNewProductCommand}" Width="150" Height="35" HorizontalAlignment="Left" Margin="75 10 0 0"/>
     </Grid>
 </UserControl>
