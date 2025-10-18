@@ -16,5 +16,11 @@
     "ManufacturerName": "Nintendo",
     "ManufacturerCountry": "Japan",
     "ManufacturerEmail": "Nintendo@Nintendo.com"
+  },
+  {
+    "ManufacturerId": "416574c7-e93a-4a1f-9fd6-91d5a81ba275",
+    "ManufacturerName": "updated",
+    "ManufacturerCountry": "updated",
+    "ManufacturerEmail": "updated@test.test"
   }
 ]
