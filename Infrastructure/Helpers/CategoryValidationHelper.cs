@@ -7,10 +7,11 @@ public static class CategoryValidationHelper
     {
         if (categoryId == Guid.Empty)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id was not set properly." };
+
         if (categoryList.Any(c => c.CategoryId == categoryId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
-        return new AnswerOutcome<bool> { Statement = true };
+        return new AnswerOutcome<bool> { Statement = true , Answer = "All validation for id passed successfully" };
     }
     public static AnswerOutcome<bool> ValidateCategoryName(string categoryName)
     {
@@ -23,7 +24,7 @@ public static class CategoryValidationHelper
         if (categoryName.Any(char.IsDigit))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Name can not contain numbers." };
 
-        return new AnswerOutcome<bool> { Statement = true };
+        return new AnswerOutcome<bool> { Statement = true , Answer = "All validation for name passed successfully" };
     } 
     public static AnswerOutcome<bool> ValidateCategoryPrefix(string prefix, List<Category> categoryList)
     {
@@ -42,7 +43,7 @@ public static class CategoryValidationHelper
         if (otherCategories.Any(c => c.CategoryPrefix == checkCategory.CategoryPrefix))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Prefix must be unique." };
         
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation controls passed succesfully" };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for unique passed succesfully" };
     }
     public static AnswerOutcome<bool> CategoryCreateValidationControl(Category checkCategory, List<Category> categoryList)
     {
@@ -55,7 +56,7 @@ public static class CategoryValidationHelper
 
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validation controls passed successfully." };
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for create passed successfully." };
 
         else return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
@@ -69,7 +70,7 @@ public static class CategoryValidationHelper
 
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validation controls passed successfully." };
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All validation update passed successfully." };
 
         else return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
@@ -87,7 +88,7 @@ public static class CategoryValidationHelper
             return new AnswerOutcome<bool> { Statement = false, Answer = errorMessages };
         }
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validationcontrols passed successfully." };
     }
 
 }

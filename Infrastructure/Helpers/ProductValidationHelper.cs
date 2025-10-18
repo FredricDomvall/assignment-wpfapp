@@ -12,7 +12,7 @@ public static class ProductValidationHelper
         if (productsList.Any(p => p.ProductId == productId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
-        return new AnswerOutcome<bool> { Statement = true };
+        return new AnswerOutcome<bool> { Statement = true , Answer = "All validation for id passed successfully" };
     }
     public static AnswerOutcome<bool> ValidateName(string stringInputs)
     {
@@ -27,7 +27,7 @@ public static class ProductValidationHelper
         if (stringInputs.Any(char.IsDigit))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product name not contain numbers." };
 
-        return new AnswerOutcome<bool> { Statement = true };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for price passed successfully" };
     }
     public static AnswerOutcome<bool> ValidateDecimalPrice(string decimalPrice)
     {
@@ -46,14 +46,14 @@ public static class ProductValidationHelper
         if (parsedPrice < 0)
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
 
-        return new AnswerOutcome<bool> { Statement = true };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for price passed successfully"};
     }
     public static AnswerOutcome<bool> ValidateCategory(string category)
     {
         if (category == null || string.IsNullOrWhiteSpace(category))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Category is not set.", Outcome = false };
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "Category is set." };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "Category is set properly." };
     }
     public static AnswerOutcome<bool> ValidateManufacturer(string manufacturer)
     {
@@ -71,7 +71,7 @@ public static class ProductValidationHelper
         if(otherProducts.Any(p => p.ProductName == productName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified name already exists." };
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "Product with the specified ID and name do not exist."};
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for unique passed successfully"};
     }
     public static AnswerOutcome<bool> ProductCreateValidationControl(Guid Id, ProductForm checkProduct, List<Product> productList)
     {
@@ -81,9 +81,11 @@ public static class ProductValidationHelper
         validationResults.Add(ValidateCategory(checkProduct.CategoryName!));
         validationResults.Add(ValidateManufacturer(checkProduct.ManufacturerName!));
         validationResults.Add(ValidateProductUnique(Id, checkProduct.ProductName!, productList));
+
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for create passed successfully." };
+
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
@@ -106,7 +108,8 @@ public static class ProductValidationHelper
 
         var finalValidationResult = ValidateAllValidationResults(validationResults);
         if (finalValidationResult.Statement is true)
-            return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+            return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for update passed successfully." };
+
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
@@ -123,6 +126,6 @@ public static class ProductValidationHelper
             return new AnswerOutcome<bool> { Statement = false, Answer = errorMessages };
         }
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All Validationcontrols passed successfully." };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validationcontrols passed successfully." };
     }
 }
