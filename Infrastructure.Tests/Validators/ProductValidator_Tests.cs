@@ -161,6 +161,45 @@ public class ProductValidator_Tests
     }
 
     [Fact]
-    
+    public void ValidateProductUnique_DuplicateName_ReturnsError_And_UniqueName_ReturnsTrue()
+    {
+        // Arrange
+        var list = new List<Product>
+        {
+            new Product { ProductId = Guid.NewGuid(), ProductName = "SameName", ProductPrice = 1, Category = new Category(), Manufacturer = new Manufacturer() }
+        };
+        var validator = new ProductValidator();
 
+        // Act
+        var duplicateResult = validator.ValidateProductUnique(Guid.NewGuid(), "SameName", list);
+        var uniqueResult = validator.ValidateProductUnique(Guid.NewGuid(), "DifferentName", list);
+
+        // Assert
+        duplicateResult.Statement.Should().BeFalse();
+        duplicateResult.Answer.Should().NotBeNullOrWhiteSpace();
+
+        uniqueResult.Statement.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ProductCreateValidationControl_InvalidForm_ReturnsError()
+    {
+        // Arrange
+        var validator = new ProductValidator();
+        var form = new ProductForm
+        {
+            ProductName = "",             // invalid
+            ProductPrice = "notdecimal",  // invalid
+            CategoryName = "",            // invalid
+            ManufacturerName = ""         // invalid
+        };
+        var productList = new List<Product>();
+
+        // Act
+        var result = validator.ProductCreateValidationControl(Guid.NewGuid(), form, productList);
+
+        // Assert
+        result.Outcome.Should().BeFalse();
+        result.Answer.Should().NotBeNullOrWhiteSpace();
+    }
 }
