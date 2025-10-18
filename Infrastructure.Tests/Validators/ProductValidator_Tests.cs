@@ -95,5 +95,72 @@ public class ProductValidator_Tests
         result.Answer.Should().NotBeNullOrWhiteSpace();
     }
 
+    [Fact]
+    public void ValidateGuidId_DuplicateGuid_ReturnsError_And_UniqueGuid_ReturnsTrue()
+    {
+        // Arrange
+        var existingId = Guid.NewGuid();
+        var products = new List<Product>
+        {
+            new Product { ProductId = existingId, ProductName = "Existing", ProductPrice = 1, Category = new Category(), Manufacturer = new Manufacturer() }
+        };
+        var validator = new ProductValidator();
+
+        // Act
+        var duplicateResult = validator.ValidateGuidId(existingId, products);
+        var uniqueResult = validator.ValidateGuidId(Guid.NewGuid(), products);
+
+        // Assert
+        duplicateResult.Outcome.Should().BeFalse();
+        duplicateResult.Answer.Should().NotBeNullOrWhiteSpace();
+
+        uniqueResult.Statement.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void ValidateCategory_Empty_ReturnsError(string categoryInput)
+    {
+        var validator = new ProductValidator();
+        var result = validator.ValidateCategory(categoryInput);
+
+        result.Outcome.Should().BeFalse();
+        result.Answer.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public void ValidateCategory_Valid_ReturnsTrue()
+    {
+        var validator = new ProductValidator();
+        var result = validator.ValidateCategory("Electronics");
+
+        result.Statement.Should().BeTrue();
+        result.Answer.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void ValidateManufacturer_Empty_ReturnsError(string manufacturerInput)
+    {
+        var validator = new ProductValidator();
+        var result = validator.ValidateManufacturer(manufacturerInput);
+
+        result.Outcome.Should().BeFalse();
+        result.Answer.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public void ValidateManufacturer_Valid_ReturnsTrue()
+    {
+        var validator = new ProductValidator();
+        var result = validator.ValidateManufacturer("Acme Inc.");
+
+        result.Statement.Should().BeTrue();
+    }
+
+    [Fact]
+    
 
 }
