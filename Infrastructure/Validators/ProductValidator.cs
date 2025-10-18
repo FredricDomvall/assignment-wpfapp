@@ -1,10 +1,9 @@
 ﻿using Infrastructure.Models;
 
-namespace Infrastructure.Helpers;
-
-public static class ProductValidationHelper
+namespace Infrastructure.Validators;
+public class ProductValidator
 {
-    public static AnswerOutcome<bool> ValidateGuidId(Guid productId, List<Product> productsList)
+    public AnswerOutcome<bool> ValidateGuidId(Guid productId, List<Product> productsList)
     {
         if (productId == Guid.Empty)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id was not set properly." };
@@ -12,9 +11,9 @@ public static class ProductValidationHelper
         if (productsList.Any(p => p.ProductId == productId))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Id already exists in the list." };
 
-        return new AnswerOutcome<bool> { Statement = true , Answer = "All validation for id passed successfully" };
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for id passed successfully" };
     }
-    public static AnswerOutcome<bool> ValidateName(string stringInputs)
+    public AnswerOutcome<bool> ValidateName(string stringInputs)
     {
         if (string.IsNullOrWhiteSpace(stringInputs))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product name can not be left empty" };
@@ -29,51 +28,51 @@ public static class ProductValidationHelper
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for price passed successfully" };
     }
-    public static AnswerOutcome<bool> ValidateDecimalPrice(string decimalPrice)
+    public AnswerOutcome<bool> ValidateDecimalPrice(string decimalPrice)
     {
         if (decimalPrice is null)
             return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be null." };
-        
+
         if (string.IsNullOrWhiteSpace(decimalPrice))
             return new AnswerOutcome<bool> { Statement = false, Answer = "price can not be left empty." };
 
         if (!decimal.TryParse(decimalPrice, out decimal parsedPrice))
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be a decimal value." };
-        
+
         if (parsedPrice >= 10000000)
             return new AnswerOutcome<bool> { Statement = false, Answer = "Price cant be greater than: 9999999,99." };
 
         if (parsedPrice < 0)
             return new AnswerOutcome<bool> { Statement = false, Answer = "price must be greater than zero." };
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for price passed successfully"};
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for price passed successfully" };
     }
-    public static AnswerOutcome<bool> ValidateCategory(string category)
+    public AnswerOutcome<bool> ValidateCategory(string category)
     {
         if (category == null || string.IsNullOrWhiteSpace(category))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Category is not set.", Outcome = false };
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Category is set properly." };
     }
-    public static AnswerOutcome<bool> ValidateManufacturer(string manufacturer)
+    public AnswerOutcome<bool> ValidateManufacturer(string manufacturer)
     {
         if (manufacturer == null || string.IsNullOrWhiteSpace(manufacturer))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Manufacturer is not set." };
 
         return new AnswerOutcome<bool> { Statement = true, Answer = "Manufacturer is set properly." };
     }
-    public static AnswerOutcome<bool> ValidateProductUnique(Guid productId, string productName, List<Product> productList)
+    public AnswerOutcome<bool> ValidateProductUnique(Guid productId, string productName, List<Product> productList)
     {
         //I need to consider taking in whole object of product instead of just name and id so i can validate ProductCode later if needed
-        
+
         var otherProducts = productList.Where(p => p.ProductId != productId);
 
-        if(otherProducts.Any(p => p.ProductName == productName))
+        if (otherProducts.Any(p => p.ProductName == productName))
             return new AnswerOutcome<bool> { Statement = false, Answer = "Product with the specified name already exists." };
 
-        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for unique passed successfully"};
+        return new AnswerOutcome<bool> { Statement = true, Answer = "All validation for unique passed successfully" };
     }
-    public static AnswerOutcome<bool> ProductCreateValidationControl(Guid Id, ProductForm checkProduct, List<Product> productList)
+    public AnswerOutcome<bool> ProductCreateValidationControl(Guid Id, ProductForm checkProduct, List<Product> productList)
     {
         List<AnswerOutcome<bool>> validationResults = new List<AnswerOutcome<bool>>();
         validationResults.Add(ValidateName(checkProduct.ProductName!));
@@ -89,7 +88,7 @@ public static class ProductValidationHelper
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-    public static AnswerOutcome<bool> ProductUpdateValidationControl(Product product, List<Product> productList)
+    public AnswerOutcome<bool> ProductUpdateValidationControl(Product product, List<Product> productList)
     {
         ProductForm checkProduct = new ProductForm
         {
@@ -113,7 +112,7 @@ public static class ProductValidationHelper
         else
             return new AnswerOutcome<bool> { Statement = false, Answer = finalValidationResult.Answer };
     }
-    public static AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
+    public AnswerOutcome<bool> ValidateAllValidationResults(List<AnswerOutcome<bool>> productserviceListResult)
     {
         string errorMessages = "";
 
