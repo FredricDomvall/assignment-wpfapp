@@ -2,6 +2,7 @@
 using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Validators;
 
 namespace Infrastructure.Services;
 public class CategoryService : ICategoryService
@@ -16,17 +17,19 @@ public class CategoryService : ICategoryService
     }
     public async Task<AnswerOutcome<Category>> AddCategoryToListAsync(Category categoryForm)
     {
+        CategoryValidator categoryCreateValidator = new CategoryValidator();
+
         Category newCategory = new Category();
         var result = new AnswerOutcome<bool> { Statement = false };
         do
         {
             categoryForm.CategoryId = GeneratorHelper.GenerateGuidId();
-            result = CategoryValidationHelper.ValidateGuidId(categoryForm.CategoryId, _categoryList);    
+            result = categoryCreateValidator.ValidateGuidId(categoryForm.CategoryId, _categoryList);    
         } while (!result.Statement);
 
         categoryForm.CategoryPrefix = GeneratorHelper.GenerateCategoryPrefix(categoryForm.CategoryName!);
         
-        var validationResult = CategoryValidationHelper.CategoryCreateValidationControl(categoryForm, _categoryList);
+        var validationResult = categoryCreateValidator.CategoryCreateValidationControl(categoryForm, _categoryList);
 
         if (validationResult.Statement is true)
         {
@@ -52,6 +55,8 @@ public class CategoryService : ICategoryService
     }
     public async Task<AnswerOutcome<Category>> UpdateCategoryInListByIdAsync(Category category)
     {
+        CategoryValidator categoryUpdateValidator = new CategoryValidator();
+
         var categoryToUpdate = _categoryList.FirstOrDefault(c => c.CategoryId == category.CategoryId);
         if (categoryToUpdate == null)
             return new AnswerOutcome<Category> { Statement = false, Answer = "Category with the specified ID does not exist." };
@@ -63,7 +68,7 @@ public class CategoryService : ICategoryService
             CategoryName = categoryToUpdate.CategoryName
         };
 
-        var validationResult = CategoryValidationHelper.CategoryUpdateValidationControl(category, _categoryList);
+        var validationResult = categoryUpdateValidator.CategoryUpdateValidationControl(category, _categoryList);
 
         if (validationResult.Statement is true)
         {
