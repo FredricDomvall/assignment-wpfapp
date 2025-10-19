@@ -140,12 +140,13 @@ public class ProductService_Tests
         IProductService productService = new ProductService(productJsonFileRepository, manufacturerService, categoryService, fileSources);
         var validProduct = new ProductForm
         {
-            ProductName = "ValidTestProduct",
-            ProductPrice = "12,34",
-            CategoryName = "TestCategory",
-            ManufacturerName = "TestManufacturer",
-            ManufacturerCountry = "TestCountry",
-            ManufacturerEmail = "test@example.com"
+            ProductName = "Valid",
+            ProductPrice = "12",
+            CategoryName = "Valid",
+            ProductCode = "VAL-00001",
+            ManufacturerName = "Valid",
+            ManufacturerCountry = "Valid",
+            ManufacturerEmail = "Valid@valid.com"
         };
 
 
@@ -155,7 +156,7 @@ public class ProductService_Tests
 
         //Assert
         Assert.True(validResult.Statement);
-        Assert.Contains(productExistsInList.Outcome!, p => p.ProductName == "ValidTestProduct" && p.ProductPrice == 12.34m);
+        Assert.Contains(productExistsInList.Outcome!, p => p.ProductName == "Valid" && p.ProductPrice == 12);
         Assert.True(File.Exists(_testFilePath));
     }
 
@@ -195,7 +196,7 @@ public class ProductService_Tests
         Assert.False(invalidResult.Statement);
 
         // Assert
-        Assert.Contains("Text-inputs can not be left empty", invalidResult.Answer);
+        Assert.Contains("Product name can not be left empty", invalidResult.Answer);
         Assert.Contains("price", invalidResult.Answer);
 
         Assert.DoesNotContain(productExistsInList.Outcome!, p => p.ProductName == "");
