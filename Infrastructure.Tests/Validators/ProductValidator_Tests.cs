@@ -248,4 +248,69 @@ public class ProductValidator_Tests
         result.Statement.Should().BeFalse();
         result.Answer.Should().NotBeNullOrWhiteSpace();
     }
+    [Fact]
+    public void ProductUpdateValidationControl_ValidProduct_ReturnsTrue()
+    {
+        // Arrange
+        var existingList = new List<Product>
+     {
+         new Product { ProductId = Guid.NewGuid(), ProductName = "Other", ProductPrice = 5m, Category = new Category { CategoryName = "Cat" }, Manufacturer = new Manufacturer { ManufacturerName = "Man" } }
+     };
+        var product = new Product
+        {
+            ProductId = Guid.NewGuid(),
+            ProductName = "Updated",
+            ProductPrice = 20m,
+            Category = new Category { CategoryName = "Electronics" },
+            Manufacturer = new Manufacturer { ManufacturerName = "Acme" }
+        };
+        var validator = new ProductValidator();
+
+        // Act
+        var result = validator.ProductUpdateValidationControl(product, existingList);
+
+        // Assert
+        result.Statement.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ValidateAllValidationResults_MixedResults_ReturnsCombinedErrors()
+    {
+        // Arrange
+        var validator = new ProductValidator();
+        var results = new List<AnswerOutcome<bool>>
+     {
+         new AnswerOutcome<bool> { Statement = true, Answer = "OK", Outcome = true },
+         new AnswerOutcome<bool> { Statement = false, Answer = "Name is invalid", Outcome = false },
+         new AnswerOutcome<bool> { Statement = false, Answer = "Price is invalid", Outcome = false }
+     };
+
+        // Act
+        var final = validator.ValidateAllValidationResults(results);
+
+        // Assert
+        final.Statement.Should().BeFalse();
+        final.Answer.Should().Contain("Name is invalid");
+        final.Answer.Should().Contain("Price is invalid");
+    }
+
+    [Fact]
+    public void ValidateAllValidationResults_AllValid_ReturnsSuccessMessage()
+    {
+        // Arrange
+        var validator = new ProductValidator();
+        var results = new List<AnswerOutcome<bool>>
+     {
+         new AnswerOutcome<bool> { Statement = true, Answer = "OK1", Outcome = true },
+         new AnswerOutcome<bool> { Statement = true, Answer = "OK2", Outcome = true }
+     };
+
+        // Act
+        var final = validator.ValidateAllValidationResults(results);
+
+        // Assert
+        final.Statement.Should().BeTrue();
+        final.Answer.Should().Be("All validationcontrols passed successfully.");
+    }
+
 }
